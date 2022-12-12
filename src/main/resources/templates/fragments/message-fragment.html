@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{main/master}" lang="en">
+<head />
+<body>
+<th:block th:fragment="messages">
+    <div th:each="m: ${messages.successes}" class="alert alert-success alert-dismissible mt-3" role="alert">
+        <strong th:text="${m.label} ?: 'Success!'" /> <span th:text="${m.text}" />
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <div th:each="m: ${messages.infos}" class="alert alert-info alert-dismissible mt-3" role="alert">
+        <strong th:text="${m.label} ?: 'Notice:'" /> <span th:text="${m.text}" />
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <div th:each="m: ${messages.warnings}" class="alert alert-warning alert-dismissible mt-3" role="alert">
+        <strong th:text="${m.label} ?: 'Warning!'" /> <span th:text="${m.text}" />
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <div th:each="m: ${messages.errors}" class="alert alert-danger alert-dismissible mt-3" role="alert">
+        <strong th:text="${m.label} ?: 'Error!'" /> <span th:text="${m.text}" />
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+</th:block>
+</body>
+</html>

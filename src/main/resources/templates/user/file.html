@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{main/master}" lang="en">
+<head />
+<body>
+<section layout:fragment="content">
+    <div class="row">
+        <th:block th:insert="fragments/menu-fragment :: menu" />
+        <div class="col-md-10 mt-3">
+            <h3>Image Uploads</h3>
+            <p>Upload images that can be referenced in the different places of the site. i.e. In meetings or data cards. Just copy the URL to the image src field on the form.</p>
+
+            <form th:action="@{/user/file/upload}" method="post" enctype="multipart/form-data">
+                <div class="row row-cols-lg-auto g-3">
+                    <div class="col-12">
+                        <label class="form-label visually-hidden" for="file">File to Upload</label>
+                        <input class="form-control" type="file" name="file" id="file" accept=".jpg, .png, .gif, .webp, .jpeg, .pdf" />
+                        <div class="form-text text-success">Allowed file types: .jpg, .png, .gif, .webp, .jpeg, .pdf</div>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </form>
+
+            <ul th:if="${!#lists.isEmpty(files)}" class="list-group my-3" th:with="wardPath=${session.user.ward.path}">
+                <li th:each="f, i : ${files}" class="list-group-item">
+                    <div class="row align-items-center">
+                        <div class="col-2">
+                            <img th:if="${!#strings.endsWith(f.name, 'pdf')}" th:src="@{/static-images/{ward}/{file}(ward=${wardPath},file=${f.name})}" th:alt="${f.name}" width="75" height="75" />
+                            <i th:if="${#strings.endsWith(f.name, 'pdf')}" class="fa-solid fa-file-pdf fs-1"></i>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="alert alert-primary copy-url" th:id="${'alert' + i.index}">Copied URL to clipboard!</p>
+                            <div>
+                                <span th:text="${f.name}" class="fw-bold fs-5"/>
+                                <div class="form-text" th:text="@{{uri}/static-images/{ward}/{file}(ward=${wardPath},file=${f.name},uri=${@environment.getProperty('ldw.domain')})}"></div>
+                            </div>
+                        </div>
+                        <div class="col text-end">
+                            <form th:action="@{/user/file/delete}" method="post" class="mx-3">
+                                <input type="hidden" name="imageId" th:value="${f.name}" />
+                                <a href="#" class="text-decoration-none copy-text"
+                                   th:data-url="@{{uri}/static-images/{ward}/{file}(ward=${wardPath},file=${f.name},uri=${@environment.getProperty('ldw.domain')})}"
+                                   th:data-id="${i.index}" title="Copy Image URL">
+                                    <i class="fa-regular fa-copy fs-2 text-primary"></i>
+                                </a>
+                                <button class="bg-transparent border-0 delete_check" title="Delete Image"><i class="fa-solid fs-2 fa-trash-can text-danger"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+</body>
+</html>

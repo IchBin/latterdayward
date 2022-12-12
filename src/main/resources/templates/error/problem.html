@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{main/master}">
+<head />
+
+<body>
+<section layout:fragment="content">
+    <div class="row">
+        <div class="col">
+            <h1 class="display-5 font-weight-bold">Error</h1>
+            <div th:switch="${errorCode}">
+                <p th:case="500">
+                    500 - An error has occurred. If the problem persists, please report this to
+                    the <a href="mailto:admin@latterdayward.com">Admin</a>.</p>
+                <p th:case="404">
+                    404 - This page does not exist. If the problem persists, please report this to the
+                    <a href="mailto:admin@latterdayward.com">Admin</a>.</p>
+                <p th:case="403">
+                    403 Forbidden - Either your account has been deactivated or your token is wrong or expired. If you feel this is an error, please
+                    report this to the <a href="mailto:admin@latterdayward.com">Admin</a>.</p>
+                <p th:case="401">401 - You are not authorized. Please turn around and repent for trying to sneak in.</p>
+                <div th:case="501">
+                    It looks like your Github account has your email address set as private. If you'd like to continue with
+                    a Github login you'll have to fix this in order to use LatterDayWard.com.
+                    <p>There are 2 places you'll have to check at Github.com.</p>
+                    <p>
+                        First check and make sure the checkbox for setting your email private is unchecked in
+                        <a class="btn btn-info border-dark" href="https://github.com/settings/emails">GitHub Email settings</a>
+                    </p>
+                    <p>
+                        After unchecking that option, you'll then need to select an email that you want public in your
+                        <a class="btn btn-success" href="https://github.com/settings/profile">GitHub Profile settings</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

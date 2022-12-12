@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{main/master}" lang="en">
+<head />
+<body>
+<th:block th:fragment="modal">
+    <!-- Modal -->
+    <div class="modal fade modal-lg" id="eventModal" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true"  data-bs-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="post" action="#" id="event_form">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="eventModalLabel">Add Meeting</h5>
+                        <button type="button" class="btn-close close_modal" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row py-3">
+                            <div class="col-md-4">
+                                <label for="title">Title</label>
+                                <input type="text" name="title" id="title" class="form-control" />
+                            </div>
+                            <div class="col-md-4">
+                                <label for="subtitle">SubTitle</label>
+                                <input type="text" name="subtitle" id="subtitle" class="form-control" />
+                            </div>
+                            <div class="col-md-4">
+                                <label for="description">Description</label>
+                                <input type="text" name="description" id="description" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="row py-3 border-dark border-top">
+                            <div class="col-md-12"><h5>Sunday's this meeting are on</h5></div>
+                            <div class="col-md-1">
+                                <label for="repeats[0]">1st</label>
+                                <input type="checkbox" name="repeats[0]" id="repeats[0]" class="form-check-input d-block" value="1" />
+                            </div>
+                            <div class="col-md-1">
+                                <label for="repeats[1]">2nd</label>
+                                <input type="checkbox" name="repeats[1]" id="repeats[1]" class="form-check-input d-block" value="2" />
+                            </div>
+                            <div class="col-md-1">
+                                <label for="repeats[2]">3rd</label>
+                                <input type="checkbox" name="repeats[2]" id="repeats[2]" class="form-check-input d-block" value="3" />
+                            </div>
+                            <div class="col-md-1">
+                                <label for="repeats[3]">4th</label>
+                                <input type="checkbox" name="repeats[3]" id="repeats[3]" class="form-check-input d-block" value="4" />
+                            </div>
+                            <div class="col-md-1">
+                                <label for="repeats[4]">5th</label>
+                                <input type="checkbox" name="repeats[4]" id="repeats[4]" class="form-check-input d-block" value="5" />
+                            </div>
+                        </div>
+                        <div class="row py-3 border-dark border-top">
+                            <div class="col-6">
+                                <h5>Image</h5>
+                                <p class="alert alert-primary copy-url">Paste the image link into this SRC field</p>
+                            </div>
+                            <div class="col-6">
+                                <select id="image-src" class="form-select" th:with="wardPath=${session.user.ward.path}">
+                                    <option>Choose an Image from your uploads</option>
+                                    <option th:each="i : ${files}"
+                                            th:text="${i.name}"
+                                            th:value="@{{uri}/static-images/{ward}/{file}(ward=${wardPath},file=${i.name},uri=${@environment.getProperty('ldw.domain')})}">
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="image.src">SRC</label>
+                                <input type="text" name="image.src" id="image.src" class="form-control" placeholder="i.e /path/to/image.png" />
+                            </div>
+                            <div class="col-md-4">
+                                <label for="image.alt">Alt</label>
+                                <input type="text" name="image.alt" id="image.alt" class="form-control" />
+                            </div>
+                            <div class="col-md-2">
+                                <label for="image.width">Width</label>
+                                <input type="text" name="image.width" id="image.width" class="form-control" placeholder="i.e 100"/>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="image.height">Height</label>
+                                <input type="text" name="image.height" id="image.height" class="form-control" placeholder="i.e 100" />
+                            </div>
+                        </div>
+                        <div class="row pt-3 border-dark border-top">
+                            <div class="col-12"><h5>Button</h5></div>
+                            <div class="col-md-4">
+                                <label for="button.text">Text</label>
+                                <input type="text" name="button.text" id="button.text" class="form-control" />
+                            </div>
+                            <div class="col-md-4">
+                                <label for="button.link.url">Link</label>
+                                <input type="text" name="button.link.url" id="button.link.url" class="form-control" placeholder="i.e. http://www.example.com" />
+                            </div>
+                            <div class="col-md-4">
+                                <label for="button.link.label">Label</label>
+                                <input type="text" name="button.link.label" id="button.link.label" class="form-control" />
+                            </div>
+                            <div class="col-md-12 mt-3">
+                                <label for="button.link.external">External Link?</label>
+                                <input type="checkbox" name="button.link.external" id="button.link.external" class="form-check-input"  />
+                            </div>
+                            <div class="col-md-12 mt-3">
+                                <div class="form-text text-danger text-end">After clicking "Add Meeting" you MUST save!</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary close_modal" data-bs-dismiss="modal">Close</button>
+                        <button type="button" id="event_submit" class="btn btn-primary">Add Meeting</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</th:block>
+</body>
+</html>

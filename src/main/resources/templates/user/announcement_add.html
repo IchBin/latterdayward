@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{main/master}" lang="en">
+<head>
+    <script th:src="@{/script/input-replication.js}"></script>
+</head>
+<body>
+<section layout:fragment="content">
+    <div class="row">
+        <th:block th:insert="fragments/menu-fragment :: menu" />
+        <div class="col-md-10 mt-3">
+            <h3>Add an Announcement</h3>
+            <form th:action="@{/user/announcement/save}" method="post" th:object="${announcement}">
+                <input type="hidden" th:field="*{id}" th:if="${announcement.id != null}"/>
+                <input type="hidden" name="wardPath" th:value="${session.user.ward.path}" />
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label" for="title">Title</label>
+                        <input class="form-control" type="text" th:field="*{title}" id="title"/>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col">
+                        <label class="form-label" for="description">Description</label>
+                        <textarea class="form-control" type="text" th:field="*{description}" id="description"></textarea>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <dive class="col-md-6">
+                        <label class="form-label" for="address">Address Location</label>
+                        <input class="form-control" type="text" th:field="*{location.address}" id="address" />
+                    </dive>
+                    <dive class="col-md-6">
+                        <label class="form-label" for="link">Address Link</label>
+                        <input class="form-control" type="text" th:field="*{location.link}" id="link"/>
+                    </dive>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>Dates
+                            <a title="Add a Date" type="button" class="duplicate-input" data-target=".date-set" data-appender="#dates">
+                                <i class="fa-solid fa-circle-plus text-info"></i>
+                            </a>
+                        </h5>
+                    </div>
+                </div>
+                <div id="dates">
+                    <div class="row mb-3 date-set" th:each="d, i : *{dates}" th:data-item-id="${'date'+i.index}">
+                        <div class="col-md-6">
+                            <label class="form-label" th:for="${'dates['+ i.index +'].date'}">Date/Time</label>
+                            <input class="form-control" type="datetime-local"
+                                   th:name="${'dates['+ i.index +'].date'}"
+                                   th:value="${d.date != null ? announcement.thymeleafDateTime(d.date) : ''}"
+                                   th:id="${'dates['+ i.index +'].date'}" />
+                        </div>
+                        <div class="col-md-5">
+                            <label class="form-label" th:for="${'dates['+ i.index +'].subTitle'}">SubTitle</label>
+                            <input class="form-control" type="text"
+                                   th:name="${'dates['+ i.index +'].subTitle'}"
+                                   th:value="${d.subTitle}"
+                                   th:id="${'dates['+ i.index +'].subTitle'}" />
+                        </div>
+                        <div th:class="${i.index > 0 ? 'col-md-1 d-flex align-items-end' : 'd-none'}">
+                            <button type="button" class="bg-transparent border-0 delete_item" th:data-item-target="${'date'+i.index}">
+                                <i class="fa-solid fs-4 fa-trash-can text-danger"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label" for="type">Type</label>
+                        <input class="form-control" type="text" th:field="*{type}" id="type"/>
+                        <div class="form-text">
+                            You can group announcements together by giving them the same type.
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <label class="form-label" for="active">Active?</label>
+                        <input class="form-check-input" type="checkbox" th:field="*{active}" id="active"/>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-sm my-3">Save</button>
+            </form>
+        </div>
+    </div>
+</section>
+</body>
+</html>

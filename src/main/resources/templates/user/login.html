@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{main/master}" lang="en">
+<head>
+    <title>LDW Login</title>
+</head>
+<body>
+    <section layout:fragment="content">
+        <div class="row d-flex justify-content-center mt-5">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="card py-3 px-2">
+                    <h4 class="text-center mb-4 mt-2">LATTER DAY WARD LOGIN</h4>
+                    <div class="row mx-auto mt-2">
+                        <h6>LOGIN WITH</h6>
+                    </div>
+                    <div class="row mx-auto text-center">
+                        <div class="col-md-4">
+                            <a class="google btn btn-lg px-4 mx-3" th:href="@{/oauth2/authorization/{name}(name='google')}">
+                                <i class="fab fa-google"></i>
+                            </a>
+                            <h5>Google</h5>
+                        </div>
+                        <div class="col-md-4">
+                            <a class="github btn btn-lg px-4 mx-3" th:href="@{/oauth2/authorization/{name}(name='github')}">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <h5>GitHub</h5>
+                        </div>
+                        <div class="col-md-4">
+                            <a class="facebook btn btn-lg px-4 mx-3" th:href="@{/oauth2/authorization/{name}(name='facebook')}">
+                                <i class="fab fa-facebook"></i>
+                            </a>
+                            <h5>Facebook</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

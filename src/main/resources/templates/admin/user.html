@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{main/master}" lang="en">
+<head />
+<body>
+<section layout:fragment="content">
+    <div class="row">
+        <th:block th:insert="fragments/menu-fragment :: menu" />
+        <div class="col-md-10 mt-3">
+            <h3>User Administration</h3>
+            <table class="table table-sm table-striped table-hover" id="user-table">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Created</th>
+                        <th>Enabled</th>
+                        <th>API Access</th>
+                        <th>Admin</th>
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                    <tr th:each="u : ${users}"
+                        th:data-user-id="${u.id}"
+                        th:data-username="${u.username}"
+                        th:data-active="${u.active}"
+                        th:data-api-active="${u.apiActive}"
+                        th:data-admin="${u.admin}"
+                        th:data-created="${u.created}" class="edit-user">
+                        <td th:text="${u.username}"></td>
+                        <td th:text="${u.created}"></td>
+                        <td>
+                            <i th:if="${u.active}" class="text-success fa-regular fa-circle-check"></i>
+                            <i th:if="${!u.active}" class="text-danger fa-solid fa-circle-xmark"></i>
+                        </td>
+                        <td>
+                            <i th:if="${u.apiActive}" class="text-success fa-regular fa-circle-check"></i>
+                            <i th:if="${!u.apiActive}" class="text-danger fa-solid fa-circle-xmark"></i>
+                        </td>
+                        <td>
+                            <i th:if="${u.admin}" class="text-success fa-regular fa-circle-check"></i>
+                            <i th:if="${!u.admin}" class="text-danger fa-solid fa-circle-xmark"></i>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="post" th:action="@{/admin/user/update}">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="userModalLabel">Edit User</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="id" value="" name="id" />
+                        <input type="hidden" id="created" value="" name="created"/>
+                        <input type="hidden" id="wardId" value="" name="wardId"/>
+                        <input class="form-control" type="text" id="username" readonly value="" name="username"/>
+                        <div class="form-check form-switch mt-2">
+                            <input class="form-check-input" type="checkbox" role="switch" id="active" name="active">
+                            <label class="form-check-label" for="active">User is enabled?</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" role="switch" id="apiActive" name="apiActive">
+                            <label class="form-check-label" for="apiActive">Enable API Access</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" role="switch" id="admin" name="admin">
+                            <label class="form-check-label" for="admin">User is Admin?</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

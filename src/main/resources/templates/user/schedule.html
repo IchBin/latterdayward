@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{main/master}" lang="en">
+<head />
+<body>
+<section layout:fragment="content">
+    <div class="row">
+        <th:block th:insert="fragments/menu-fragment :: menu" />
+        <div class="col-md-10 mt-3">
+            <h3>Ward Schedule</h3>
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                <div class="col" th:each="s: ${schedule}">
+                    <div class="card">
+                        <div class="card-body">
+                            <form th:action="@{/user/schedule/delete}" method="post" class="mx-3 float-end">
+                                <input type="hidden" name="id" th:value="${s.id}" />
+                                <button class="bg-transparent border-0 delete_check"><i class="fa-solid fs-2 fa-trash-can text-danger"></i></button>
+                                <button th:formaction="@{/user/schedule/edit}" class="bg-transparent border-0"><i class="fa-solid fs-2 fa-pencil text-warning"></i></button>
+                            </form>
+                            <h5 class="card-title">Meeting Time: <span th:text="${s.time}" /></h5>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item bg-light">Meeting Schedule <span class="float-end">Color: <span th:text="${s.color}" /></span></li>
+                            <li class="list-group-item" th:each="e : ${s.events}">
+                                <div><span class="fw-bold">Sundays</span> - <span th:text="${e.sundays()}" /></div>
+                                <div><span class="fw-bold">Title</span> - <span th:text="${e.title}" /></div>
+                                <div><span class="fw-bold">Subtitle</span> - <span th:text="${e.subtitle}" /></div>
+                                <div><span class="fw-bold">Description</span> -  <span th:text="${e.description}" /></div>
+                                <div th:if="${e.image.src != ''}">
+                                    <img th:src="${e.image.src}" th:width="100" th:height="100" th:alt="${e.image.alt}" />
+                                </div>
+                                <div th:if="${e.button.text != ''}">
+                                    Button<br />
+                                    <a class="btn btn-secondary" th:target="${e.button.link.external != null ? '_blank' : ''}"
+                                       th:href="${e.button.link.url}" th:text="${e.button.text}"></a><br />
+                                    <small th:text="${e.button.link.label}"></small>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{main/master}" lang="en">
+<head />
+<body>
+    <th:block th:fragment="menu">
+        <div class="col-md-2">
+            <nav class="navbar navbar-expand-md mynav">
+                <div class="container-fluid">
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <div class="d-flex flex-column flex-shrink-0 bg-light">
+                            <ul class="nav flex-column mb-auto">
+                                <li class="nav-item">
+                                    <a th:href="@{/}" class="nav-link bg-warning bg-opacity-50 text-dark">
+                                        <i class="fa-solid fa-house"></i>
+                                        Home
+                                    </a>
+                                </li>
+                                <li class="nav-item border-bottom">
+                                    <a th:href="@{/user/ward}" class="nav-link">Ward</a>
+                                </li>
+                                <li class="nav-item border-bottom" th:if="${session.user.isOwner()}">
+                                    <a th:href="@{/user/token}" class="nav-link">Token</a>
+                                </li>
+                                <li class="nav-item border-bottom" th:if="${session.user.editorAccess()}">
+                                    <a th:href="@{/user/announcement}" class="nav-link">Announcements</a>
+                                </li>
+                                <li class="nav-item border-bottom px-2 mt-0 form-text" th:if="${session.user.editorAccess()}">
+                                    <a th:href="@{/user/announcement/add}" class="nav-link">Add Announcement</a>
+                                </li>
+                                <li class="nav-item border-bottom" th:if="${session.user.publisherAccess()}">
+                                    <a th:href="@{/user/datacard}" class="nav-link">DataCards</a>
+                                </li>
+                                <li class="nav-item border-bottom px-2 mt-0 form-text" th:if="${session.user.publisherAccess()}">
+                                    <a th:href="@{/user/datacard/add}" class="nav-link">Add DataCard</a>
+                                </li>
+                                <li class="nav-item border-bottom" th:if="${session.user.publisherAccess()}">
+                                    <a th:href="@{/user/schedule}" class="nav-link">Schedule</a>
+                                </li>
+                                <li class="nav-item border-bottom px-2 mt-0 form-text" th:if="${session.user.publisherAccess()}">
+                                    <a th:href="@{/user/schedule/add}" class="nav-link">Add Meeting</a>
+                                </li>
+                                <li class="nav-item border-bottom" th:if="${session.user.publisherAccess()}">
+                                    <a th:href="@{/user/file}" class="nav-link">File Upload</a>
+                                </li>
+                            <th:block th:if="${session.user.admin}">
+                                <li class="nav-item border-bottom admin-menu">Administration</li>
+                                <li class="nav-item border-bottom">
+                                    <a th:href="@{/admin/user}" class="nav-link">User</a>
+                                </li>
+                                <li class="nav-item border-bottom">
+                                    <a th:href="@{/admin/ward}" class="nav-link">Wards</a>
+                                </li>
+                                <li class="nav-item border-bottom">
+                                    <a th:href="@{/admin/token}" class="nav-link">Token</a>
+                                </li>
+                            </th:block>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </th:block>
+</body>
+</html>

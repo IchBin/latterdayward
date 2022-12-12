@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{main/master}" lang="en">
+<head />
+<body>
+<section layout:fragment="content">
+    <div class="row">
+        <th:block th:insert="fragments/menu-fragment :: menu" />
+        <div class="col-md-10 mt-3">
+            <h3>Ward Administration</h3>
+
+            <div class="row border-bottom mb-4 pb-4">
+                <div class="col-md-6">
+                    <form th:action="@{/admin/ward/edit}">
+                        <select class="form-select" name="path" id="ward-select">
+                            <option>Choose a ward</option>
+                            <option th:each="w : ${wards}" th:text="${w.value}" th:value="${w.key}" th:selected="${selected == w.key}"></option>
+                        </select>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <form th:action="@{/admin/ward/save}" method="post" th:object="${ward}" th:if="${ward}">
+                        <div class="row">
+                            <div class="col">
+                                <label for="ward-title">Ward Name</label>
+                                <input type="text" class="form-control" th:field="*{title}" id="ward-title" />
+                                <input type="hidden" th:field="*{created}" />
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col">
+                                <label for="ward-path">Ward Path</label>
+                                <i class="fa-solid fa-circle-info text-danger"
+                                   data-bs-toggle="tooltip"
+                                   data-bs-placement="right"
+                                   title="Required API path. Also will be used in a ward URL. i.e. latterdayward.com/ward-name"></i>
+                                <input type="text" class="form-control" th:field="*{path}" id="ward-path" data-bs-toggle="tooltip" title="" required/>
+                                <small class="d-block">Must be min 5 characters, lower case, optional dash and numbers.</small>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col">
+                                <label for="descr">Description</label>
+                                <input type="text" class="form-control" th:field="*{subTitle}" id="descr"/>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-outline-dark mt-3" id="ward-save">Edit Ward</button>
+                    </form>
+                </div>
+                <div class="col-md-6" th:if="${selected != null}">
+                    <div class="col-md-12">
+                        <h3>Editors</h3>
+                        <table class="table table-sm table-striped">
+                            <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Editor</th>
+                                <th>Remove</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="e: ${editors}">
+                                <td th:text="${e.username}"></td>
+                                <td>
+                                    <i class="text-success fa-regular fa-circle-check" th:if="${e.isEditor()}" />
+                                    <form th:action="@{/admin/access/approve}" method="post" th:if="${e.role == null}">
+                                        <input type="hidden" name="username" th:value="${e.username}" />
+                                        <input type="hidden" name="owner" th:value="${owner}" />
+                                        <input type="hidden" name="role" value="EDITOR" />
+                                        <button class="btn btn-info btn-sm border-dark mx-2">Approve</button>
+                                    </form>
+
+                                </td>
+                                <td>
+                                    <form th:action="@{/admin/access/deny}" method="post">
+                                        <input type="hidden" name="username" th:value="${e.username}" />
+                                        <input type="hidden" name="owner" th:value="${owner}" />
+                                        <input type="hidden" name="role" value="EDITOR" />
+                                        <button th:if="${!e.isEditor()}"class="btn btn-danger btn-sm border-dark">Deny</button>
+                                        <button th:if="${e.isEditor()}" class="bg-transparent border-0"><i class="fa-solid fa-trash-can text-danger"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <tr th:if="${#lists.isEmpty(editors)}">
+                                <td colspan="3">
+                                    No Editors currently assigned.
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-12">
+                        <h3>Publishers</h3>
+                        <table class="table table-sm table-striped">
+                            <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Publisher</th>
+                                <th>Remove</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="e: ${publishers}">
+                                <td th:text="${e.username}"></td>
+                                <td>
+                                    <i class="text-success fa-regular fa-circle-check" th:if="${e.isPublisher()}" />
+                                    <form th:action="@{/admin/access/approve}" method="post" th:if="${e.role == null}">
+                                        <input type="hidden" name="username" th:value="${e.username}" />
+                                        <input type="hidden" name="owner" th:value="${owner}" />
+                                        <input type="hidden" name="role" value="PUBLISHER" />
+                                        <button class="btn btn-info btn-sm border-dark mx-2">Approve</button>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form th:action="@{/admin/access/deny}" method="post">
+                                        <input type="hidden" name="username" th:value="${e.username}" />
+                                        <input type="hidden" name="owner" th:value="${owner}" />
+                                        <input type="hidden" name="role" value="PUBLISHER" />
+                                        <button th:if="${!e.isPublisher()}"class="btn btn-danger btn-sm border-dark">Deny</button>
+                                        <button th:if="${e.isPublisher()}" class="bg-transparent border-0"><i class="fa-solid fa-trash-can text-danger"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <tr th:if="${#lists.isEmpty(publishers)}">
+                                <td colspan="3">
+                                    No Publishers currently assigned.
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+</body>
+</html>

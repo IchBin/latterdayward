@@ -1,0 +1,86 @@
+.fa-github, .fa-google, .fa-facebook {
+    color: #FFFFFF;
+}
+
+.github {
+    border: 1px solid #000000;
+    background-color: #24292f;
+}
+.github:hover .fa-github, .github:focus .fa-github {
+    color: #24292f;
+}
+
+.facebook {
+    border: 1px solid #000000;
+    background-color: #3578E5;
+}
+
+.facebook:hover .fa-facebook, .facebook:focus .fa-facebook {
+    color: #3578E5;
+}
+
+.google {
+    border: 1px solid #000000;
+    background-color: #CB5048;
+}
+.google:hover .fa-google, .google:focus .fa-google {
+    color: #CB5048;
+}
+
+#profile-pic {
+    border-radius: 50%;
+    width: 32px;
+}
+
+.tooltip-inner {
+    background-color: #f8d7da;
+    border: 1px solid black;
+    color: black;
+    max-width: 100%;
+}
+
+#user-table tr:hover, #user-table td:hover {
+    cursor: pointer;
+}
+
+#username {
+    cursor: not-allowed;
+}
+
+.copy-url {
+    padding: 3px 5px;
+    margin-bottom: 0;
+    display: none;
+}
+
+/* Navigation CSS */
+.nav-item:hover {
+    background-color: rgba(var(--bs-secondary-rgb));
+}
+.nav-item a {
+    font-weight: bold;
+    color: rgba(var(--bs-secondary-rgb));
+}
+.nav-item a:hover {
+    color: white;
+}
+.admin-menu {
+    background-color: black;
+    color: white;
+    padding: 7px;
+}
+
+.description {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.fs-7 {
+    font-size: .75em !important;
+}
+
+/* Navigation customizations */
+.mynav {
+    padding-top:0;
+}

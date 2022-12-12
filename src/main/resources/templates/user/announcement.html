@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{main/master}" lang="en">
+<head />
+<body>
+<section layout:fragment="content">
+    <div class="row">
+        <th:block th:insert="fragments/menu-fragment :: menu" />
+        <div class="col-md-10 mt-3">
+            <h3>Ward Announcements</h3>
+            <th:block th:each="g : ${announcements}">
+                <h4><span class="badge bg-secondary" th:text="${g.key}" /></h4>
+                <ul class="list-group my-3">
+                    <li th:each="a : ${g.value}" th:class="${a.pastDue()} ? 'border border-2 border-danger list-group-item' : 'list-group-item'">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <h6 th:text="${a.title}" class="fw-bold fs-5"></h6>
+                                <h6 th:if="${a.pastDue()}" class="text-danger">* Past Due</h6>
+                                <div><strong>ID: </strong> <span class="badge bg-light border text-dark" th:text="${a.id}" /></div>
+                                <div class="description fs-7 mt-2"><h6 class="fw-bold mb-0">Description: </h6><span th:text="${a.description}" /></div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="fs-7">
+                                    <strong class="fs-6">Location: </strong>
+                                    <span th:if="${!a.hasLink}" th:text="${a.location.address}" />
+                                    <span th:if="${a.hasLink}">
+                                        <i class="fa-solid fa-location-dot text-info"></i>
+                                        <a th:href="${a.location.link}" th:text="${a.location.address}"></a>
+                                    </span>
+                                </div>
+                                <h6 class="mb-0 fw-bold fs-6">Date(s): </h6>
+                                <div class="fs-7" th:each="d: ${a.dates}">
+                                    <span th:if="${d.subTitle != ''}"><strong th:text="${d.subTitle}"></strong>:</span>
+                                    <span th:text="${#temporals.format(d.date, 'MMM dd, yyyy hh:mma')}" />
+                                </div>
+                                <div class="fs-7"><strong>Announcement Type:</strong> <span th:text="${a.type}" /></div>
+                            </div>
+                            <div class="col">
+                                Active? <i th:if="${a.active}" class="text-success fa-regular fa-circle-check"></i>
+                                <i th:if="${!a.active}" class="text-danger fa-solid fa-circle-xmark"></i>
+                            </div>
+                            <div class="col-md-2 text-end">
+                                <form th:action="@{/user/announcement/delete}" method="post" class="mx-3">
+                                    <input type="hidden" name="id" th:value="${a.id}" />
+                                    <button class="bg-transparent border-0 delete_check"><i class="fa-solid fs-2 fa-trash-can text-danger"></i></button>
+                                    <button th:formaction="@{/user/announcement/edit}" class="bg-transparent border-0"><i class="fa-solid fs-2 fa-pencil text-warning"></i></button>
+                                </form>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </th:block>
+        </div>
+    </div>
+</section>
+</body>
+</html>
