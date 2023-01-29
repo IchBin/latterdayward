@@ -6,7 +6,7 @@ import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.temporal.TemporalAdjusters
 
-enum class ScheduleType() {
+enum class ScheduleType {
     WARD, STAKE, CONFERENCE
 }
 
