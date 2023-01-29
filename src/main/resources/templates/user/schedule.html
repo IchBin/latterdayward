@@ -9,7 +9,15 @@
     <div class="row">
         <th:block th:insert="fragments/menu-fragment :: menu" />
         <div class="col-md-10 mt-3">
-            <h3>Ward Schedule</h3>
+            <div class="row">
+                <div class="col-md-3"><h3>Ward Schedule</h3></div>
+                <div class="col-md-9 text-end">
+                    Create Example Schedule:
+                    <a class="btn btn-sm border border-primary" th:href="@{/user/schedule/example/WARD}">Ward</a>
+                    <a class="btn btn-sm border border-success" th:href="@{/user/schedule/example/STAKE}">Stake</a>
+                    <a class="btn btn-sm border border-secondary" th:href="@{/user/schedule/example/CONFERENCE}">Conference</a>
+                </div>
+            </div>
             <div class="row row-cols-1 row-cols-md-2 g-4">
                 <div class="col" th:each="s: ${schedule}">
                     <div class="card">

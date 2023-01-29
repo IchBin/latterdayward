@@ -1,5 +1,6 @@
 package my.latterdayward.controller.user
 
+import io.swagger.v3.oas.annotations.Hidden
 import my.latterdayward.data.*
 import my.latterdayward.repo.DataCardRepository
 import my.latterdayward.service.FileService
@@ -96,6 +97,7 @@ class UserDataCardController(
     }
 
 
+    @Hidden
     @ResponseBody
     @GetMapping("/active")
     fun activateCard(@RequestParam active: Boolean, @RequestParam id: String): Boolean {

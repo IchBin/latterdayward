@@ -1,24 +1,24 @@
 package my.latterdayward.controller.user
 
-import my.latterdayward.data.Messages
-import my.latterdayward.data.Schedule
-import my.latterdayward.data.User
+import my.latterdayward.data.*
 import my.latterdayward.repo.ScheduleRepository
 import my.latterdayward.service.FileService
+import org.springframework.core.env.Environment
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import javax.servlet.http.HttpSession
+import kotlin.collections.MutableMap
+import kotlin.collections.forEach
+import kotlin.collections.set
 
 @Controller
 @RequestMapping("/user/schedule")
 class UserScheduleController(
     private val repo: ScheduleRepository,
-    private val fileService: FileService
+    private val fileService: FileService,
+    private val env: Environment
 ) {
 
     @GetMapping("")
@@ -57,4 +57,20 @@ class UserScheduleController(
         r.addFlashAttribute(m.success("Success!", "You have deleted the meeting schedule."))
         return "redirect:/user/schedule"
     }
+
+    @GetMapping("/example/{type:CONFERENCE|WARD|STAKE}")
+    fun exampleSchedules(@PathVariable("type") type: ScheduleType, session: HttpSession, r: RedirectAttributes, m: Messages): String {
+        val user = session.getAttribute("user") as User
+        val schedules = when(type) {
+            ScheduleType.WARD -> ExampleSchedule(env).wardSchedule(user)
+            ScheduleType.STAKE -> ExampleSchedule(env).stakeSchedule(user)
+            ScheduleType.CONFERENCE -> ExampleSchedule(env).conferenceSchedule(user)
+        }
+        schedules.forEach {
+            repo.save(it)
+            r.addFlashAttribute("messages", m.success("Example $type schedule has been added."))
+        }
+        return "redirect:/user/schedule"
+    }
+
 }
