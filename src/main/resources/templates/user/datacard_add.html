@@ -10,7 +10,7 @@
 <section layout:fragment="content">
     <div class="row">
         <th:block th:insert="fragments/menu-fragment :: menu" />
-        <div class="col-md-10 mt-3">
+        <div class="col-md-9 mt-3">
             <h3>Add a DataCard</h3>
             <form th:action="@{/user/datacard/save}" method="post" th:object="${datacard}">
                 <div class="row">

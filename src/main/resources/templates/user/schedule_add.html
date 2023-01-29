@@ -10,7 +10,7 @@
 <section layout:fragment="content">
     <div class="row">
         <th:block th:insert="fragments/menu-fragment :: menu" />
-        <div class="col-md-10 mt-3">
+        <div class="col-md-9 mt-3">
             <h3>Ward Schedule</h3>
             <form th:action="@{/user/schedule/save}" method="post" th:object="${form}" id="schedule_form">
                 <input type="hidden" th:field="*{id}" th:if="${form.id != null}"/>
