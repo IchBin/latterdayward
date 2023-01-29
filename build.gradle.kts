@@ -2,12 +2,12 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 plugins {
-	id("org.springframework.boot") version "2.7.6"
+	id("org.springframework.boot") version "2.7.8"
 	id("io.spring.dependency-management") version "1.0.13.RELEASE"
-	kotlin("jvm") version "1.7.21"
-	kotlin("plugin.spring") version "1.7.21"
-	// openapi via springdoc
-	id("org.springdoc.openapi-gradle-plugin") version "1.5.0"
+	kotlin("jvm") version "1.8.0"
+	kotlin("plugin.spring") version "1.8.0"
+	// openapi via springdoc - https://github.com/springdoc/springdoc-openapi-gradle-plugin
+	id("org.springdoc.openapi-gradle-plugin") version "1.6.0"
 }
 
 group = "code.latterdayward"
@@ -35,8 +35,8 @@ dependencies {
 
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
-	implementation("org.springdoc:springdoc-openapi-ui:1.6.13")
-	implementation("org.springdoc:springdoc-openapi-kotlin:1.6.13")
+	implementation("org.springdoc:springdoc-openapi-ui:1.6.14")
+	implementation("org.springdoc:springdoc-openapi-kotlin:1.6.14")
 
 	implementation(kotlin("reflect"))
 	implementation(kotlin("stdlib-jdk8"))
