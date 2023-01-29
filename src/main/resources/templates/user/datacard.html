@@ -8,7 +8,7 @@
 <section layout:fragment="content">
     <div class="row">
         <th:block th:insert="fragments/menu-fragment :: menu" />
-        <div class="col-md-10 mt-3">
+        <div class="col-md-9 mt-3">
             <h3>Data Cards</h3>
             <div class="my-4" th:each="m, i: ${datacards}" th:with="color=${colors.nextColor(i.index)}">
                 <h4>

@@ -10,7 +10,7 @@
 <section layout:fragment="content">
     <div class="row">
         <th:block th:insert="fragments/menu-fragment :: menu" />
-        <div class="col-md-10 mt-3">
+        <div class="col-md-9 mt-3">
             <h3>Add an Announcement</h3>
             <form th:action="@{/user/announcement/save}" method="post" th:object="${announcement}">
                 <input type="hidden" th:field="*{id}" th:if="${announcement.id != null}"/>

@@ -8,7 +8,7 @@
 <section layout:fragment="content">
     <div class="row">
         <th:block th:insert="fragments/menu-fragment :: menu" />
-        <div class="col-md-10 mt-3">
+        <div class="col-md-9 mt-3">
             <h3 class="fs-2">Data Card Order</h3>
             <form th:action="@{/user/datacard/order/{type}/save(type=${cardType})}" method="post">
                 <div class="row mb-3">

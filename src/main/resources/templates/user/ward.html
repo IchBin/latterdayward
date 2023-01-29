@@ -8,7 +8,7 @@
 <section layout:fragment="content">
     <div class="row">
         <th:block th:insert="fragments/menu-fragment :: menu" />
-        <div class="col-md-5 mt-3" th:if="${session.user.showWardForm()}">
+        <div class="col-md col-lg-5 mt-3" th:if="${session.user.showWardForm()}">
             <h3>Ward Setup</h3>
             <form th:action="@{/user/ward/save}" method="post" th:object="${ward}">
                 <div class="row">
@@ -55,7 +55,7 @@
             </div>
 
         </div>
-        <div class="col-md-5 mt-3" th:if="${!session.user.hasWard()}">
+        <div class="col-md col-lg-5 mt-3" th:if="${!session.user.hasWard()}">
             <h3>Request to join a ward</h3>
             <form th:action="@{/user/access/request}" method="post" th:if="${!session.user.accessRequested()}" th:object="${accessRequest}">
                 <select class="form-select" th:field="*{ward}" required>
