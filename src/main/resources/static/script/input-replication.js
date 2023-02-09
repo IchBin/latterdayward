@@ -31,6 +31,6 @@ $(document).ready(function() {
                 return parseInt(i) + 1
             });
         });
-        theClone.find("div.d-none").addClass('col-md-1 d-flex align-items-end').removeClass("d-none");
+        theClone.find("div.hidden").addClass('inline my-2').removeClass("hidden");
     });
 });

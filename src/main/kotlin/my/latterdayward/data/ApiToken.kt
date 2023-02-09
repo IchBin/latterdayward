@@ -12,21 +12,21 @@ class ApiToken(
     var token: String?,
     var expires: LocalDateTime?
 ) {
-    constructor(): this(null, null, null, )
+    constructor(): this(null, null, null)
 
     fun hasToken(): Boolean {
         return token != null
     }
 
     fun isExpired(): Boolean {
-        return LocalDateTime.now().isAfter(expires)
+        return expires?.let { LocalDateTime.now().isAfter(expires) } ?: false
     }
     fun timePeriod(): String {
         with (Period.between(LocalDate.now(), expires?.toLocalDate())) {
             return if (LocalDateTime.now().isAfter(expires))
                 "Your token is expired!"
             else
-                "${years}y, ${months}m, ${days}d  until expired"
+                "Expires in ${years}y, ${months}m, ${days}d"
         }
     }
 }

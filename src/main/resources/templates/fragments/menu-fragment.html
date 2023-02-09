@@ -6,53 +6,43 @@
 <head />
 <body>
     <th:block th:fragment="menu">
-        <div class="col-md-3 col-lg-2 navbar-expand-md">
-            <div class="navbar-collapse collapse" id="navbarSupportedContent">
-                <ul class="list-group">
-                    <li class="list-group-item bg-warning bg-opacity-50 rounded-0">
-                        <a th:href="@{/}" class="nav-link text-dark">
-                            <i class="fa-solid fa-house"></i>
-                            Home
-                        </a>
-                    </li>
-                    <li class="list-group-item bg-light"><a th:href="@{/user/ward}" class="nav-link">Ward</a></li>
-                    <li class="list-group-item bg-light" th:if="${session.user.isOwner()}">
-                        <a th:href="@{/user/token}" class="nav-link">Token</a>
-                    </li>
-                    <li class="list-group-item bg-light" th:if="${session.user.editorAccess()}">
-                        <a th:href="@{/user/announcement}" class="nav-link">Announcements</a>
-                    </li>
-                    <li class="list-group-item px-4 bg-light" th:if="${session.user.editorAccess()}">
-                        <a th:href="@{/user/announcement/add}" class="nav-link">Add Announcement</a>
-                    </li>
-                    <li class="list-group-item bg-light" th:if="${session.user.publisherAccess()}">
-                        <a th:href="@{/user/datacard}" class="nav-link">DataCards</a>
-                    </li>
-                    <li class="list-group-item px-4 bg-light" th:if="${session.user.publisherAccess()}">
-                        <a th:href="@{/user/datacard/add}" class="nav-link">Add DataCard</a>
-                    </li>
-                    <li class="list-group-item bg-light" th:if="${session.user.publisherAccess()}">
-                        <a th:href="@{/user/schedule}" class="nav-link">Schedule</a>
-                    </li>
-                    <li class="list-group-item px-4 bg-light" th:if="${session.user.publisherAccess()}">
-                        <a th:href="@{/user/schedule/add}" class="nav-link">Add Meeting</a>
-                    </li>
-                    <li class="list-group-item bg-light" th:if="${session.user.publisherAccess()}">
-                        <a th:href="@{/user/file}" class="nav-link">File Upload</a>
-                    </li>
-                    <th:block th:if="${session.user.admin}">
-                        <li class="list-group-item admin-menu">Administration</li>
-                        <li class="list-group-item bg-light">
-                            <a th:href="@{/admin/user}" class="nav-link">User</a>
-                        </li>
-                        <li class="list-group-item bg-light">
-                            <a th:href="@{/admin/ward}" class="nav-link">Wards</a>
-                        </li>
-                        <li class="list-group-item bg-light">
-                            <a th:href="@{/admin/token}" class="nav-link">Token</a>
-                        </li>
+        <div class="md:col-span-3 col-span-12" th:with="user=${session.user}">
+            <div class="bg-gray-200">
+                <div class="">
+                    <div class="md:hidden block w-10 float-right mr-3" id="menu-toggle">
+                        <div class="border-2 border-black my-2"></div>
+                        <div class="border-2 border-black my-2"></div>
+                        <div class="border-2 border-black my-2"></div>
+                    </div>
+                    <a class="block bg-amber-200 p-3 pl-5 hover:bg-gray-400 border-b-2 border-gray-600" th:href="@{/}">
+                        <i class="fa-solid fa-house"></i> Home
+                    </a>
+                </div>
+                <div id="collapsed-menu" class="md:block hidden">
+                    <a class="block bg-gray-200 p-3 pl-5 hover:bg-gray-400 border-b border-gray-400"
+                       th:href="@{/user/ward}">Ward</a>
+                    <a class="block bg-gray-200 p-3 pl-5 hover:bg-gray-400 border-b border-gray-400"
+                       th:if="${user.isOwner()}" th:href="@{/user/token}">Token</a>
+                    <a class="block bg-gray-200 p-3 pl-5 hover:bg-gray-400 border-b border-gray-400"
+                       th:if="${user.editorAccess()}" th:href="@{/user/announcement}">Announcements</a>
+                    <a class="block bg-gray-200 p-3 pl-8 hover:bg-gray-400 border-b border-gray-400"
+                       th:if="${user.editorAccess()}" th:href="@{/user/announcement/add}">Add Announcement</a>
+                    <a class="block bg-gray-200 p-3 pl-5 hover:bg-gray-400 border-b border-gray-400"
+                       th:if="${user.publisherAccess()}" th:href="@{/user/datacard}">DataCards</a>
+                    <a class="block bg-gray-200 p-3 pl-8 hover:bg-gray-400 border-b border-gray-400"
+                       th:if="${user.publisherAccess()}" th:href="@{/user/datacard/add}">Add DataCard</a>
+                    <a class="block bg-gray-200 p-3 pl-5 hover:bg-gray-400 border-b border-gray-400"
+                       th:if="${user.publisherAccess()}" th:href="@{/user/schedule}">Schedule</a>
+                    <a class="block bg-gray-200 p-3 pl-8 hover:bg-gray-400 border-b border-gray-400"
+                       th:if="${user.publisherAccess()}" th:href="@{/user/schedule/add}">Add Meeting</a>
+                    <a class="block bg-gray-200 p-3 pl-5 hover:bg-gray-400 border-b border-gray-400"
+                       th:if="${user.publisherAccess()}" th:href="@{/user/file}">File Upload</a>
+                    <th:block th:if="${user.admin}">
+                        <div class="bg-gray-200 p-3 pl-5 bg-black text-white">Administration</div>
+                        <a class="block bg-gray-200 p-3 pl-5 hover:bg-gray-400 border-b border-gray-400"
+                           th:href="@{/admin/user}">User</a>
                     </th:block>
-                </ul>
+                </div>
             </div>
         </div>
     </th:block>

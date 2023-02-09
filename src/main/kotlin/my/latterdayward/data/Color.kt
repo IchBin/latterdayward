@@ -1,13 +1,13 @@
 package my.latterdayward.data
 
 enum class Color(val css: String) {
-    PRIMARY("primary"),
-    SECONDARY("secondary"),
-    INFO("info"),
-    SUCCESS("success"),
-    WARN("warning"),
-    DARK("dark"),
-    DANGER("danger");
+    PRIMARY("blue"),
+    SECONDARY("orange"),
+    INFO("blue"),
+    SUCCESS("green"),
+    WARN("amber"),
+    DARK("slate"),
+    DANGER("red");
 }
 
 class Colors {

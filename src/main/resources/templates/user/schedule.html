@@ -6,48 +6,57 @@
 <head />
 <body>
 <section layout:fragment="content">
-    <div class="row">
-        <th:block th:insert="fragments/menu-fragment :: menu" />
-        <div class="col-md-9 mt-3">
-            <div class="row">
-                <div class="col-md-3"><h3>Ward Schedule</h3></div>
-                <div class="col-md-9 text-end">
-                    Create Example Schedule:
-                    <a class="btn btn-sm border border-primary" th:href="@{/user/schedule/example/WARD}">Ward</a>
-                    <a class="btn btn-sm border border-success" th:href="@{/user/schedule/example/STAKE}">Stake</a>
-                    <a class="btn btn-sm border border-secondary" th:href="@{/user/schedule/example/CONFERENCE}">Conference</a>
-                </div>
-            </div>
-            <div class="row row-cols-1 row-cols-md-2 g-4">
-                <div class="col" th:each="s: ${schedule}">
-                    <div class="card">
-                        <div class="card-body">
-                            <form th:action="@{/user/schedule/delete}" method="post" class="mx-3 float-end">
-                                <input type="hidden" name="id" th:value="${s.id}" />
-                                <button class="bg-transparent border-0 delete_check"><i class="fa-solid fs-2 fa-trash-can text-danger"></i></button>
-                                <button th:formaction="@{/user/schedule/edit}" class="bg-transparent border-0"><i class="fa-solid fs-2 fa-pencil text-warning"></i></button>
-                            </form>
-                            <h5 class="card-title">Meeting Time: <span th:text="${s.time}" /></h5>
-                        </div>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item bg-light">Meeting Schedule <span class="float-end">Color: <span th:text="${s.color}" /></span></li>
-                            <li class="list-group-item" th:each="e : ${s.events}">
-                                <div><span class="fw-bold">Sundays</span> - <span th:text="${e.sundays()}" /></div>
-                                <div><span class="fw-bold">Title</span> - <span th:text="${e.title}" /></div>
-                                <div><span class="fw-bold">Subtitle</span> - <span th:text="${e.subtitle}" /></div>
-                                <div><span class="fw-bold">Description</span> -  <span th:text="${e.description}" /></div>
-                                <div th:if="${e.image.src != ''}">
-                                    <img th:src="${e.image.src}" th:width="100" th:height="100" th:alt="${e.image.alt}" />
+    <div class="grid grid-cols-12 gap-4">
+        <div class="col-span-6">
+            <h3 class="font-bold text-3xl my-4">Ward Schedule</h3>
+        </div>
+        <div class="col-span-6 my-auto">
+            Create Example Schedule:
+            <a class="border border-blue-400 bg-blue-200 px-2 py-1 rounded block md:inline my-2 md:my-0" th:href="@{/user/schedule/example/WARD}">Ward</a>
+            <a class="border border-violet-400 bg-violet-200 px-2 py-1 rounded block md:inline my-2 md:my-0" th:href="@{/user/schedule/example/STAKE}">Stake</a>
+            <a class="border border-orange-400 bg-orange-200 px-2 py-1 rounded block md:inline my-2 md:my-0" th:href="@{/user/schedule/example/CONFERENCE}">Conference</a>
+        </div>
+        <div class="col-span-12">
+            <div class="grid grid-cols-12 my-4" th:each="s, i: ${schedule}" th:with="color=${colors.nextColor(i.index)}">
+                <div th:class="${'col-span-12 bg-'+color+'-100 border-'+color+'-600 border rounded-lg p-3'}">
+                    <ul class="list-none">
+                        <li>
+                            <span class="font-bold">Meeting Schedule for</span>
+                            <span th:class="'px-8 py-1 rounded-full text-'+ ${s.color} + '-800 bg-' +${s.color}+'-100'" th:text="${s.time}"></span>
+                            <div class="float-right inline">
+                                <form class="inline mr-4" method="post" th:action="@{/user/schedule/delete/{id}(id=${s.id})}">
+                                    <button type="submit" class="delete_check"><i class="fa-solid text-3xl fa-trash-can text-red-600 md:m-0 m-3"></i></button>
+                                </form>
+                                <a th:href="@{/user/schedule/edit/{id}(id=${s.id})}"><i class="fa-solid text-3xl fa-pencil text-amber-400"></i></a>
+                            </div>
+                        </li>
+                        <li th:each="e : ${s.events}" class="pb-5">
+                            <div class="flex flex-row flex-wrap">
+                                <div class="basis-full md:basis-1/4">
+                                    <span class="font-bold">Title</span> - <span th:text="${e.title}" />
                                 </div>
-                                <div th:if="${e.button.text != ''}">
-                                    Button<br />
-                                    <a class="btn btn-secondary" th:target="${e.button.link.external != null ? '_blank' : ''}"
-                                       th:href="${e.button.link.url}" th:text="${e.button.text}"></a><br />
-                                    <small th:text="${e.button.link.label}"></small>
+                                <div class="basis-full md:basis-1/4">
+                                    <span class="font-bold">Sundays</span> - <span th:text="${e.sundays()}" />
                                 </div>
-                            </li>
-                        </ul>
-                    </div>
+                                <div class="basis-full md:basis-1/4">
+                                    <span class="font-bold">Subtitle</span> - <span th:text="${e.subtitle}" />
+                                </div>
+                                <div class="basis-full md:basis-1/4">
+                                    <span class="font-bold">Description</span> -  <span th:text="${e.description}" />
+                                </div>
+                                <div class="basis-full">
+                                    <img th:if="${e.image.src != ''}" th:src="${e.image.src}"
+                                         th:width="100" th:height="100" th:alt="${e.image.alt}" />
+                                </div>
+                            </div>
+                            <div th:if="${e.button.text != ''}" class="my-2">
+                                <a class="px-2 py-1 bg-gray-200 border-gray-600 border rounded-lg"
+                                   th:target="${e.button.link.external != null ? '_blank' : ''}"
+                                   th:href="${e.button.link.url}" th:text="${e.button.text}"></a>
+                                <p><small th:text="${e.button.link.label}"></small></p>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>

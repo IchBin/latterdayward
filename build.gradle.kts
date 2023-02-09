@@ -8,15 +8,23 @@ plugins {
 	kotlin("plugin.spring") version "1.8.0"
 	// openapi via springdoc - https://github.com/springdoc/springdoc-openapi-gradle-plugin
 	id("org.springdoc.openapi-gradle-plugin") version "1.6.0"
+	id("org.siouan.frontend-jdk11") version "6.0.0"
 }
 
 group = "code.latterdayward"
-version = "0.0.1"
+version = "1.0.0"
 java.sourceCompatibility = JavaVersion.VERSION_11
 java.targetCompatibility = JavaVersion.VERSION_11
 
 repositories {
 	mavenCentral()
+}
+
+frontend {
+	nodeVersion.set("19.5.0")
+	assembleScript.set("run build")
+	cleanScript.set("run clean")
+	checkScript.set("run check")
 }
 
 dependencies {
