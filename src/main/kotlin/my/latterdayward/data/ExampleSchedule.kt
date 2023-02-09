@@ -20,7 +20,7 @@ class ExampleSchedule(
                 wardPath = user.ward?.path,
                 time = "12:00PM",
                 color= "green",
-                events = listOf(
+                events = mutableListOf(
                     Event(listOf(1,2,3,4,5), "Sacrament", "In Person Meeting", "60 min all individuals",
                         Image(
                             src = "$domain/images/sacrament.webp\n",
@@ -46,7 +46,7 @@ class ExampleSchedule(
                 wardPath = user.ward?.path,
                 time = "1:00PM",
                 color= "blue",
-                events = listOf(
+                events = mutableListOf(
                     Event(listOf(2,4), "Relief Society", "In Person Meeting", "60 min all Adult Women", Image("", ""), ScheduleButton("", Link())),
                     Event(listOf(2,4), "Elders Quorum", "In Person Meeting", "60 min all Adult Men", Image("", ""), ScheduleButton("", Link())),
                     Event(listOf(1,2,3,4,5), "Primary", "In Person Meeting", "60 min all Primary children", Image("", ""), ScheduleButton("", Link())),
@@ -67,7 +67,7 @@ class ExampleSchedule(
                 dateOverride = nextMonthSunday,
                 time = "Saturday 10:00AM and 2:00PM",
                 color= "green",
-                events = listOf(
+                events = mutableListOf(
                     Event(listOf(1,2,3,4,5), "Leadership Session", "In Person Meeting", "Ward and Stake Leadership invited",
                         Image(
                             src = "$domain/images/sacrament.webp\n",
@@ -83,7 +83,7 @@ class ExampleSchedule(
                 dateOverride = nextMonthSunday,
                 time = "10:00AM and 2:00PM",
                 color= "blue",
-                events = listOf(
+                events = mutableListOf(
                     Event(listOf(1,2,3,4,5), "General Session", "In Person Meeting", "All Families and Individuals", Image("", ""), ScheduleButton("", Link()))
                 )
             )
@@ -98,7 +98,7 @@ class ExampleSchedule(
                 dateOverride = nextMonthSunday,
                 time = "Saturday 10:00AM, 12:00PM and 6:00PM",
                 color= "green",
-                events = listOf(
+                events = mutableListOf(
                     Event(listOf(1,2,3,4,5), "Morning Session", "General Conference", "10:00AM Saturday",
                         Image(
                             src = "$domain/images/conference_center.jpg\n",
@@ -115,7 +115,7 @@ class ExampleSchedule(
                 dateOverride = nextMonthSunday,
                 time = "Sunday 10:00AM and 12:00PM",
                 color= "blue",
-                events = listOf(
+                events = mutableListOf(
                     Event(listOf(1,2,3,4,5), "Morning Session", "General Conference", "10:00AM Sunday",
                         Image(
                             src = "$domain/images/conference_center.jpg\n",

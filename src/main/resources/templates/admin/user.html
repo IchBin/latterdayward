@@ -6,10 +6,9 @@
 <head />
 <body>
 <section layout:fragment="content">
-    <div class="row">
-        <th:block th:insert="fragments/menu-fragment :: menu" />
-        <div class="col-md-10 mt-3">
-            <h3>User Administration</h3>
+    <div class="grid grid-cols-12">
+        <div class="col-span-12">
+            <h3 class="font-bold text-3xl my-4">User Administration</h3>
             <table class="table table-sm table-striped table-hover" id="user-table">
                 <thead>
                     <tr>

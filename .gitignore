@@ -4,3 +4,7 @@
 .DS_Store
 application-dev.properties
 application-prod.properties
+/node/
+/bin/
+.vscode/
+/node_modules/

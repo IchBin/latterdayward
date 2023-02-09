@@ -3,101 +3,70 @@
       xmlns:th="https://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{main/master}" lang="en">
-<head>
-    <script th:src="@{/script/add_event.js}"></script>
-</head>
+<head />
 <body>
 <section layout:fragment="content">
-    <div class="row">
-        <th:block th:insert="fragments/menu-fragment :: menu" />
-        <div class="col-md-9 mt-3">
-            <h3>Ward Schedule</h3>
+    <div class="grid grid-cols-12">
+        <div class="col-span-12">
+            <h3 class="font-bold text-3xl my-4">Ward Schedule</h3>
+            <!--/*@thymesVar id="form" type="my.latterdayward.data.Schedule"*/-->
             <form th:action="@{/user/schedule/save}" method="post" th:object="${form}" id="schedule_form">
                 <input type="hidden" th:field="*{id}" th:if="${form.id != null}"/>
                 <input type="hidden" name="wardPath" th:value="${session.user.ward.path}" />
-                <div class="row pb-3">
-                    <div class="col-md-3">
+                <div class="grid grid-cols-12 gap-4 w-full md:w-2/3">
+                    <div class="col-span-12 md:col-span-6">
                         <label for="time">Meeting Time</label>
-                        <input type="text" th:field="*{time}" class="form-control" id="time" placeholder="i.e. 10:00AM"/>
+                        <input type="text" th:field="*{time}" class="rounded block" id="time" placeholder="i.e. 10:00AM"/>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-span-12 md:col-span-6">
                         <label for="color">Custom Color</label>
-                        <input type="text" th:field="*{color}" class="form-control" id="color" placeholder="i.e. green"/>
+                        <input type="text" th:field="*{color}" class="rounded block" id="color" placeholder="i.e. green"/>
                     </div>
-                    <div class="col">
-                        <div>Add a meeting to this time slot</div>
-                        <button type="button" class="btn btn-secondary border-top border-secondary" data-bs-toggle="modal" data-bs-target="#eventModal">Add Meeting Event</button>
-                    </div>
-                </div>
-                <div class="row pb-3">
-                    <div class="col-md-3">
+                    <div class="col-span-12">
                         <label for="color">Override Date</label>
-                        <input type="date" step="7" min="2022-08-28" th:field="*{dateOverride}" class="form-control" id="dateOverride" />
-                    </div>
-                    <div class="col-md-7">
-                        <div class="form-text text-info">
-                            <strong>Note:</strong> The override date can be used to customize a schedule for one weekend. If the up coming
+                        <input type="date" step="7" min="2022-08-28" th:field="*{dateOverride}" class="rounded block" id="dateOverride" />
+                        <div class="text-blue-400 text-sm">
+                            <strong>Note:</strong> The override date can be used to customize a schedule for one weekend. If the upcoming
                             Sunday matches the override date, that schedule will be returned instead of the schedule without an override date.
                             Use this option for Stake Conference or General Conference weekends etc.
                         </div>
+                        <button type="submit" class="border border-blue-600 bg-blue-400 p-2 my-2 rounded">Save</button>
                     </div>
                 </div>
-                <!-- Insert Events here -->
-                <div id="schedule_events">
-                    <h3>Scheduled Meetings</h3>
-                    <table class="table table-sm table-striped">
-                        <thead>
-                        <tr>
-                            <th>Title</th>
-                            <th>Description</th>
-                            <th>Sundays</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="e, i: ${form.events}" th:class="${'event'+i.index}" th:id="${i.index}">
-                            <td th:text="${e.title}"></td>
-                            <td th:text="${e.description}"></td>
-                            <td th:text="${e.sundays}"></td>
-                            <td class="text-end">
-                                <a href="#" class="delete_event" th:data-delete-id="${i.index}"><i class="fa-solid fa-trash-can text-danger fs-4"></i></a>
-                                <a class="edit_event mx-2" href="#" th:data-edit-id="${i.index}"><i class="fa-solid fa-pencil text-warning fs-4"></i></a>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <div th:each="e, i : ${form.events}" th:class="${'hidden_event' + i.index}">
-                        <input type="hidden" th:each="d, ix : ${e.repeats}" th:name="${'events['+i.index+'].repeats['+ix.index+']'}"
-                               th:value="${d}" th:id="${'repeats['+ix.index+']'}" class="hidden_checkbox" />
-                        <input type="hidden" th:name="${'events['+i.index+'].subtitle'}" th:value="${e.subtitle}" id="subtitle">
-                        <input type="hidden" th:name="${'events['+i.index+'].title'}" th:value="${e.title}" id="title">
-                        <input type="hidden" th:name="${'events['+i.index+'].description'}" th:value="${e.description}" id="description">
-                        <th:block th:if="${e.image != null}">
-                            <input type="hidden" th:name="${'events['+i.index+'].image.src'}" th:value="${e.image.src}" id="image.src">
-                            <input type="hidden" th:name="${'events['+i.index+'].image.alt'}" th:value="${e.image.alt}" id="image.alt">
-                            <input type="hidden" th:name="${'events['+i.index+'].image.width'}" th:value="${e.image.width}" id="image.width">
-                            <input type="hidden" th:name="${'events['+i.index+'].image.height'}" th:value="${e.image.height}" id="image.height">
-                        </th:block>
-                        <th:block th:if="${e.button != null}">
-                            <input type="hidden" th:name="${'events['+i.index+'].button.text'}" th:value="${e.button.text}" id="button.text">
-                        </th:block>
-                        <th:block th:if="${e.button != null and e.button.link != null}">
-                            <input type="hidden" th:name="${'events['+i.index+'].button.link.url'}" th:value="${e.button.link.url}" id="button.link.url">
-                            <input type="hidden" th:name="${'events['+i.index+'].button.link.label'}" th:value="${e.button.link.label}" id="button.link.label">
-                            <input type="hidden" th:name="${'events['+i.index+'].button.link.external'}" th:value="${e.button.link.external}" id="button.link.external">
-                        </th:block>
+                <div class="grid grid-cols-12 gap-4 w-full">
+                    <div class="col-span-12 md:col-span-6" th:if="${form.id != null}">
+                        <h4 class="font-bold text-xl my-3">Meetings for this time slot</h4>
+                        <a th:href="@{/user/schedule/add/{id}(id=${form.id})}" class="border border-violet-600 bg-violet-200 p-2 rounded my-2">Add Meeting Event</a>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-12">
-                        <button type="submit" class="btn btn-primary btn-sm my-3">Save</button>
+                    <div class="col-span-12 rounded bg-gray-200 border border-gray-600 p-2 md:w-3/5 w-full">
+                        <p th:if="${form.id == null}">In order to add a meeting event, the Schedule must first be saved.</p>
+                        <p th:if="${form.id != null && #lists.isEmpty(form.events)}">There are no meeting events for this time.</p>
+                    </div>
+                    <div class="col-span-12" th:if="${!#lists.isEmpty(form.events)}">
+                        <div class="flex flex-row flex-wrap gap-4">
+                            <div th:class="${'basis-full md:basis-1/4 bg-'+color+'-100 border-'+color+'-600 border rounded-lg p-3'}"
+                                 th:each="e, i: ${form.events}"
+                                 th:with="color=${colors.nextColor(i.index)}">
+                                <p><span class="font-bold">Title: </span><span th:text="${e.title}"></span></p>
+                                <p><span class="font-bold">Description: </span><span th:text="${e.description}"></span></p>
+                                <p><span class="font-bold">Sundays: </span><span th:text="${e.sundays}"></span></p>
+                                <div class="mt-6 flex justify-between">
+                                    <a th:href="@{/user/schedule/edit/{id}/{meeting}(id=${form.id}, meeting=${i.index})}" class="delete_event"
+                                       th:data-edit-id="${i.index}"><i class="fa-solid fa-pencil text-amber-600 text-2xl"></i>
+                                    </a>
+                                    <form method="post" th:action="@{/user/schedule/delete/{id}/{meeting}(id=${form.id}, meeting=${i.index})}">
+                                        <button type="submit" class="delete_check"
+                                           th:data-delete-id="${i.index}"><i class="fa-solid fa-trash-can text-red-600 text-2xl"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </form>
         </div>
     </div>
-
-    <th:block th:insert="fragments/schedule-fragment :: modal" />
 </section>
 </body>
 </html>

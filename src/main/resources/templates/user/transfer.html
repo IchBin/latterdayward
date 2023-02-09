@@ -6,29 +6,21 @@
 <head />
 <body>
 <section layout:fragment="content">
-    <div class="row">
-        <th:block th:insert="fragments/menu-fragment :: menu" />
-        <div class="col-md-9 mt-3">
-            <h3>Ownership Transfer</h3>
+    <div class="grid grid-cols-12">
+        <div class="col-span-12 w-100 md:w-2/3">
+            <h3 class="font-bold text-3xl my-4">Ward Ownership Transfer</h3>
             <form th:action="@{/user/transfer}" method="post">
-                <div class="row my-3">
-                    <div class="col-md-6">
-                        <p class="text-info border border-info rounded p-2">
-                            <i class="fa-solid fa-circle-exclamation"></i> Ownership can only be transferred to a current member of your ward.
-                            If they are not available to choose from the list they must be added as an Editor or Publisher first.
-                            After the transfer you will no longer be part of the ward unless you apply for Editor or Publisher again.
-                        </p>
-                        <select class="form-select" name="transferee" required>
-                            <option value="">Select a User</option>
-                            <option th:each="u : ${ward_users}" th:value="${u.username}" th:text="${u.username}"></option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <button type="submit" class="btn btn-primary btn-sm" id="complete-transfer">Complete Transfer</button>
-                    </div>
-                </div>
+                <p class="text-red-800 border-red-600 bg-red-200 rounded p-2 my-3">
+                    <i class="fa-solid fa-circle-exclamation"></i> Ownership can only be transferred to a current member of your ward.
+                    If they are not available to choose from the list they must be added as an Editor or Publisher first.
+                    After the transfer you will no longer be part of the ward unless you apply for Editor or Publisher again.
+                </p>
+                <select class="form-select rounded" name="transferee" required>
+                    <option value="">Select a User</option>
+                    <option th:each="u : ${ward_users}" th:value="${u.username}" th:text="${u.username}"></option>
+                </select>
+
+                <button type="submit" class=" rounded border border-blue-600 text-blue-800 bg-blue-200 p-2" id="complete-transfer">Complete Transfer</button>
             </form>
         </div>
     </div>

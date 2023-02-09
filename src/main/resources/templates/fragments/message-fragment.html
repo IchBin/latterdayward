@@ -6,24 +6,24 @@
 <head />
 <body>
 <th:block th:fragment="messages">
-    <div th:each="m: ${messages.successes}" class="alert alert-success alert-dismissible mt-3" role="alert">
+    <div th:each="m: ${messages.successes}" class="p-4 my-4 bg-green-400 border-green-600 border rounded-lg" role="alert">
         <strong th:text="${m.label} ?: 'Success!'" /> <span th:text="${m.text}" />
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <a href="#" class="close float-right"><i class="fa-solid fa-xmark"></i></a>
     </div>
 
-    <div th:each="m: ${messages.infos}" class="alert alert-info alert-dismissible mt-3" role="alert">
+    <div th:each="m: ${messages.infos}" class="p-4 my-4 bg-blue-400 border-blue-600 border rounded-lg" role="alert">
         <strong th:text="${m.label} ?: 'Notice:'" /> <span th:text="${m.text}" />
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <a href="#" class="close float-right"><i class="fa-solid fa-xmark"></i></a>
     </div>
 
-    <div th:each="m: ${messages.warnings}" class="alert alert-warning alert-dismissible mt-3" role="alert">
+    <div th:each="m: ${messages.warnings}" class="p-4 my-4 bg-amber-400 border-amber-600 border rounded-lg" role="alert">
         <strong th:text="${m.label} ?: 'Warning!'" /> <span th:text="${m.text}" />
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <a href="#" class="close float-right"><i class="fa-solid fa-xmark"></i></a>
     </div>
 
-    <div th:each="m: ${messages.errors}" class="alert alert-danger alert-dismissible mt-3" role="alert">
+    <div th:each="m: ${messages.errors}" class="p-4 my-4 bg-red-400 border-red-600 border rounded-lg" role="alert">
         <strong th:text="${m.label} ?: 'Error!'" /> <span th:text="${m.text}" />
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <a href="#" class="close float-right"><i class="fa-solid fa-xmark"></i></a>
     </div>
 </th:block>
 </body>

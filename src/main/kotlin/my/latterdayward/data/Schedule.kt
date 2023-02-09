@@ -3,7 +3,6 @@ package my.latterdayward.data
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer
 import io.swagger.v3.oas.annotations.media.Schema
-import net.minidev.json.annotate.JsonIgnore
 import org.bson.types.ObjectId
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
@@ -20,7 +19,7 @@ class Schedule(
     var wardPath: String? = null,
     var time: String? = null,
     var color: String? = null,
-    var events: List<Event>? = null,
+    var events: MutableList<Event>? = null,
     @field:DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     var dateOverride: LocalDate? = null
 )

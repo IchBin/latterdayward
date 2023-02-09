@@ -6,49 +6,48 @@
 <head />
 <body>
 <section layout:fragment="content">
-    <div class="row">
-        <th:block th:insert="fragments/menu-fragment :: menu" />
-        <div class="col-md-9 col-lg-10 mt-3">
-            <div class="row">
-                <div class="col-8"><h1>Welcome to Latter Day Ward</h1></div>
-                <div class="col">
-                    <div th:fragment="logout" th:if="${session.user != null}">
-                        <span class="fw-bold">User: </span><span th:text="${session.user.username}" />
-                    </div>
-                    <a th:href="@{/user/ward}" class="btn btn-sm btn-primary position-relative my-2" th:if="${access_requests != null}">
-                        Access Requests <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" th:text="${access_requests.size}"></span>
-                    </a>
-                </div>
+    <div class="grid grid-cols-10 my-5">
+        <div class="col-span-10 md:col-span-6"><h1 class="font-bold text-3xl">Welcome to Latter Day Ward</h1></div>
+        <div class="col-span-10 md:col-span-4">
+            <div th:if="${session.user != null}">
+                <span class="font-bold">User: </span><span th:text="${session.user.username}" />
             </div>
-            <div class="row">
-                <div class="col">
-                    Choose one of the following options:
-                    <ul>
-                        <li>Option #1 - Request to join a ward. You only need to request to join a ward if you'd like to
-                            be a content editor for an existing ward. Once accepted as a content editor, you will see new options
-                            to add or edit content.
-                        </li>
-                        <li>Option #2 - Create a new ward for API consumption from your own website.</li>
-                        <ul>
-                            <li>You will need your Ward Path as part of the path in your API calls.</li>
-                            <li>Next create an API token. This token MUST be provided as an x-api-key in your HTTP header request.
-                                <br /><small class="link-primary">- i.e. request.headers.set("x-api-key", "token_here")</small>
-                            </li>
-                            <li>
-                                To view endpoints of this API, you can see the HTML Swagger file <a target="_blank" th:href="@{/swagger-ui/index.html}">here</a>
-                                or the JSON Swagger <a target="_blank" th:href="@{/v3/api-docs/}">here.</a>
-                                You can click the authorize button to enter your token and test the endpoints.
-                            </li>
-                        </ul>
-                    </ul>
-                </div>
-            </div>
-            <div class="row mt-4">
-                <div class="col">
-                    If you have any questions or issues, feel free to <a href="mailto:admin@latterdayward.com?subject=Latter%20Day%20Ward%20Question">email me.</a>
-                </div>
-            </div>
+            <a th:href="@{/user/ward}" class="text-blue-600" th:if="${access_requests != null}">
+                You have Access <span class="px-1.5 bg-red-600 rounded border-black border text-white" th:text="${access_requests.size}"></span> Request
+            </a>
         </div>
+    </div>
+    <div>
+        <h4 class="font-bold">Choose one of the following options:</h4>
+        <ul class="list-disc ml-4">
+            <li><b>Option #1</b> - Request to join a ward. You only need to request to join a ward if you'd like to
+                be a content editor for an existing ward. Once accepted as a content editor, you will see new options
+                to add or edit content.
+            </li>
+            <li><b>Option #2</b> - Create a new ward for API consumption from your own website.</li>
+            <ul class="list-disc ml-4">
+                <li>You will need your Ward Path as part of the path in your API calls.</li>
+                <li>Next create an API token. This token MUST be provided as an x-api-key in your HTTP header request.
+                    <br /><small class="text-blue-600">- i.e. request.headers.set("x-api-key", "token_here")</small>
+                </li>
+                <li>
+                    To view endpoints of this API, you can see the HTML Swagger file <a class="text-blue-600 underline" target="_blank" th:href="@{/swagger-ui/index.html}">here</a>
+                    or the JSON Swagger <a class="text-blue-600 underline" target="_blank" th:href="@{/v3/api-docs/}">here.</a>
+                    You can click the authorize button to enter your token and test the endpoints.
+                </li>
+            </ul>
+        </ul>
+    </div>
+
+    <div class="my-8 py-8 border-t-2 border-grey-400">
+        <p>
+            If you have any questions or issues, feel free to
+            <a class="text-blue-600 underline" href="mailto:admin@latterdayward.com?subject=Latter%20Day%20Ward%20Question">email me.</a>
+        </p>
+        <p>Would you like to suggest a feature or report a problem. You can view the code at github.com</p>
+        <a class="text-blue-600 underline" target="_blank" href="https://github.com/IchBin/latterdayward/issues">Give a suggestion or report an issue</a><br />
+        <a class="text-blue-600 underline" target="_blank" href="https://github.com/IchBin/latterdayward">View the Code</a>
+
     </div>
 </section>
 </body>

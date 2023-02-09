@@ -1,7 +1,4 @@
 $(document).ready(function() {
-    // tooltips
-    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
-    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
 
     // Toggle visibility of token
     $('#show_hide_token a').on('click', function(event) {
@@ -23,33 +20,50 @@ $(document).ready(function() {
         return confirm("Are you sure you want to remove this?")
     })
 
+    $('.close').click(function(e) {
+        e.preventDefault();
+        $(this).parent().hide();
+    });
+
+    $('#menu-toggle').click(function() {
+        $('#collapsed-menu').toggle()
+    });
+
+    $(window).resize(function(e) {
+        if ($(window).width() > 767) {
+            $('#collapsed-menu').show();
+        }
+    });
+
     // Check ward path is available and valid
     let wardPath = $("#ward-path")
     wardPath.focusout(function() {
         wardPath.tooltip("hide");
     });
     wardPath.keyup(function(){
+        let successDiv = "<div id=\"ward-exists\" class=\"rounded my-2 w-2/3 border border-blue-600 bg-blue-100 bg-blue-200 p-2\">Ward name available</div>"
+        let errorDiv = "<div id=\"ward-exists\" class=\"rounded my-2 w-2/3 border border-red-600 bg-red-100 bg-red-200 p-2\">Ward name is not available</div>"
         const pathName = $(this).val().trim();
         let div = $("#ward-exists");
         div.remove();
         if(pathName !== "") {
             // Check pattern first
             if (!isValidWardName(pathName)) {
-                wardPath.tooltip("dispose");
-                wardPath.tooltip({title: "Please match the suggested format.", trigger: "manual"}).tooltip("show");
+                wardPath.after(errorDiv);
+                $('#ward-exists').text("Please match the suggested format.")
                 $("#ward-save").prop("disabled", true);
                 return;
-            } else { wardPath.tooltip("dispose"); }
+            }
             $.ajax({
                 url: "/user/ward/names",
                 type: "get",
                 data: { path: pathName },
                 success: function(response) {
                     if (response === true) {
-                        wardPath.after('<div id="ward-exists" class="btn btn-danger btn-sm mt-2">Ward name not available</div>');
+                        wardPath.after(errorDiv);
                         $("#ward-save").prop("disabled", true);
                     } else {
-                        wardPath.after('<div id="ward-exists" class="btn btn-success btn-sm mt-2">Ward name available!</div>');
+                        wardPath.after(successDiv);
                         $("#ward-save").prop("disabled", false);
                     }
                 }
@@ -96,7 +110,6 @@ $(document).ready(function() {
     $('.toggle-active').click(function() {
         const id = $(this).data('card-id');
         const active = $(this).is(':checked');
-        console.log("data id is " + id + " and active is " + active);
         $.ajax({
             url: '/user/datacard/active',
             type: 'GET',

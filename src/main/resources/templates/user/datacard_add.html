@@ -8,160 +8,148 @@
 </head>
 <body>
 <section layout:fragment="content">
-    <div class="row">
-        <th:block th:insert="fragments/menu-fragment :: menu" />
-        <div class="col-md-9 mt-3">
-            <h3>Add a DataCard</h3>
+    <div class="grid grid-cols-12">
+        <div class="col-span-12">
+            <h3 class="font-bold text-3xl my-4">Add a DataCard</h3>
             <form th:action="@{/user/datacard/save}" method="post" th:object="${datacard}">
-                <div class="row">
-                    <div class="col">
+                <div class="grid grid-cols-12 gap-4">
+                    <div class="col-span-12">
                         <input type="hidden" th:field="*{id}" th:if="${datacard.id != null}" />
                         <input type="hidden" name="wardPath" th:value="${session.user.ward.path}" />
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label class="form-label" for="title">Title</label>
-                                <input class="form-control form-control-sm" type="text" th:field="*{title}" id="title" />
+
+                        <label for="title">Title</label>
+                        <input class="rounded block md:w-6/12 w-10/12" type="text" th:field="*{title}" id="title" />
+                    </div>
+                    <div class="col-span-12">
+                        <label for="subtitle">Subtitle</label>
+                        <input class="rounded block md:w-6/12 w-10/12" type="text" th:field="*{subtitle}" id="subtitle" />
+                    </div>
+                    <div class="col-span-12">
+                        <label for="paragraph">Paragraph</label>
+                        <textarea class="rounded block md:w-8/12 w-10/12 p-3" th:field="*{paragraph}" id="paragraph" />
+                    </div>
+                </div>
+                <div id="images" class="grid grid-cols-12 mt-4 pt-4 border-t border-black">
+                    <div class="col-span-12 md:col-span-2">
+                        <h5>Images
+                            <a title="Add image" type="button" class="duplicate-input" data-target=".images-set" data-appender="#images">
+                                <i class="fa-solid fa-circle-plus text-blue-600 text-lg"></i></a>
+                        </h5>
+                    </div>
+                    <div class="col-span-12 md:col-span-2"><p class="text-blue-500 copy-url hidden">URL Copied!</p></div>
+                    <div class="col-span-12 md:col-span-7">
+                        <select id="image-src" class="form-select rounded" th:with="wardPath=${session.user.ward.path}">
+                            <option value="">Copy image URL from uploaded images</option>
+                            <option th:each="i : ${files}"
+                                    th:text="${i.name}"
+                                    th:value="@{{uri}/static-images/{ward}/{file}(ward=${wardPath},file=${i.name},uri=${@environment.getProperty('ldw.domain')})}">
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-span-12 images-set flex flex-row gap-3 flex-wrap md:flex-nowrap" th:each="img, i : ${datacard.images}" th:data-item-id="${'image'+i.index}">
+                        <div class="basis-full md:basis-5/12">
+                            <label th:for="${'images['+i.index+'].src'}">SRC</label>
+                            <input class="rounded block w-full" type="text"
+                                   th:name="${'images['+i.index+'].src'}"
+                                   th:value="${img.src}"
+                                   th:id="${'images['+i.index+'].src'}" placeholder="i.e. /path/to/your/image.png"/>
+                        </div>
+                        <div class="basis-full md:basis-3/12">
+                            <label th:for="${'images['+i.index+'].alt'}">Alt Text</label>
+                            <input class="rounded block w-full" type="text"
+                                   th:name="${'images['+i.index+'].alt'}"
+                                   th:value="${img.alt}"
+                                   th:id="${'images['+i.index+'].alt'}" />
+                        </div>
+                        <div class="basis-full md:basis-2/12">
+                            <label th:for="${'images['+i.index+'].width'}">Width</label>
+                            <input class="rounded block w-full" type="text"
+                                   th:name="${'images['+i.index+'].width'}"
+                                   th:value="${img.width}"
+                                   th:id="${'images['+i.index+'].width'}" />
+                        </div>
+                        <div class="basis-full md:basis-2/12">
+                            <label th:for="${'images['+i.index+'].height'}">Height</label>
+                            <input class="rounded block w-full" type="text"
+                                   th:name="${'images['+i.index+'].height'}"
+                                   th:value="${img.height}"
+                                   th:id="${'images['+i.index+'].height'}" />
+                        </div>
+                        <div class="basis-full md:basis-1/12 my-auto">
+                            <div th:class="${i.index > 0 ? 'float-right' : 'hidden'}">
+                                <button type="button" class="delete_item" th:data-item-target="${'image'+i.index}">
+                                    <i class="fa-solid text-2xl fa-trash-can text-red-600"></i>
+                                </button>
                             </div>
                         </div>
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label class="form-label" for="subtitle">Subtitle</label>
-                                <input class="form-control form-control-sm" type="text" th:field="*{subtitle}" id="subtitle" />
-                            </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-12 my-4 py-4 border-t border-b border-black">
+                    <div class="col-span-12">
+                        <h5>Links
+                            <a title="Add a link" type="button" class="duplicate-input" data-target=".link-set" data-appender="#links">
+                                <i class="fa-solid fa-circle-plus text-blue-600"></i>
+                            </a>
+                        </h5>
+                    </div>
+                    <div id="links" class="col-span-12 grid grid-cols-12">
+                        <div class="col-span-12">
+                            <label for="button.text">Text</label>
+                            <input class="rounded block md:w-5/12 w-10/12" type="text" th:field="*{button.text}" id="button.text" />
                         </div>
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label class="form-label" for="paragraph">Paragraph</label>
-                                <textarea class="form-control form-control-sm" th:field="*{paragraph}" id="paragraph" />
+                        <div class="col-span-12 link-set flex flex-row gap-3 flex-wrap md:flex-nowrap" th:each="link, i : ${datacard.button.link}" th:data-item-id="${'link'+i.index}">
+                            <div class="basis-full md:basis-5/12">
+                                <label th:for="${'button.link['+ i.index +'].url'}">URL</label>
+                                <input class="rounded block w-full" type="text"
+                                       th:name="${'button.link['+ i.index +'].url'}"
+                                       th:value="${link.url}"
+                                       th:id="${'button.link['+ i.index +'].url'}" />
                             </div>
-                        </div>
-                        <div id="images">
-                            <div class="row border-top border-dark pt-4">
-                                <div class="col-3">
-                                    <h5>Images
-                                        <a title="Add image" type="button" class="duplicate-input" data-target=".images-set" data-appender="#images"><i class="fa-solid fa-circle-plus text-info"></i></a>
-                                    </h5>
-                                </div>
-                                <div class="col-4"><p class="alert alert-primary copy-url">URL Copied!</p></div>
-                                <div class="col-4">
-                                    <select id="image-src" class="form-select form-select-sm" th:with="wardPath=${session.user.ward.path}">
-                                        <option value="">Copy image URL from uploaded images</option>
-                                        <option th:each="i : ${files}"
-                                                th:text="${i.name}"
-                                                th:value="@{{uri}/static-images/{ward}/{file}(ward=${wardPath},file=${i.name},uri=${@environment.getProperty('ldw.domain')})}">
-                                        </option>
-                                    </select>
-                                </div>
+                            <div class="basis-full md:basis-3/12">
+                                <label th:for="${'button.link['+ i.index +'].label'}">Label</label>
+                                <input class="rounded block w-full" type="text"
+                                       th:name="${'button.link['+ i.index +'].label'}"
+                                       th:value="${link.label}"
+                                       th:id="${'button.link['+ i.index +'].label'}" />
                             </div>
-                            <div class="row mb-3 images-set" th:each="img, i : ${datacard.images}" th:data-item-id="${'image'+i.index}">
-                                <div class="col-md-4">
-                                    <label class="form-label" th:for="${'images['+i.index+'].src'}">SRC</label>
-                                    <input class="form-control form-control-sm" type="text"
-                                           th:name="${'images['+i.index+'].src'}"
-                                           th:value="${img.src}"
-                                           th:id="${'images['+i.index+'].src'}" placeholder="i.e. /path/to/your/image.png"/>
-                                </div>
-                                <div class="col-md-3">
-                                    <label class="form-label" th:for="${'images['+i.index+'].alt'}">Alt Text</label>
-                                    <input class="form-control form-control-sm" type="text"
-                                           th:name="${'images['+i.index+'].alt'}"
-                                           th:value="${img.alt}"
-                                           th:id="${'images['+i.index+'].alt'}" />
-                                </div>
-                                <div class="col-md-2">
-                                    <label class="form-label" th:for="${'images['+i.index+'].width'}">Width</label>
-                                    <input class="form-control form-control-sm" type="text"
-                                           th:name="${'images['+i.index+'].width'}"
-                                           th:value="${img.width}"
-                                           th:id="${'images['+i.index+'].width'}" />
-                                </div>
-                                <div class="col-md-2">
-                                    <label class="form-label" th:for="${'images['+i.index+'].height'}">Height</label>
-                                    <input class="form-control form-control-sm" type="text"
-                                           th:name="${'images['+i.index+'].height'}"
-                                           th:value="${img.height}"
-                                           th:id="${'images['+i.index+'].height'}" />
-                                </div>
-                                <div th:class="${i.index > 0 ? 'col-md-1 d-flex align-items-end' : 'd-none'}">
-                                    <button type="button" class="bg-transparent border-0 delete_item" th:data-item-target="${'image'+i.index}">
-                                        <i class="fa-solid fs-4 fa-trash-can text-danger"></i>
+                            <div class="basis-full md:basis-2/12 my-auto">
+                                <input class="rounded" type="checkbox"
+                                       th:name="${'button.link['+ i.index +'].calendly'}"
+                                       th:value="true"
+                                       th:checked="${link.calendly}"
+                                       th:id="${'button.link['+ i.index +'].calendly'}" />
+                                <label class="form-label" th:for="${'button.link['+ i.index +'].calendly'}">Calendly</label>
+                            </div>
+                            <div class="basis-full md:basis-2/12 my-auto">
+                                <input class="rounded" type="checkbox"
+                                   th:name="${'button.link['+ i.index +'].external'}"
+                                   th:value="true"
+                                   th:checked="${link.external}"
+                                   th:id="${'button.link['+ i.index +'].external'}" />
+                                <label  th:for="${'button.link['+ i.index +'].external'}">External</label>
+                                <div th:class="${i.index > 0 ? 'float-right' : 'hidden'}">
+                                    <button type="button" class="delete_item" th:data-item-target="${'link'+i.index}">
+                                        <i class="fa-solid text-2xl fa-trash-can text-red-600"></i>
                                     </button>
                                 </div>
                             </div>
                         </div>
-                        <div class="row pt-3 border-top border-dark">
-                            <div class="col-9">
-                                <h5>Links
-                                    <a title="Add a link" type="button" class="duplicate-input" data-target=".link-set" data-appender="#links">
-                                        <i class="fa-solid fa-circle-plus text-info"></i>
-                                    </a>
-                                </h5>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="form-label" for="button.text">Text</label>
-                                <input class="form-control form-control-sm" type="text" th:field="*{button.text}" id="button.text" />
-                            </div>
-                        </div>
-                        <div id="links">
-                            <div class="row mb-3 pt-3 link-set" th:each="link, i : ${datacard.button.link}" th:data-item-id="${'link'+i.index}">
-                                <div class="col-md-4">
-                                    <label class="form-label" th:for="${'button.link['+ i.index +'].url'}">URL</label>
-                                    <input class="form-control form-control-sm" type="text"
-                                           th:name="${'button.link['+ i.index +'].url'}"
-                                           th:value="${link.url}"
-                                           th:id="${'button.link['+ i.index +'].url'}" />
-                                </div>
-                                <div class="col-md-3">
-                                    <label class="form-label" th:for="${'button.link['+ i.index +'].label'}">label</label>
-                                    <input class="form-control form-control-sm" type="text"
-                                           th:name="${'button.link['+ i.index +'].label'}"
-                                           th:value="${link.label}"
-                                           th:id="${'button.link['+ i.index +'].label'}" />
-                                </div>
-                                <div class="col-md-2 d-flex align-items-end">
-                                    <div>
-                                        <input class="form-check-input" type="checkbox"
-                                               th:name="${'button.link['+ i.index +'].calendly'}"
-                                               th:value="true"
-                                               th:checked="${link.calendly}"
-                                               th:id="${'button.link['+ i.index +'].calendly'}" />
-                                        <label class="form-label" th:for="${'button.link['+ i.index +'].calendly'}">Calendly</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-2 d-flex align-items-end">
-                                    <div>
-                                        <input class="form-check-input" type="checkbox"
-                                           th:name="${'button.link['+ i.index +'].external'}"
-                                           th:value="true"
-                                           th:checked="${link.external}"
-                                           th:id="${'button.link['+ i.index +'].external'}" />
-                                        <label class="form-label" th:for="${'button.link['+ i.index +'].external'}">External</label>
-                                    </div>
-                                </div>
-                                <div th:class="${i.index > 0 ? 'col-md-1 d-flex align-items-end' : 'd-none'}">
-                                    <button type="button" class="bg-transparent border-0 delete_item" th:data-item-target="${'link'+i.index}">
-                                        <i class="fa-solid fs-4 fa-trash-can text-danger"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row py-3 border-top border-dark">
-                            <div class="col-md-3">
-                                <label class="form-label" for="type">Type</label>
-                                <input class="form-control form-control-sm" type="text" th:field="*{type}" id="type" />
-                            </div>
-                            <div class="col-md-2">
-                                <label class="form-label" for="type">Order</label>
-                                <input class="form-control form-control-sm" type="number" min="1" th:field="*{order}" id="order" />
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-2">
-                                <input class="form-check-input" type="checkbox" th:field="*{active}" id="active" />
-                                <label class="form-label" for="active">Active?</label>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-sm my-3">Save</button>
+                    </div>
+                </div>
+                <div class="grid grid-cols-12 gap-4">
+                    <div class="col-span-12 md:col-span-3">
+                        <label for="type">Type</label>
+                        <input class="rounded block" type="text" th:field="*{type}" id="type" />
+                    </div>
+                    <div class="col-span-12 md:col-span-3">
+                        <label for="type">Order</label>
+                        <input class="rounded block" type="number" min="1" th:field="*{order}" id="order" />
+                    </div>
+                    <div class="col-span-12">
+                        <input class="rounded my-4" type="checkbox" th:field="*{active}" id="active" />
+                        <label for="active">Active?</label>
+                        <button type="submit" class="rounded block bg-blue-400 border border-blue-600 my-2 p-2">Save</button>
                     </div>
                 </div>
             </form>
