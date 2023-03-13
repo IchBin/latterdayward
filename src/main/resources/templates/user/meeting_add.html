@@ -11,7 +11,7 @@
             <h3 class="font-bold text-3xl my-4">Add/Edit Meeting Event</h3>
             <!--/*@thymesVar id="form" type="my.latterdayward.data.Event"*/-->
             <form method="post" th:action="@{/user/schedule/save/{id}(id=${meeting_id})}" th:object="${form}" id="event_form">
-                <input type="hidden" name="event_id" th:value="${event_index}" />
+                <input type="hidden" name="event" th:value="${event_index}" />
                 <div class="grid grid-cols-12 gap-4">
                     <div class="col-span-12 md:col-span-3">
                         <label for="title">Title</label>

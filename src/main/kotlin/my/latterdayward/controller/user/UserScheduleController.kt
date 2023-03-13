@@ -39,6 +39,9 @@ class UserScheduleController(
 
     @PostMapping("/save")
     fun save(schedule: Schedule, r: RedirectAttributes, m: Messages): String {
+        if (repo.existsById(schedule.id.toString())) {
+            schedule.events = repo.findByIdOrNull(schedule.id.toString())?.events
+        }
         repo.save(schedule)
         r.addFlashAttribute("messages", m.success("Success!", "Schedule details have been added."))
         return "redirect:/user/schedule/edit/${schedule.id}"
@@ -87,7 +90,7 @@ class UserScheduleController(
         val schedule = repo.findByWardPath(user.ward?.path!!)?.first { it.id == ObjectId(id) }!!
         event?.let {
             schedule.events?.set(event, form)
-        }.run {
+        } ?: run {
             schedule.events?.add(form)
         }
 

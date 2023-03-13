@@ -17,12 +17,12 @@
             <a class="border border-orange-400 bg-orange-200 px-2 py-1 rounded block md:inline my-2 md:my-0" th:href="@{/user/schedule/example/CONFERENCE}">Conference</a>
         </div>
         <div class="col-span-12">
-            <div class="grid grid-cols-12 my-4" th:each="s, i: ${schedule}" th:with="color=${colors.nextColor(i.index)}">
-                <div th:class="${'col-span-12 bg-'+color+'-100 border-'+color+'-600 border rounded-lg p-3'}">
+            <div class="grid grid-cols-12 my-4" th:each="s, i: ${schedule}">
+                <div class="col-span-12 border border-slate-800 rounded-lg p-3 schedule_item">
                     <ul class="list-none">
                         <li>
                             <span class="font-bold">Meeting Schedule for</span>
-                            <span th:class="'px-8 py-1 rounded-full text-'+ ${s.color} + '-800 bg-' +${s.color}+'-100'" th:text="${s.time}"></span>
+                            <span th:class="'px-4 py-1 rounded-lg text-slate-800 bg-slate-100 border border-slate-800'" th:text="${s.time}"></span>
                             <div class="float-right inline">
                                 <form class="inline mr-4" method="post" th:action="@{/user/schedule/delete/{id}(id=${s.id})}">
                                     <button type="submit" class="delete_check"><i class="fa-solid text-3xl fa-trash-can text-red-600 md:m-0 m-3"></i></button>

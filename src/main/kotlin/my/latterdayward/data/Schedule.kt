@@ -19,7 +19,7 @@ class Schedule(
     var wardPath: String? = null,
     var time: String? = null,
     var color: String? = null,
-    var events: MutableList<Event>? = null,
+    var events: MutableList<Event>? = ArrayList(),
     @field:DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     var dateOverride: LocalDate? = null
 )

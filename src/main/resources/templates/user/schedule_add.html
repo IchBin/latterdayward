@@ -33,38 +33,38 @@
                         <button type="submit" class="border border-blue-600 bg-blue-400 p-2 my-2 rounded">Save</button>
                     </div>
                 </div>
-                <div class="grid grid-cols-12 gap-4 w-full">
-                    <div class="col-span-12 md:col-span-6" th:if="${form.id != null}">
-                        <h4 class="font-bold text-xl my-3">Meetings for this time slot</h4>
-                        <a th:href="@{/user/schedule/add/{id}(id=${form.id})}" class="border border-violet-600 bg-violet-200 p-2 rounded my-2">Add Meeting Event</a>
-                    </div>
-                    <div class="col-span-12 rounded bg-gray-200 border border-gray-600 p-2 md:w-3/5 w-full">
-                        <p th:if="${form.id == null}">In order to add a meeting event, the Schedule must first be saved.</p>
-                        <p th:if="${form.id != null && #lists.isEmpty(form.events)}">There are no meeting events for this time.</p>
-                    </div>
-                    <div class="col-span-12" th:if="${!#lists.isEmpty(form.events)}">
-                        <div class="flex flex-row flex-wrap gap-4">
-                            <div th:class="${'basis-full md:basis-1/4 bg-'+color+'-100 border-'+color+'-600 border rounded-lg p-3'}"
-                                 th:each="e, i: ${form.events}"
-                                 th:with="color=${colors.nextColor(i.index)}">
-                                <p><span class="font-bold">Title: </span><span th:text="${e.title}"></span></p>
-                                <p><span class="font-bold">Description: </span><span th:text="${e.description}"></span></p>
-                                <p><span class="font-bold">Sundays: </span><span th:text="${e.sundays}"></span></p>
-                                <div class="mt-6 flex justify-between">
-                                    <a th:href="@{/user/schedule/edit/{id}/{meeting}(id=${form.id}, meeting=${i.index})}" class="delete_event"
-                                       th:data-edit-id="${i.index}"><i class="fa-solid fa-pencil text-amber-600 text-2xl"></i>
-                                    </a>
-                                    <form method="post" th:action="@{/user/schedule/delete/{id}/{meeting}(id=${form.id}, meeting=${i.index})}">
-                                        <button type="submit" class="delete_check"
-                                           th:data-delete-id="${i.index}"><i class="fa-solid fa-trash-can text-red-600 text-2xl"></i>
-                                        </button>
-                                    </form>
-                                </div>
+            </form>
+            <div class="grid grid-cols-12 gap-4 w-full">
+                <div class="col-span-12 md:col-span-6" th:if="${form.id != null}">
+                    <h4 class="font-bold text-xl my-3">Meetings for this time slot</h4>
+                    <a th:href="@{/user/schedule/add/{id}(id=${form.id})}" class="border border-violet-600 bg-violet-200 p-2 rounded my-2">Add Meeting Event</a>
+                </div>
+                <div class="col-span-12 md:w-3/5 w-full">
+                    <p class="rounded bg-gray-200 border border-gray-600 p-2" th:if="${form.id == null}">In order to add a meeting event, the Schedule must first be saved.</p>
+                    <p class="rounded bg-gray-200 border border-gray-600 p-2" th:if="${form.id != null && #lists.isEmpty(form.events)}">There are no meeting events for this time.</p>
+                </div>
+                <div class="col-span-12" th:if="${!#lists.isEmpty(form.events)}">
+                    <div class="flex flex-row flex-wrap gap-4">
+                        <div th:class="${'basis-full md:basis-1/4 bg-'+color+'-100 border-'+color+'-600 border rounded-lg p-3'}"
+                             th:each="e, i: ${form.events}"
+                             th:with="color=${colors.nextColor(i.index)}">
+                            <p><span class="font-bold">Title: </span><span th:text="${e.title}"></span></p>
+                            <p><span class="font-bold">Description: </span><span th:text="${e.description}"></span></p>
+                            <p><span class="font-bold">Sundays: </span><span th:text="${e.sundays}"></span></p>
+                            <div class="mt-6 flex justify-between">
+                                <a th:href="@{/user/schedule/edit/{id}/{meeting}(id=${form.id}, meeting=${i.index})}" class="delete_event"
+                                   th:data-edit-id="${i.index}"><i class="fa-solid fa-pencil text-amber-600 text-2xl"></i>
+                                </a>
+                                <form method="post" th:action="@{/user/schedule/delete/{id}/{meeting}(id=${form.id}, meeting=${i.index})}">
+                                    <button type="submit" class="delete_check"
+                                       th:data-delete-id="${i.index}"><i class="fa-solid fa-trash-can text-red-600 text-2xl"></i>
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 </section>

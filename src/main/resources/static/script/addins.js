@@ -127,4 +127,13 @@ $(document).ready(function() {
         });
     });
 
+    let index = 0
+    $('.schedule_item').each(function(i, v) {
+        let bgColors = ['bg-blue-100', 'bg-orange-100', 'bg-green-100', 'bg-amber-100', 'bg-slate-100', 'bg-red-100'];
+        const size = bgColors.length
+        if (i > size) index = 0;
+        $(this).addClass(bgColors[index])
+        index++;
+    });
+
 });
