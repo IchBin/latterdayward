@@ -106,8 +106,18 @@ class ExampleSchedule(
                         ),
                         ScheduleButton("", Link())
                     ),
-                    Event(listOf(1,2,3,4,5), "Afternoon Session", "General Conference", "12:00PM Saturday", Image("", ""), ScheduleButton("", Link())),
-                    Event(listOf(1,2,3,4,5), "Evening Session", "General Conference", "6:00PM Saturday", Image("", ""), ScheduleButton("", Link()))
+                    Event(listOf(1,2,3,4,5), "Afternoon Session", "General Conference", "12:00PM Saturday",
+                        Image(
+                            src = "$domain/images/conference_center.jpg\n",
+                            alt = "Conference Center Image"
+                        ),
+                        ScheduleButton("", Link())),
+                    Event(listOf(1,2,3,4,5), "Evening Session", "General Conference", "6:00PM Saturday",
+                        Image(
+                            src = "$domain/images/conference_center.jpg\n",
+                            alt = "Conference Center Image"
+                        ),
+                        ScheduleButton("", Link()))
                 )
             ),
             Schedule(
@@ -123,7 +133,12 @@ class ExampleSchedule(
                         ),
                         ScheduleButton("", Link())
                     ),
-                    Event(listOf(1,2,3,4,5), "Afternoon Session", "General Conference", "12:00PM Sunday", Image("", ""), ScheduleButton("", Link()))
+                    Event(listOf(1,2,3,4,5), "Afternoon Session", "General Conference", "12:00PM Sunday",
+                        Image(
+                            src = "$domain/images/conference_center.jpg\n",
+                            alt = "Conference Center Image"
+                        ),
+                        ScheduleButton("", Link()))
                 )
             )
         )
