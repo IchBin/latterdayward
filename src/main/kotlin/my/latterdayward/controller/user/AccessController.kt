@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
-import javax.servlet.http.HttpSession
 
 @Controller
 @RequestMapping("/user/access")
@@ -22,8 +21,7 @@ class AccessController(
 ) {
 
     @PostMapping("/request")
-    fun editorAccess(accessRequest: AccessRequest, session: HttpSession, r: RedirectAttributes, m: Messages) : String {
-        val user = session.getAttribute("user") as User
+    fun editorAccess(accessRequest: AccessRequest, user: User, r: RedirectAttributes, m: Messages) : String {
         user.accessRequest = accessRequest
         userService.save(user)
         accessRequest.ward?.let {
@@ -34,8 +32,7 @@ class AccessController(
     }
 
     @PostMapping("/approve")
-    fun approveAccess(@RequestParam username: String, @RequestParam role: Role, session: HttpSession, r: RedirectAttributes, m: Messages): String {
-        val user = session.getAttribute("user") as User
+    fun approveAccess(@RequestParam username: String, @RequestParam role: Role, user: User, r: RedirectAttributes, m: Messages): String {
         val applicant = userService.findUserByUserName(username)
         applicant?.ward = user.ward
         userService.save(applicant?.approveAccess(role)!!)
@@ -45,8 +42,7 @@ class AccessController(
     }
 
     @PostMapping("/deny")
-    fun denyAccess(@RequestParam username: String, session: HttpSession, r: RedirectAttributes, m: Messages): String {
-        val owner = session.getAttribute("user") as User
+    fun denyAccess(@RequestParam username: String, r: RedirectAttributes, m: Messages, owner: User): String {
         val user = userService.findUserByUserName(username)
         val role = user?.accessRequest?.role ?: user?.role
         val path = user?.ward?.path ?: owner.ward?.path

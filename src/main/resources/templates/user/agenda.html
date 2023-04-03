@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{main/master}" lang="en">
+<head />
+<body>
+<section layout:fragment="content">
+    <h3 class="font-bold text-3xl my-5">Sacrament Agendas</h3>
+    <div th:each="a : ${agendas}" class="grid grid-cols-12 my-4">
+        <div th:if="${!#lists.isEmpty(agendas)}" class="col-span-12 md:col-span-6 flex justify-between rounded-lg border border-grey-600 p-3">
+            <div><span th:text="${a.presiding.title}" /> - <span th:text="${a.presiding.name}" /></div>
+            <div class="flex justify-end">
+                <div th:text="${#temporals.format(a.date, 'EEEE MMMM d yyyy')}"></div>
+                <div>
+                    <form th:action="@{/user/agenda/delete}" method="post">
+                        <input type="hidden" name="id" th:value="${a.id}" />
+                        <button class="delete_check mx-3" title="Delete this agenda"><i class="fa-solid fa-trash-can text-red-600 text-2xl"></i></button>
+                        <button th:formaction="@{/user/agenda/edit}" title="Edit this agenda" class="ml-3"><i class="fa-solid fa-pencil text-amber-400 text-2xl"></i></button>
+                        <button th:formaction="@{/user/agenda/copy}" title="Copy &amp; create a new agenda" class="ml-3"><i class="fa-solid fa-copy text-blue-400 text-2xl"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div th:if="${#lists.isEmpty(agendas)}" class="col-span-12 rounded-lg border border-amber-600 md:w-1/2 w-full p-3">
+            <div class="font-bold">There are no agendas to display.</div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

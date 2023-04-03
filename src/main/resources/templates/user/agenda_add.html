@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{main/master}" lang="en">
+<head>
+    <script th:src="@{/script/input-replication.js}"></script>
+</head>
+<body>
+<section layout:fragment="content">
+    <div class="grid grid-cols-10">
+        <div class="col-span-10">
+            <h3 class="font-bold text-3xl my-4" th:text="${agenda.id != null ? 'Edit Sacrament Agenda' : 'Add Sacrament Agenda'}"></h3>
+            <form th:action="@{/user/agenda/save}" method="post" th:object="${agenda}">
+                <div class="grid grid-cols-12 my-3">
+                    <div class="col-span-12">
+                        <input type="hidden" th:field="*{id}" th:if="${agenda.id != null}"/>
+                        <input type="hidden" name="wardPath" th:value="${session.user.ward.path}" />
+                        <label class="form-label" for="date">Sacrament Date</label>
+                        <input type="date" step="7" th:min="${#temporals.format(agenda.nextSunday(), 'yyyy-MM-dd')}" th:field="*{date}"
+                               class="rounded block" id="date" required />
+                    </div>
+                </div>
+                <div class="grid grid-cols-12 my-3">
+                    <div class="col-span-6 md:col-span-3">
+                        <label class="form-label" for="presiding.title">Presiding Title</label>
+                        <input class="rounded block w-10/12" type="text" th:field="*{presiding.title}" id="presiding.title"/>
+                    </div>
+                    <div class="col-span-6 md:col-span-3">
+                        <label class="form-label" for="presiding.name">Presiding Name</label>
+                        <input class="rounded block w-10/12" type="text" th:field="*{presiding.name}" id="presiding.name"/>
+                    </div>
+                </div>
+                <div class="grid grid-cols-12 my-3">
+                    <div class="col-span-6 md:col-span-3">
+                        <label class="form-label" for="conducting.title">Conducting Title</label>
+                        <input class="rounded block w-10/12" type="text" th:field="*{conducting.title}" id="conducting.title"/>
+                    </div>
+                    <div class="col-span-6 md:col-span-3">
+                        <label class="form-label" for="conducting.name">Conducting Name</label>
+                        <input class="rounded block w-10/12" type="text" th:field="*{conducting.name}" id="conducting.name"/>
+                    </div>
+                </div>
+                <div class="grid grid-cols-12 my-3">
+                    <div class="col-span-6 md:col-span-3">
+                        <label class="form-label" for="organist.title">Organist Title</label>
+                        <input class="rounded block w-10/12" type="text" th:field="*{organist.title}" id="organist.title"/>
+                    </div>
+                    <div class="col-span-6 md:col-span-3">
+                        <label class="form-label" for="organist.name">Organist Name</label>
+                        <input class="rounded block w-10/12" type="text" th:field="*{organist.name}" id="organist.name"/>
+                    </div>
+                </div>
+                <div class="grid grid-cols-12 my-3">
+                    <div class="col-span-6 md:col-span-3">
+                        <label class="form-label" for="chorister.title">Chorister Title</label>
+                        <input class="rounded block w-10/12" type="text" th:field="*{chorister.title}" id="chorister.title"/>
+                    </div>
+                    <div class="col-span-6 md:col-span-3">
+                        <label class="form-label" for="chorister.name">Chorister Name</label>
+                        <input class="rounded block w-10/12" type="text" th:field="*{chorister.name}" id="chorister.name"/>
+                    </div>
+                </div>
+                <div class="grid grid-cols-12 my-3">
+                    <div class="col-span-6 md:col-span-3">
+                        <label class="form-label" for="openHymn.title">Opening Hymn Title</label>
+                        <input class="rounded block w-10/12" type="text" th:field="*{openHymn.title}" id="openHymn.title" th:placeholder="${'Opening Hymn'}"/>
+                    </div>
+                    <div class="col-span-6 md:col-span-3">
+                        <label class="form-label " for="openHymn.name">Opening Hymn Name</label>
+                        <input class="rounded block w-10/12" type="text" th:field="*{openHymn.name}" id="openHymn.name" th:placeholder="${'#86 How Great Though Art'}"/>
+                    </div>
+                </div>
+                <div class="grid grid-cols-12 my-3">
+                    <div class="col-span-6 md:col-span-3">
+                        <label class="form-label" for="invocation.title">Invocation Title</label>
+                        <input class="rounded block w-10/12" type="text" th:field="*{invocation.title}" id="invocation.title"/>
+                    </div>
+                    <div class="col-span-6 md:col-span-3">
+                        <label class="form-label" for="invocation.name">Invocation Name</label>
+                        <input class="rounded block w-10/12" type="text" th:field="*{invocation.name}" id="invocation.name"/>
+                    </div>
+                </div>
+                <div class="grid grid-cols-12 my-3">
+                    <div class="col-span-6 md:col-span-3">
+                        <label class="form-label" for="sacramentHymn.title">Sacrament Hymn Title</label>
+                        <input class="rounded block w-10/12" type="text" th:field="*{sacramentHymn.title}" id="sacramentHymn.title" />
+                    </div>
+                    <div class="col-span-6 md:col-span-3">
+                        <label class="form-label " for="sacramentHymn.name">Sacrament Hymn Name</label>
+                        <input class="rounded block w-10/12" type="text" th:field="*{sacramentHymn.name}" id="sacramentHymn.name" th:placeholder="${'i.e. #86 How Great Though Art'}"/>
+                    </div>
+                </div>
+                <div class="my-4 border border-black"></div>
+                <div id="program-contents">
+                    <h5 class="text-lg font-bold">Program Contents
+                        <a title="Add an program item" type="button" class="duplicate-input" data-target=".content-set" data-appender="#program-contents">
+                            <i class="fa-solid fa-circle-plus text-blue-400"></i>
+                        </a>
+                    </h5>
+                    <div class="grid grid-cols-12 mb-3 content-set" th:each="p, i : *{programContent}" th:data-item-id="${'programContent'+i.index}" >
+                        <div class="col-span-6 md:col-span-4">
+                            <label th:for="${'programContent['+ i.index +'].title'}">Speaker or Music Title</label>
+                            <input class="rounded block w-10/12" type="text"
+                                   th:name="${'programContent['+ i.index +'].title'}"
+                                   th:value="${p.title}"
+                                   th:id="${'programContent['+ i.index +'].title'}" th:placeholder="${'i.e. Speaker or Special Musical #'}"/>
+                        </div>
+                        <div class="col-span-6 md:col-span-4">
+                            <label th:for="${'programContent['+ i.index +'].name'}">Speaker or Music Name</label>
+                            <input class="rounded block w-10/12" type="text"
+                                   th:name="${'programContent['+ i.index +'].name'}"
+                                   th:value="${p.name}"
+                                   th:id="${'programContent['+ i.index +'].name'}" th:placeholder="${'i.e. Speaker name or song name'}"/>
+                        </div>
+                        <div class="col-span-6 md:col-span-2">
+                            <label th:for="${'programContent['+ i.index +'].order'}">Order</label>
+                            <input class="rounded w-10/12 md:w-full" type="text"
+                                   th:name="${'programContent['+ i.index +'].order'}"
+                                   th:value="${p.order}"
+                                   th:id="${'programContent['+ i.index +'].order'}" required />
+                            <div th:class="${i.index > 0 ? 'inline' : 'hidden'}">
+                                <button type="button" class="delete_item" th:data-item-target="${'programContent'+i.index}">
+                                    <i class="fa-solid fs-4 fa-trash-can text-red-600 text-2xl"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="my-4 border border-black"></div>
+                <div class="grid grid-cols-12 my-3">
+                    <div class="col-span-6 md:col-span-3">
+                        <label class="form-label" for="closingHymn.title">Closing Hymn Title</label>
+                        <input class="rounded block w-10/12 mb-3" type="text" th:field="*{closingHymn.title}" id="closingHymn.title" />
+                    </div>
+                    <div class="col-span-6 md:col-span-3">
+                        <label class="form-label" for="closingHymn.name">Closing Hymn Name</label>
+                        <input class="rounded block w-10/12 mb-3" type="text" th:field="*{closingHymn.name}" id="closingHymn.name" />
+                    </div>
+                </div>
+                <div class="grid grid-cols-12 my-3">
+                    <div class="col-span-6 md:col-span-3">
+                        <label class="form-label" for="benediction.title">Benediction Title</label>
+                         <input class="rounded block w-10/12" type="text" th:field="*{benediction.title}" id="benediction.title" />
+                    </div>
+                    <div class="col-span-6 md:col-span-3">
+                        <label class="form-label" for="benediction.name">Benediction Name</label>
+                         <input class="rounded block w-10/12" type="text" th:field="*{benediction.name}" id="benediction.name" />
+                    </div>
+                </div>
+                <div class="my-4 border border-black md:w-1/2"></div>
+                <div id="announcements">
+                    <h5 class="text-lg font-bold">Ward Announcements
+                        <a title="Add an announcement" type="button" class="duplicate-input" data-target=".announcement-set" data-appender="#announcements">
+                            <i class="fa-solid fa-circle-plus text-blue-400"></i>
+                        </a>
+                    </h5>
+                    <div class="grid grid-cols-12 mb-3 announcement-set" th:each="a, i : *{wardAnnouncement}" th:data-item-id="${'wardAnnouncement'+i.index}" >
+                        <div class="col-span-6 md:col-span-3">
+                            <label th:for="${'wardAnnouncement['+ i.index +'].title'}">Title</label>
+                            <input class="rounded block w-10/12" type="text"
+                                   th:name="${'wardAnnouncement['+ i.index +'].title'}"
+                                   th:value="${a.title}"
+                                   th:id="${'wardAnnouncement['+ i.index +'].title'}" />
+                        </div>
+                        <div class="col-span-6 md:col-span-3">
+                            <label th:for="${'wardAnnouncement['+ i.index +'].description'}">Description</label><br />
+                            <input class="rounded w-10/12" type="text"
+                                   th:name="${'wardAnnouncement['+ i.index +'].description'}"
+                                   th:value="${a.description}"
+                                   th:id="${'wardAnnouncement['+ i.index +'].description'}" />
+
+                            <div th:class="${i.index > 0 ? 'inline' : 'hidden'}">
+                                <button type="button" class="delete_item" th:data-item-target="${'wardAnnouncement'+i.index}">
+                                    <i class="fa-solid fs-4 fa-trash-can text-red-600 text-2xl"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="rounded border-blue-600 bg-blue-400 border py-2 px-3">Save</button>
+            </form>
+        </div>
+    </div>
+</section>
+</body>
+</html>

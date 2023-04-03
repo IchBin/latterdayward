@@ -32,6 +32,10 @@
                     <a class="block bg-gray-200 p-3 pl-8 hover:bg-gray-400 border-b border-gray-400"
                        th:if="${user.publisherAccess()}" th:href="@{/user/datacard/add}">Add DataCard</a>
                     <a class="block bg-gray-200 p-3 pl-5 hover:bg-gray-400 border-b border-gray-400"
+                       th:if="${user.publisherAccess()}" th:href="@{/user/agenda}">Sacrament Agenda</a>
+                    <a class="block bg-gray-200 p-3 pl-8 hover:bg-gray-400 border-b border-gray-400"
+                       th:if="${user.publisherAccess()}" th:href="@{/user/agenda/add}">Add Agenda</a>
+                    <a class="block bg-gray-200 p-3 pl-5 hover:bg-gray-400 border-b border-gray-400"
                        th:if="${user.publisherAccess()}" th:href="@{/user/schedule}">Schedule</a>
                     <a class="block bg-gray-200 p-3 pl-8 hover:bg-gray-400 border-b border-gray-400"
                        th:if="${user.publisherAccess()}" th:href="@{/user/schedule/add}">Add Meeting</a>

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import java.time.LocalDateTime
 import java.util.*
-import javax.servlet.http.HttpSession
 
 @Controller
 @RequestMapping("/user/token")
@@ -20,8 +19,7 @@ class TokenController(
 ) {
 
     @GetMapping("")
-    fun home(model: MutableMap<String, Any?>, session: HttpSession): String {
-        val user = session.getAttribute("user") as User
+    fun home(model: MutableMap<String, Any?>, user: User): String {
         user.ward?.let {
             model["token"] = user.apiToken ?: ApiToken()
         } ?: run {
@@ -32,8 +30,7 @@ class TokenController(
     }
 
     @PostMapping("/create")
-    fun createToken(session: HttpSession, r: RedirectAttributes, m: Messages): String {
-        val user = session.getAttribute("user") as User
+    fun createToken(user: User, r: RedirectAttributes, m: Messages): String {
         user.apiToken = ApiToken(null, token = generateToken(), expires = LocalDateTime.now().plusYears(2))
         userService.save(user)
         r.addFlashAttribute("messages", m.success("Success!", "A token has been created."))
@@ -41,8 +38,7 @@ class TokenController(
     }
 
     @PostMapping("/delete")
-    fun deleteToken(session: HttpSession, r: RedirectAttributes, m: Messages): String {
-        val user = session.getAttribute("user") as User
+    fun deleteToken(user: User, r: RedirectAttributes, m: Messages): String {
         user.apiToken = null
         userService.save(user)
         r.addFlashAttribute("messages", m.success("Success!", "A token has been deleted."))

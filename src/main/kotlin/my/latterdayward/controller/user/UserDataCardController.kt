@@ -8,7 +8,6 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
-import javax.servlet.http.HttpSession
 
 @Controller
 @RequestMapping("/user/datacard")
@@ -18,8 +17,7 @@ class UserDataCardController(
 ) {
 
     @GetMapping("")
-    fun home(model: MutableMap<String, Any?>, session: HttpSession): String {
-        val user = session.getAttribute("user") as User
+    fun home(model: MutableMap<String, Any?>, user: User): String {
         model["datacards"] = repo.findByWardPath(user.ward?.path!!)
             ?.sortedBy { it.order }
             ?.groupBy { it.type }
@@ -30,16 +28,14 @@ class UserDataCardController(
     }
 
     @GetMapping("/add")
-    fun add(model: MutableMap<String, Any?>, session: HttpSession): String {
-        val user = session.getAttribute("user") as User
+    fun add(model: MutableMap<String, Any?>, user: User): String {
         model["datacard"] = DataCard().toForm()
         model["files"] = fileService.fileList(user)
         return "user/datacard_add"
     }
 
     @PostMapping("/edit")
-    fun edit(@RequestParam id: String, model: MutableMap<String, Any?>, session: HttpSession): String {
-        val user = session.getAttribute("user") as User
+    fun edit(@RequestParam id: String, model: MutableMap<String, Any?>, user: User): String {
         model["files"] = fileService.fileList(user)
         model["datacard"] = repo.findByIdOrNull(id)
         return "user/datacard_add"
@@ -76,8 +72,7 @@ class UserDataCardController(
     }
 
     @GetMapping("/order/{type}")
-    fun order(@PathVariable type: String, model: MutableMap<String, Any?>, session: HttpSession): String {
-        val user = session.getAttribute("user") as User
+    fun order(@PathVariable type: String, model: MutableMap<String, Any?>, user: User): String {
         val datacards = repo.findByWardPathAndType(user.ward?.path!!, type)
         model["datacards"] = datacards?.sortedBy { it.order }
         model["cardNumbers"] = (1..datacards?.maxBy { it.order!! }?.order!!).toList()

@@ -22,7 +22,11 @@ class Schedule(
     var events: MutableList<Event>? = ArrayList(),
     @field:DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     var dateOverride: LocalDate? = null
-)
+) {
+    fun nextSunday(): LocalDate {
+        return LocalDate.now().nextSunday()
+    }
+}
 
 class Event(
     var repeats: List<Int>? = null,

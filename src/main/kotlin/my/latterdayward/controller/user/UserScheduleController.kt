@@ -9,7 +9,6 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
-import javax.servlet.http.HttpSession
 import kotlin.collections.set
 
 @Controller
@@ -20,19 +19,15 @@ class UserScheduleController(
     private val env: Environment
 ) {
 
-    @ModelAttribute("user")
-    fun getUser(session: HttpSession): User {
-        return session.getAttribute("user") as User
-    }
     @GetMapping("")
-    fun home(model: MutableMap<String, Any?>, session: HttpSession, @ModelAttribute user: User): String {
+    fun home(model: MutableMap<String, Any?>, user: User): String {
         model["schedule"] = repo.findByWardPath(user.ward?.path!!)
         model["colors"] = Colors()
         return "user/schedule"
     }
 
     @GetMapping("/add")
-    fun add(model: MutableMap<String, Any?>, @ModelAttribute user: User): String {
+    fun add(model: MutableMap<String, Any?>, user: User): String {
         model["form"] = Schedule()
         return "user/schedule_add"
     }
@@ -48,7 +43,7 @@ class UserScheduleController(
     }
 
     @GetMapping("/edit/{id}")
-    fun edit(@PathVariable id: String, model: MutableMap<String, Any?>, @ModelAttribute user: User): String {
+    fun edit(@PathVariable id: String, model: MutableMap<String, Any?>, user: User): String {
         model["files"] = fileService.fileList(user)
         model["form"] = repo.findByIdOrNull(id)
         model["colors"] = Colors()
@@ -63,7 +58,7 @@ class UserScheduleController(
     }
 
     @GetMapping("/edit/{id}/{event}")
-    fun editEvent(@PathVariable id: String, @PathVariable event: Int, model: MutableMap<String, Any?>, @ModelAttribute user: User): String {
+    fun editEvent(@PathVariable id: String, @PathVariable event: Int, model: MutableMap<String, Any?>, user: User): String {
         val schedule = repo.findByWardPath(user.ward?.path!!)?.first { it.id == ObjectId(id) }
         model["form"] = schedule?.events?.get(event)
         model["event_index"] = event
@@ -73,7 +68,7 @@ class UserScheduleController(
     }
 
     @GetMapping("/add/{id}")
-    fun addEvent(@PathVariable id: String, model: MutableMap<String, Any?>, @ModelAttribute user: User): String {
+    fun addEvent(@PathVariable id: String, model: MutableMap<String, Any?>, user: User): String {
         model["form"] = Event()
         model["meeting_id"] = id
         model["is_update"] = true
@@ -84,8 +79,8 @@ class UserScheduleController(
     @PostMapping("/save/{id}")
     fun saveEvent(@PathVariable id: String,
                   @RequestParam event: Int?,
-                  @ModelAttribute user: User,
-                  @ModelAttribute form: Event): String {
+                  @ModelAttribute form: Event,
+                  user: User): String {
 
         val schedule = repo.findByWardPath(user.ward?.path!!)?.first { it.id == ObjectId(id) }!!
         event?.let {
@@ -101,7 +96,7 @@ class UserScheduleController(
     @PostMapping("/delete/{id}/{event}")
     fun deletEvent(@PathVariable id: String,
                    @PathVariable event: Int,
-                   @ModelAttribute user: User): String {
+                   user: User): String {
         val schedule = repo.findByWardPath(user.ward?.path!!)?.first { it.id == ObjectId(id) }!!
         schedule.events?.removeAt(event)
         repo.save(schedule)
@@ -109,7 +104,7 @@ class UserScheduleController(
     }
 
     @GetMapping("/example/{type:CONFERENCE|WARD|STAKE}")
-    fun exampleSchedules(@PathVariable("type") type: ScheduleType, session: HttpSession, r: RedirectAttributes, m: Messages, @ModelAttribute user: User): String {
+    fun exampleSchedules(@PathVariable("type") type: ScheduleType, r: RedirectAttributes, m: Messages, user: User): String {
         val schedules = when(type) {
             ScheduleType.WARD -> ExampleSchedule(env).wardSchedule(user)
             ScheduleType.STAKE -> ExampleSchedule(env).stakeSchedule(user)
