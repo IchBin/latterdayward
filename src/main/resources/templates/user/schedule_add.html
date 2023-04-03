@@ -24,7 +24,7 @@
                     </div>
                     <div class="col-span-12">
                         <label for="color">Override Date</label>
-                        <input type="date" step="7" min="2022-08-28" th:field="*{dateOverride}" class="rounded block" id="dateOverride" />
+                        <input type="date" step="7" th:min="${#temporals.format(agenda.nextSunday(), 'yyyy-MM-dd')}" th:field="*{dateOverride}" class="rounded block" id="dateOverride" />
                         <div class="text-blue-400 text-sm">
                             <strong>Note:</strong> The override date can be used to customize a schedule for one weekend. If the upcoming
                             Sunday matches the override date, that schedule will be returned instead of the schedule without an override date.

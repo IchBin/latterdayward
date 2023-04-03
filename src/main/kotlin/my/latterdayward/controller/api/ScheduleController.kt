@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses
 import io.swagger.v3.oas.annotations.tags.Tag
 import my.latterdayward.data.ErrorResponse
 import my.latterdayward.data.Schedule
+import my.latterdayward.data.nextSunday
 import my.latterdayward.repo.ScheduleRepository
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -43,10 +44,8 @@ class ScheduleController(
     }
 
     private fun scheduleOrOverride(schedules: List<Schedule>): List<Schedule> {
-        val today = LocalDate.now()
-        val nextSunday = today.with(next(DayOfWeek.SUNDAY))
         val override = schedules.filter { s ->
-            s.dateOverride == nextSunday
+            s.dateOverride == LocalDate.now().nextSunday()
         }
         return override.ifEmpty { schedules.filter { it.dateOverride == null } }
     }
