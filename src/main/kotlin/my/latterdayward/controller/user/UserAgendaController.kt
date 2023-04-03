@@ -8,7 +8,6 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
-import javax.servlet.http.HttpSession
 
 @Controller
 @RequestMapping("/user/agenda")
@@ -17,7 +16,7 @@ class UserAgendaController(
 ) {
 
     @GetMapping(value = ["/", ""])
-    fun home(model: MutableMap<String, Any?>, session: HttpSession, user: User): String {
+    fun home(model: MutableMap<String, Any?>, user: User): String {
         model["agendas"] = repo.findAllByWardPathOrderByDateDesc(user.ward?.path!!)
         return "user/agenda"
     }

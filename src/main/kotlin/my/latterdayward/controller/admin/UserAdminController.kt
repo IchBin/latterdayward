@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
-import javax.servlet.http.HttpSession
 
 @Controller
 @RequestMapping("/admin/user")
@@ -24,8 +23,7 @@ class UserAdminController(
     }
 
     @PostMapping("/update")
-    fun update(form: UserForm, r: RedirectAttributes, m: Messages, session: HttpSession) : String {
-        val authUser = session.getAttribute("user") as User
+    fun update(form: UserForm, r: RedirectAttributes, m: Messages, authUser: User) : String {
         val user = service.findUserByUserName(form.username)
         if (authUser.id  == user?.id) {
             r.addFlashAttribute("messages", m.error("You cannot remove admin from your own account."))

@@ -9,7 +9,6 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
-import javax.servlet.http.HttpSession
 import kotlin.collections.set
 
 @Controller
@@ -21,7 +20,7 @@ class UserScheduleController(
 ) {
 
     @GetMapping("")
-    fun home(model: MutableMap<String, Any?>, session: HttpSession, user: User): String {
+    fun home(model: MutableMap<String, Any?>, user: User): String {
         model["schedule"] = repo.findByWardPath(user.ward?.path!!)
         model["colors"] = Colors()
         return "user/schedule"
@@ -105,7 +104,7 @@ class UserScheduleController(
     }
 
     @GetMapping("/example/{type:CONFERENCE|WARD|STAKE}")
-    fun exampleSchedules(@PathVariable("type") type: ScheduleType, session: HttpSession, r: RedirectAttributes, m: Messages, user: User): String {
+    fun exampleSchedules(@PathVariable("type") type: ScheduleType, r: RedirectAttributes, m: Messages, user: User): String {
         val schedules = when(type) {
             ScheduleType.WARD -> ExampleSchedule(env).wardSchedule(user)
             ScheduleType.STAKE -> ExampleSchedule(env).stakeSchedule(user)

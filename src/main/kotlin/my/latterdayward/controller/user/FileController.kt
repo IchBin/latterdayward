@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
-import javax.servlet.http.HttpSession
 
 @Controller
 @RequestMapping("/user/file")
@@ -21,23 +20,20 @@ class FileController(
 ) {
 
     @GetMapping(value = ["", "/"])
-    fun home(model: MutableMap<String, Any?>, session: HttpSession): String {
-        val user = session.getAttribute("user") as User
+    fun home(model: MutableMap<String, Any?>, user: User): String {
         model["files"] = fileService.fileList(user)
         return "user/file"
     }
 
     @PostMapping("/upload", consumes = ["multipart/form-data"])
-    fun upload(@RequestParam file: MultipartFile, r: RedirectAttributes, m: Messages, session: HttpSession): String {
-        val user = session.getAttribute("user") as User
+    fun upload(@RequestParam file: MultipartFile, r: RedirectAttributes, m: Messages, user: User): String {
         fileService.uploadFile(file, user)
         r.addFlashAttribute("messages", m.success("Succesfully uploaded ${file.name}"))
         return "redirect:/user/file"
     }
 
     @PostMapping("/delete")
-    fun delete(@RequestParam imageId: String, r: RedirectAttributes, m: Messages, session: HttpSession): String {
-        val user = session.getAttribute("user") as User
+    fun delete(@RequestParam imageId: String, r: RedirectAttributes, m: Messages, user: User): String {
         fileService.delete(imageId, user)
         r.addFlashAttribute("messages", m.success("Succesfully deleted $imageId"))
         return "redirect:/user/file"

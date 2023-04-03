@@ -20,8 +20,7 @@ class UserAnnouncementController(
 ) {
 
     @GetMapping("")
-    fun home(model: MutableMap<String, Any?>, session: HttpSession): String {
-        val user = session.getAttribute("user") as User
+    fun home(model: MutableMap<String, Any?>, user: User): String {
         model["announcements"] = repo.findAllByWardPath(user.ward?.path!!)?.sortedBy { a -> a.dates?.first()?.date }?.groupBy { it.type }?.entries
         return "user/announcement"
     }

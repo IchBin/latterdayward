@@ -18,8 +18,7 @@ class WardController(
 ) {
 
     @GetMapping("")
-    fun wardHome(model: MutableMap<String, Any?>, session: HttpSession): String {
-        val user = session.getAttribute("user") as User
+    fun wardHome(model: MutableMap<String, Any?>, session: HttpSession, user: User): String {
         val userWard = userService.findUserByUserName(user.username)
         userWard?.ward?.let {
             model["ward"] = it
@@ -34,8 +33,7 @@ class WardController(
     }
 
     @PostMapping("/save")
-    fun saveWard(@ModelAttribute ward: Ward, session: HttpSession, r: RedirectAttributes, m: Messages): String {
-        val user = session.getAttribute("user") as User
+    fun saveWard(@ModelAttribute ward: Ward, session: HttpSession, r: RedirectAttributes, m: Messages, user: User): String {
         user.setAsWardOwner(ward)
         userService.save(user)
         r.addFlashAttribute("messages", m.success("Success!","Ward was saved."))
