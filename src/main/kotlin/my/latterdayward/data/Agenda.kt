@@ -28,8 +28,8 @@ class Agenda(
     var sacramentHymn: ProgramItem? = ProgramItem("Sacrament Hymn"),
     var closingHymn: ProgramItem? = ProgramItem("Closing Hymn"),
     var benediction: ProgramItem? = ProgramItem("Benediction"),
-    var programContent: List<ProgramContent>? = mutableListOf(ProgramContent()),
-    var wardAnnouncement: List<WardAnnouncement>? = mutableListOf(WardAnnouncement())
+    var programContent: List<ProgramContent>? = emptyList(),
+    var wardAnnouncement: List<WardAnnouncement>? = emptyList()
 ) {
     fun nextSunday(): LocalDate {
         return LocalDate.now().nextSunday()
