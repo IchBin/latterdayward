@@ -35,7 +35,7 @@ class AgendaController(
         repo.findByWardPathAndDate(path, LocalDate.now().nextSunday())?.let {
             return ResponseEntity.status(HttpStatus.OK).body(it)
         } ?: run {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorResponse("No ward schedule was found."))
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorResponse("No sacrament agenda was found."))
         }
     }
 }
