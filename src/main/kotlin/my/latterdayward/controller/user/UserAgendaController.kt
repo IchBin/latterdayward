@@ -23,7 +23,7 @@ class UserAgendaController(
 
     @GetMapping("/add")
     fun addAgenda(model: MutableMap<String, Any?>): String {
-        model["agenda"] = Agenda()
+        model["agenda"] = Agenda().toForm()
         return "user/agenda_add"
     }
 

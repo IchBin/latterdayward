@@ -28,18 +28,22 @@ class Agenda(
     var sacramentHymn: ProgramItem? = ProgramItem("Sacrament Hymn"),
     var closingHymn: ProgramItem? = ProgramItem("Closing Hymn"),
     var benediction: ProgramItem? = ProgramItem("Benediction"),
-    var programContent: List<ProgramContent>? = emptyList(),
-    var wardAnnouncement: List<WardAnnouncement>? = emptyList()
+    var programContent: List<ProgramContent>? = ArrayList(),
+    var wardAnnouncement: List<WardAnnouncement>? = ArrayList()
 ) {
     fun nextSunday(): LocalDate {
         return LocalDate.now().nextSunday()
+    }
+
+    fun toForm(): Agenda {
+        return Agenda(programContent = mutableListOf(ProgramContent()), wardAnnouncement= mutableListOf(WardAnnouncement()))
     }
 }
 
 class ProgramContent(
     var title: String? = null,
     var name: String? = null,
-    var order: Int? = 1
+    var order: Int? = null
 )
 
 class ProgramItem(
