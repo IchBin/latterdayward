@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.tags.Tag
 import my.latterdayward.data.ErrorResponse
 import my.latterdayward.data.Schedule
 import my.latterdayward.data.nextSunday
+import my.latterdayward.repo.AgendaRepository
 import my.latterdayward.repo.ScheduleRepository
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -24,7 +25,8 @@ import java.time.temporal.TemporalAdjusters.next
 @RequestMapping("/api/schedule")
 @Tag(name = "Schedule", description = "Ward Schedule API")
 class ScheduleController(
-    private val scheduleRepo: ScheduleRepository
+    private val scheduleRepo: ScheduleRepository,
+    private val agendaRepository: AgendaRepository
 ) {
 
     @Operation(summary = "Get the ward schedule.", tags = ["Schedule"])
@@ -37,7 +39,11 @@ class ScheduleController(
     @GetMapping("/{path}")
     fun findWardSchedule(@PathVariable path: String) : ResponseEntity<Any> {
         scheduleRepo.findByWardPath(path)?.let {
-            return ResponseEntity.status(HttpStatus.OK).body(scheduleOrOverride(it))
+            val schedules = scheduleOrOverride(it)
+            schedules.forEach { s ->
+                s.isAgenda = agendaRepository.findByWardPathAndDate(path, LocalDate.now().nextSunday()) != null
+            }
+            return ResponseEntity.status(HttpStatus.OK).body(schedules)
         } ?: run {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorResponse("No ward schedule was found."))
         }

@@ -21,7 +21,9 @@ class Schedule(
     var color: String? = null,
     var events: MutableList<Event>? = ArrayList(),
     @field:DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    var dateOverride: LocalDate? = null
+    var dateOverride: LocalDate? = null,
+    // Set only when pulling a schedule in the API
+    var isAgenda: Boolean = false
 ) {
     fun nextSunday(): LocalDate {
         return LocalDate.now().nextSunday()
