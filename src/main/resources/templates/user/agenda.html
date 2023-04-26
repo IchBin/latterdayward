@@ -15,16 +15,17 @@
                 <div>
                     <form th:action="@{/user/agenda/delete}" method="post">
                         <input type="hidden" name="id" th:value="${a.id}" />
-                        <button class="delete_check mx-3" title="Delete this agenda"><i class="fa-solid fa-trash-can text-red-600 text-2xl"></i></button>
                         <button th:formaction="@{/user/agenda/edit}" title="Edit this agenda" class="ml-3"><i class="fa-solid fa-pencil text-amber-400 text-2xl"></i></button>
                         <button th:formaction="@{/user/agenda/copy}" title="Copy &amp; create a new agenda" class="ml-3"><i class="fa-solid fa-copy text-blue-400 text-2xl"></i></button>
+                        <button th:formaction="@{/user/agenda/download/{id}(id=${a.id})}" title="Download PDF" class="ml-3"><i class="fa-solid fa-download text-green-400 text-2xl"></i></button>
+                        <button class="delete_check ml-3" title="Delete this agenda"><i class="fa-solid fa-trash-can text-red-600 text-2xl"></i></button>
                     </form>
                 </div>
             </div>
         </div>
-        <div th:if="${#lists.isEmpty(agendas)}" class="col-span-12 rounded-lg border border-amber-600 md:w-1/2 w-full p-3">
-            <div class="font-bold">There are no agendas to display.</div>
-        </div>
+    </div>
+    <div th:if="${#lists.isEmpty(agendas)}" class="col-span-12 rounded-lg border border-amber-600 md:w-1/2 w-full p-3">
+        <div class="font-bold">There are no agendas to display.</div>
     </div>
 </section>
 </body>

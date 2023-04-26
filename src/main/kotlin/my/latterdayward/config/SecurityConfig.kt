@@ -23,7 +23,7 @@ class SecurityConfig(
     fun filterChain(http: HttpSecurity): SecurityFilterChain? {
         http.authorizeHttpRequests { authz ->
                 authz
-                    .antMatchers("/oauth/**", "/css/**", "/images/**", "/script/**", "/api/**", "/static-images/**").permitAll()
+                    .antMatchers("/oauth/**", "/css/**", "/images/**", "/script/**", "/api/**", "/static-images/**", "/open/**").permitAll()
                     .antMatchers("/**").authenticated()
                     .and()
                     .oauth2Login()
