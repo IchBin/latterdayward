@@ -4,15 +4,18 @@ import my.latterdayward.data.Agenda
 import my.latterdayward.data.Messages
 import my.latterdayward.data.User
 import my.latterdayward.repo.AgendaRepository
+import my.latterdayward.service.PdfService
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
+import javax.servlet.http.HttpServletResponse
 
 @Controller
 @RequestMapping("/user/agenda")
 class UserAgendaController(
-    private val repo: AgendaRepository
+    private val repo: AgendaRepository,
+    private val pdfService: PdfService
 ) {
 
     @GetMapping(value = ["/", ""])
@@ -53,5 +56,12 @@ class UserAgendaController(
         model["agenda"] = repo.deleteById(id)
         r.addFlashAttribute("messages", m.success("You have successfully deleted the Sacrament agenda."))
         return "redirect:/user/agenda"
+    }
+
+    @PostMapping("/download/{id}")
+    fun downloadPdf(@PathVariable id: String, user: User, res: HttpServletResponse) {
+        repo.findByIdOrNull(id)?.let {
+            pdfService.generatePdf(res, it, user.ward?.title)
+        }
     }
 }
