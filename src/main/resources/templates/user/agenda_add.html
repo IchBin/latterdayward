@@ -66,7 +66,7 @@
                         <label class="form-label" for="openHymn.title">Opening Hymn Title</label>
                         <input class="rounded block w-10/12" type="text" th:field="*{openHymn.title}" id="openHymn.title" th:placeholder="${'Opening Hymn'}"/>
                     </div>
-                    <div class="col-span-6 md:col-span-3">
+                    <div class="col-span-6">
                         <label class="form-label " for="openHymn.name">Opening Hymn Name</label>
                         <input class="rounded block w-10/12" type="text" th:field="*{openHymn.name}" id="openHymn.name" th:placeholder="${'#86 How Great Though Art'}"/>
                     </div>
@@ -86,8 +86,10 @@
                         <label class="form-label" for="sacramentHymn.title">Sacrament Hymn Title</label>
                         <input class="rounded block w-10/12" type="text" th:field="*{sacramentHymn.title}" id="sacramentHymn.title" />
                     </div>
-                    <div class="col-span-6 md:col-span-3">
-                        <label class="form-label " for="sacramentHymn.name">Sacrament Hymn Name</label>
+                    <div class="col-span-6">
+                        <label class="form-label " for="sacramentHymn.name">
+                            Sacrament Hymn Name <i class="fa-solid fa-circle-info text-blue-600" title="Starting with the Hymn number i.e. #121 will allow it to link to the hymns in the app."></i>
+                        </label>
                         <input class="rounded block w-10/12" type="text" th:field="*{sacramentHymn.name}" id="sacramentHymn.name" th:placeholder="${'i.e. #86 How Great Though Art'}"/>
                     </div>
                 </div>
@@ -114,8 +116,11 @@
                                    th:id="${'programContent['+ i.index +'].name'}" th:placeholder="${'i.e. Speaker name or song name'}"/>
                         </div>
                         <div class="col-span-6 md:col-span-2">
-                            <label th:for="${'programContent['+ i.index +'].order'}">Order</label>
-                            <input class="rounded w-10/12 md:w-full" type="text"
+                            <label th:for="${'programContent['+ i.index +'].order'}">
+                                Order
+                                <i class="fa-solid fa-circle-info text-blue-600" title="Order number must be unique. No duplicate numbers."></i>
+                            </label>
+                            <input class="rounded w-10/12" type="text"
                                    th:name="${'programContent['+ i.index +'].order'}"
                                    th:value="${p.order}"
                                    th:id="${'programContent['+ i.index +'].order'}" required />
@@ -133,7 +138,7 @@
                         <label class="form-label" for="closingHymn.title">Closing Hymn Title</label>
                         <input class="rounded block w-10/12 mb-3" type="text" th:field="*{closingHymn.title}" id="closingHymn.title" />
                     </div>
-                    <div class="col-span-6 md:col-span-3">
+                    <div class="col-span-6">
                         <label class="form-label" for="closingHymn.name">Closing Hymn Name</label>
                         <input class="rounded block w-10/12 mb-3" type="text" th:field="*{closingHymn.name}" id="closingHymn.name" />
                     </div>
@@ -163,12 +168,12 @@
                                    th:value="${a.title}"
                                    th:id="${'wardAnnouncement['+ i.index +'].title'}" />
                         </div>
-                        <div class="col-span-6 md:col-span-3">
+                        <div class="col-span-6">
                             <label th:for="${'wardAnnouncement['+ i.index +'].description'}">Description</label><br />
                             <input class="rounded w-10/12" type="text"
                                    th:name="${'wardAnnouncement['+ i.index +'].description'}"
                                    th:value="${a.description}"
-                                   th:id="${'wardAnnouncement['+ i.index +'].description'}" />
+                                   th:id="${'wardAnnouncement['+ i.index +'].description'}"></input>
 
                             <div th:class="${i.index > 0 ? 'inline' : 'hidden'}">
                                 <button type="button" class="delete_item" th:data-item-target="${'wardAnnouncement'+i.index}">
