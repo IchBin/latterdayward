@@ -77,7 +77,7 @@
                         </div>
                         <div class="basis-full md:basis-1/12 my-auto">
                             <div th:class="${i.index > 0 ? 'float-right' : 'hidden'}">
-                                <button type="button" class="delete_item" th:data-item-target="${'image'+i.index}">
+                                <button type="button" class="delete_item" th:data-item-target="${'image'+i.index}" data-target-set=".images-set">
                                     <i class="fa-solid text-2xl fa-trash-can text-red-600"></i>
                                 </button>
                             </div>
@@ -129,7 +129,7 @@
                                    th:id="${'button.link['+ i.index +'].external'}" />
                                 <label  th:for="${'button.link['+ i.index +'].external'}">External</label>
                                 <div th:class="${i.index > 0 ? 'float-right' : 'hidden'}">
-                                    <button type="button" class="delete_item" th:data-item-target="${'link'+i.index}">
+                                    <button type="button" class="delete_item" th:data-item-target="${'link'+i.index}" data-target-set=".link-set">
                                         <i class="fa-solid text-2xl fa-trash-can text-red-600"></i>
                                     </button>
                                 </div>

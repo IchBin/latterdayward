@@ -171,7 +171,7 @@
                                    th:id="${'wardAnnouncement['+ i.index +'].description'}" />
 
                             <div th:class="${i.index > 0 ? 'inline' : 'hidden'}">
-                                <button type="button" class="delete_item" th:data-item-target="${'wardAnnouncement'+i.index}">
+                                <button type="button" class="delete_item" th:data-item-target="${'wardAnnouncement'+i.index}" data-target-set=".announcement-set">
                                     <i class="fa-solid fs-4 fa-trash-can text-red-600 text-2xl"></i>
                                 </button>
                             </div>
