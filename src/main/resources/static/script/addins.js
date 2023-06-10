@@ -102,7 +102,7 @@ $(document).ready(function() {
     $(document).on('click', '.delete_item', function() {
         if (confirm('Are you sure you want to remove this?')) {
             const id = $(this).attr('data-item-target');
-            $('div[data-item-id="'+id+'"]').remove();
+            $('[data-item-id="'+id+'"]').remove();
             // We need to reorder the array so that we remove empty items when deleting.
             const targetSet = $($(this).attr('data-target-set'));
             targetSet.each(function (i) {
