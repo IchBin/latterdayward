@@ -31,8 +31,8 @@
             <p th:class="${token.expired} ? 'px-4 py-2 bg-red-200 rounded border-red-400 inline border border-red-600' : 'px-4 py-2 bg-green-200 rounded border-green-400 inline border border-green-600'"
                th:text="${token.timePeriod()}"></p>
             <form th:action="@{/user/token/delete}" method="post" class="inline">
-                <button type="submit" id="token_delete" title="Delete Token" class="align-middle ml-4 mb-1">
-                    <i class="fa-solid fa-trash-can text-red-600 text-3xl"></i></button>
+                <button type="submit" id="token_delete" title="Delete Token" class="align-middle ml-4 mb-1 bg-red-600 py-1 px-2 rounded-full">
+                    <i class="fa-solid fa-trash-can text-white text-xl"></i></button>
             </form>
         </div>
     </div>

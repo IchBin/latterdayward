@@ -75,10 +75,10 @@
                                    th:value="${img.height}"
                                    th:id="${'images['+i.index+'].height'}" />
                         </div>
-                        <div class="basis-full md:basis-1/12 my-auto">
+                        <div class="basis-full md:basis-1/12 flex self-end">
                             <div th:class="${i.index > 0 ? 'float-right' : 'hidden'}">
-                                <button type="button" class="delete_item" th:data-item-target="${'image'+i.index}" data-target-set=".images-set">
-                                    <i class="fa-solid text-2xl fa-trash-can text-red-600"></i>
+                                <button type="button" class="delete_item bg-red-600 py-1 px-2 rounded-full" th:data-item-target="${'image'+i.index}" data-target-set=".images-set">
+                                    <i class="fa-solid text-xl fa-trash-can text-white"></i>
                                 </button>
                             </div>
                         </div>
@@ -129,8 +129,8 @@
                                    th:id="${'button.link['+ i.index +'].external'}" />
                                 <label  th:for="${'button.link['+ i.index +'].external'}">External</label>
                                 <div th:class="${i.index > 0 ? 'float-right' : 'hidden'}">
-                                    <button type="button" class="delete_item" th:data-item-target="${'link'+i.index}" data-target-set=".link-set">
-                                        <i class="fa-solid text-2xl fa-trash-can text-red-600"></i>
+                                    <button type="button" class="delete_item bg-red-600 py-1 px-2 rounded-full" th:data-item-target="${'link'+i.index}" data-target-set=".link-set">
+                                        <i class="fa-solid text-xl fa-trash-can text-white"></i>
                                     </button>
                                 </div>
                             </div>

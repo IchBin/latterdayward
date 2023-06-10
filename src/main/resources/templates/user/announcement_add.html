@@ -56,8 +56,8 @@
                                    th:id="${'dates['+ i.index +'].subTitle'}" />
 
                             <div th:class="${i.index > 0 ? 'inline' : 'hidden'}">
-                                <button type="button" class="delete_item" th:data-item-target="${'date'+i.index}">
-                                    <i class="fa-solid fs-4 fa-trash-can text-red-600 text-2xl"></i>
+                                <button type="button" class="delete_item bg-red-600 py-1 px-2 rounded-full" th:data-item-target="${'date'+i.index}">
+                                    <i class="fa-solid fs-4 fa-trash-can text-white text-xl"></i>
                                 </button>
                             </div>
                         </div>

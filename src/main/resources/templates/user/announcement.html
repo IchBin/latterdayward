@@ -46,8 +46,8 @@
                 <span>
                     <form th:action="@{/user/announcement/delete}" method="post" class="inline float-right">
                         <input type="hidden" name="id" th:value="${a.id}" />
-                        <button class="delete_check"><i class="fa-solid fa-trash-can text-3xl text-red-600"></i></button>
-                        <button th:formaction="@{/user/announcement/edit}"><i class="fa-solid text-3xl fa-pencil text-amber-500"></i></button>
+                        <button class="delete_check bg-red-600 py-1 px-2 rounded-full"><i class="fa-solid fa-trash-can text-xl text-white"></i></button>
+                        <button th:formaction="@{/user/announcement/edit}" class="bg-amber-400 py-1 px-2 rounded-md"><i class="fa-solid text-xl fa-pencil text-white"></i></button>
                     </form>
                 </span>
             </div>
