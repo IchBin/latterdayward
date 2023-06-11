@@ -1,24 +1,25 @@
 $(document).ready(function() {
     const sortable = $('#sortable').sortable({handle: '.handle'});
+    const regex = /(\d+)/;
     sortable.on('sortupdate', function (event, ui) {
         //const id = ui.item.index();
         const targetItemsClass = ui.item.data('item-set');
         // Get all elements with class from data-item-set
         $(targetItemsClass).each((index, element) => {
-            const item = $(element)
+            const item = $(element);
             item.find('input').each(function () {
                 const inputId = $(this).attr('id');
-                const name = $(this).attr("name")
-                $(this).attr('id', inputId.replace(/\d/, index))
-                $(this).attr('name', name.replace(/\d/, index))
+                const name = $(this).attr("name");
+                $(this).attr('id', inputId.replace(regex, index));
+                $(this).attr('name', name.replace(regex, index));
             });
             item.find('label').each(function () {
                 const forId = $(this).attr('for');
-                $(this).attr('for', forId.replace(/\d/, index));
+                $(this).attr('for', forId.replace(regex, index));
             });
 
             // Update delete buttons so the first row is the only row without one.
-            const deleteTarget = item.data('item-id').replace(/\d/, index);
+            const deleteTarget = item.data('item-id').replace(regex, index);
             const deleteExists = item.find('.delete_item').length;
             if (index === 0 && deleteExists) {
                 item.find('.delete_item').parent().addClass('hidden').removeClass("inline my-2");
@@ -28,7 +29,6 @@ $(document).ready(function() {
             // Change data-item-id index and matching delete button attribute.
             item.attr('data-item-id', deleteTarget);
             item.find('.delete_item').attr('data-item-target', deleteTarget);
-
         });
     });
 });

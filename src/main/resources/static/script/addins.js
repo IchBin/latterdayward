@@ -100,6 +100,7 @@ $(document).ready(function() {
 
     // Delete image, link, or ward announcement row
     $(document).on('click', '.delete_item', function() {
+        const regex = /(\d+)/;
         if (confirm('Are you sure you want to remove this?')) {
             const id = $(this).attr('data-item-target');
             $('[data-item-id="'+id+'"]').remove();
@@ -108,14 +109,14 @@ $(document).ready(function() {
             targetSet.each(function (i) {
                 $(this).find('input').each(function () {
                     const inputId = $(this).attr('id');
-                    const name = $(this).attr("name")
-                    $(this).attr('id', inputId.replace(/\d/, i))
-                    $(this).attr('name', name.replace(/\d/, i))
-                })
+                    const name = $(this).attr("name");
+                    $(this).attr('id', inputId.replace(regex, i));
+                    $(this).attr('name', name.replace(regex, i));
+                });
                 $(this).find('label').each(function () {
                     const forId = $(this).attr('for');
-                    $(this).attr('for', forId.replace(/\d/, i));
-                })
+                    $(this).attr('for', forId.replace(regex, i));
+                });
             });
         }
     });
