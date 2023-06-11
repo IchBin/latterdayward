@@ -36,7 +36,7 @@
                     <div class="basis-full md:basis-1/5 text-right">
                         <form th:action="@{/user/file/delete}" method="post">
                             <input type="hidden" name="imageId" th:value="${f.name}" />
-                            <a href="#" class="md:mx-4 copy-text bg-blue-400 py-2 px-2 rounded-md"
+                            <a href="#" class="md:mx-4 copy-text bg-blue-400 py-1.5 px-1 rounded-md"
                                th:data-url="@{{uri}/static-images/{ward}/{file}(ward=${wardPath},file=${f.name},uri=${@environment.getProperty('ldw.domain')})}"
                                th:data-id="${i.index}" title="Copy Image URL">
                                 <i class="fa-regular fa-copy text-xl text-white"></i>

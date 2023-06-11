@@ -15,7 +15,7 @@
                 <div>
                     <form th:action="@{/user/agenda/delete}" method="post">
                         <input type="hidden" name="id" th:value="${a.id}" />
-                        <button th:formaction="@{/user/agenda/edit}" title="Edit this agenda" class="bg-amber-400 py-1 px-2 rounded-md ml-3">
+                        <button th:formaction="@{/user/agenda/edit}" title="Edit this agenda" class="bg-amber-400 py-1 px-1.5 rounded-md ml-3">
                             <i class="fa-solid fa-pencil text-white text-xl"></i></button>
                         <button th:formaction="@{/user/agenda/copy}" title="Copy &amp; create a new agenda" class="bg-blue-400 py-1 px-2 rounded-md ml-3">
                             <i class="fa-solid fa-copy text-white text-xl"></i></button>

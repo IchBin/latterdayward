@@ -27,7 +27,7 @@
                                 <form class="inline mr-4" method="post" th:action="@{/user/schedule/delete/{id}(id=${s.id})}">
                                     <button type="submit" class="delete_check bg-red-600 py-1 px-2 rounded-full"><i class="fa-solid text-xl fa-trash-can text-white md:m-0 m-3"></i></button>
                                 </form>
-                                <a th:href="@{/user/schedule/edit/{id}(id=${s.id})}" class="bg-amber-400 py-2 px-2 rounded-md"><i class="fa-solid text-xl fa-pencil text-white"></i></a>
+                                <a th:href="@{/user/schedule/edit/{id}(id=${s.id})}" class="bg-amber-400 py-1.5 px-1.5 rounded-md"><i class="fa-solid text-xl fa-pencil text-white"></i></a>
                             </div>
                         </li>
                         <li th:each="e : ${s.events}" class="pb-5">

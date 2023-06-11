@@ -52,7 +52,7 @@
                             <p><span class="font-bold">Description: </span><span th:text="${e.description}"></span></p>
                             <p><span class="font-bold">Sundays: </span><span th:text="${e.sundays}"></span></p>
                             <div class="mt-6 flex justify-between">
-                                <a th:href="@{/user/schedule/edit/{id}/{meeting}(id=${form.id}, meeting=${i.index})}" class="delete_event bg-amber-400 py-1 px-2 rounded-md"
+                                <a th:href="@{/user/schedule/edit/{id}/{meeting}(id=${form.id}, meeting=${i.index})}" class="delete_event bg-amber-400 py-1 px-1.5 rounded-md"
                                    th:data-edit-id="${i.index}"><i class="fa-solid fa-pencil text-white text-xl"></i>
                                 </a>
                                 <form method="post" th:action="@{/user/schedule/delete/{id}/{meeting}(id=${form.id}, meeting=${i.index})}">
