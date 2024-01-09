@@ -2,10 +2,10 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 plugins {
-	id("org.springframework.boot") version "2.7.12"
-	id("io.spring.dependency-management") version "1.0.13.RELEASE"
-	kotlin("jvm") version "1.8.21"
-	kotlin("plugin.spring") version "1.8.21"
+	id("org.springframework.boot") version "2.7.18"
+	id("io.spring.dependency-management") version "1.0.15.RELEASE"
+	kotlin("jvm") version "1.9.20"
+	kotlin("plugin.spring") version "1.9.20"
 	// openapi via springdoc - https://github.com/springdoc/springdoc-openapi-gradle-plugin
 	id("org.springdoc.openapi-gradle-plugin") version "1.6.0"
 	id("org.siouan.frontend-jdk11") version "6.0.0"
@@ -42,7 +42,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
 	implementation("org.springframework.boot:spring-boot-starter-mail")
 
-	implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity5:3.1.1.RELEASE")
+	implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity5:3.1.2.RELEASE")
 	implementation("nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect")
 
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
