@@ -7,8 +7,40 @@
 <body>
 <section layout:fragment="content">
     <h3 class="font-bold text-3xl my-5">Sacrament Agendas</h3>
-    <div th:each="a : ${agendas}" class="grid grid-cols-12 my-4">
-        <div th:if="${!#lists.isEmpty(agendas)}" class="col-span-12 md:col-span-8 flex justify-between rounded-lg border border-grey-600 p-3">
+    <div class="grid grid-cols-12 my-4">
+        <div class="col-span-12 md:col-span-5">
+            <form th:action="@{/user/agenda/delete-by-date}" method="post">
+                <select class="form-select rounded" id="days" name="days">
+                    <option value="30">Agendas older than 30 days</option>
+                    <option value="60">Agendas older than 60 days</option>
+                    <option value="90">Agendas older than 90 days</option>
+                </select>
+                <button type="submit" class="delete_check rounded border-red-600 bg-red-400 border py-2 px-3">Delete</button>
+            </form>
+
+        </div>
+        <div class="col-span-12 md:col-span-4">
+            <nav aria-label="Page navigation example">
+                <ul class="list-style-none flex justify-end">
+                    <li th:if="${agendas.totalPages > 1 and page > 1}">
+                        <a class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:hover:bg-neutral-700 dark:hover:text-white"
+                           th:href="@{/user/agenda(page=${page - 1})}">Previous</a>
+                    </li>
+                    <li th:each="n : ${#numbers.sequence(1, agendas.totalPages, 1)}">
+                        <a th:classappend="${page == n ? 'bg-slate-200' : 'bg-primary-100'}" class="relative block rounded px-3 py-1.5 text-sm font-medium text-primary-700 transition-all duration-300 hover:bg-neutral-100 dark:hover:bg-neutral-700 dark:hover:text-white"
+                           th:href="@{/user/agenda(page=${n})}" th:text="${n}"></a>
+                    </li>
+                    <li th:if="${page < agendas.totalPages}">
+                        <a class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:hover:bg-neutral-700 dark:hover:text-white"
+                           th:href="@{/user/agenda(page=${page + 1})}" >Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <div th:each="a : ${agendas.content}" class="grid grid-cols-12 my-4">
+        <div th:if="${!#lists.isEmpty(agendas)}" class="col-span-12 md:col-span-9 flex justify-between rounded-lg border border-grey-600 p-3">
             <div><span th:text="${a.presiding.title}" /> - <span th:text="${a.presiding.name}" /></div>
             <div class="flex justify-end">
                 <div th:text="${#temporals.format(a.date, 'EEEE MMMM d yyyy')}"></div>

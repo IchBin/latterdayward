@@ -57,7 +57,7 @@
                             <div class="basis-full md:basis-2/5"><h5 class="font-bold text-xl my-3">Image</h5></div>
                             <div class="basis-full md:basis-1/5"><p class="hidden copy-url text-blue-400 text-sm">Image URL copied!</p></div>
                             <div class="basis-full md:basis-2/5">
-                                <select id="image-src" class="form-select rounded" th:with="wardPath=${session.user.ward.path}">
+                                <select id="image-src" class="form-select rounded" th:with="wardPath=${user.ward.path}">
                                     <option>Choose an Image from your uploads</option>
                                     <option th:each="i : ${files}"
                                             th:text="${i.name}"

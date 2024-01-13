@@ -15,7 +15,7 @@
                 <div class="grid grid-cols-12 gap-4">
                     <div class="col-span-12">
                         <input type="hidden" th:field="*{id}" th:if="${datacard.id != null}" />
-                        <input type="hidden" name="wardPath" th:value="${session.user.ward.path}" />
+                        <input type="hidden" name="wardPath" th:value="${user.ward.path}" />
 
                         <label for="title">Title</label>
                         <input class="rounded block md:w-6/12 w-10/12" type="text" th:field="*{title}" id="title" />
@@ -38,7 +38,7 @@
                     </div>
                     <div class="col-span-12 md:col-span-2"><p class="text-blue-500 copy-url hidden">URL Copied!</p></div>
                     <div class="col-span-12 md:col-span-7">
-                        <select id="image-src" class="form-select rounded" th:with="wardPath=${session.user.ward.path}">
+                        <select id="image-src" class="form-select rounded" th:with="wardPath=${user.ward.path}">
                             <option value="">Copy image URL from uploaded images</option>
                             <option th:each="i : ${files}"
                                     th:text="${i.name}"

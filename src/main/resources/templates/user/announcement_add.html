@@ -15,7 +15,7 @@
                 <div class="grid grid-cols-12 gap-4">
                     <div class="col-span-12 md:col-span-6">
                         <input type="hidden" th:field="*{id}" th:if="${announcement.id != null}"/>
-                        <input type="hidden" name="wardPath" th:value="${session.user.ward.path}" />
+                        <input type="hidden" name="wardPath" th:value="${user.ward.path}" />
                         <label class="form-label" for="title">Title</label>
                         <input class="rounded block w-10/12" type="text" th:field="*{title}" id="title"/>
                     </div>

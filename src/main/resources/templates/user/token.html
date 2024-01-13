@@ -11,7 +11,7 @@
         <div class="col-span-10">
             <h3 class="font-bold text-3xl my-4">API Token</h3>
             <form th:action="@{/user/token/create}" method="post" th:object="${token}">
-                <div th:if="${!token.hasToken && session.user.hasWard}">
+                <div th:if="${!token.hasToken && user.hasWard}">
                     <button type="submit" class="px-4 py-2 bg-amber-400 border-amber-600 border rounded-lg hover:bg-amber-300">Generate Token</button>
                 </div>
                 <div th:if="${token.hasToken}" class="my-4">

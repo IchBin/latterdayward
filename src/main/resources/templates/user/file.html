@@ -19,7 +19,7 @@
             </form>
         </div>
 
-        <div th:if="${!#lists.isEmpty(files)}" class="col-span-12" th:with="wardPath=${session.user.ward.path}">
+        <div th:if="${!#lists.isEmpty(files)}" class="col-span-12" th:with="wardPath=${user.ward.path}">
             <div th:each="f, i : ${files}">
                 <div class="flex flex-row border border-grey-600 rounded p-4 my-2">
                     <div class="basis-full hidden md:block md:basis-1/5 my-auto md:my-0">

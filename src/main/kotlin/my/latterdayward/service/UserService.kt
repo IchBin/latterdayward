@@ -65,4 +65,9 @@ class UserService(val repo: UserRepository) {
     fun wardUsers(path: String): List<User>? {
         return repo.findAllByWardPath(path)
     }
+
+    fun expiredTokens(): List<User>? {
+        val now = LocalDateTime.now()
+        return repo.findAllByApiTokenExpiresBetween(now, now.plusMonths(1))
+    }
 }

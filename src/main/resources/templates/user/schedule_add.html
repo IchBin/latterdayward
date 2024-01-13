@@ -12,7 +12,7 @@
             <!--/*@thymesVar id="form" type="my.latterdayward.data.Schedule"*/-->
             <form th:action="@{/user/schedule/save}" method="post" th:object="${form}" id="schedule_form">
                 <input type="hidden" th:field="*{id}" th:if="${form.id != null}"/>
-                <input type="hidden" name="wardPath" th:value="${session.user.ward.path}" />
+                <input type="hidden" name="wardPath" th:value="${user.ward.path}" />
                 <div class="grid grid-cols-12 gap-4 w-full md:w-2/3">
                     <div class="col-span-12 md:col-span-6">
                         <label for="time">Meeting Time</label>

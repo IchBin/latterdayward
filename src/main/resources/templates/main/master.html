@@ -15,8 +15,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script th:src="@{/script/addins.js}"></script>
+    <script th:if="${isDev}" src="https://cdn.tailwindcss.com"></script>
 </head>
-<body th:with="user=${session.user}">
+<body th:with="user=${user}">
     <header>
         <div class="bg-gray-500 border-b-4 border-b-yellow-400 grid grid-cols-3 md:grid-cols-2 py-3 px-5 md:px-10">
             <div class="md:col-span-1 col-span-2">

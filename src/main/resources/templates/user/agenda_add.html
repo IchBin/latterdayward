@@ -19,7 +19,7 @@
                 <div class="grid grid-cols-6 gap-4">
                     <div class="col-span-6">
                         <input type="hidden" th:field="*{id}" th:if="${agenda.id != null}"/>
-                        <input type="hidden" name="wardPath" th:value="${session.user.ward.path}" />
+                        <input type="hidden" name="wardPath" th:value="${user.ward.path}" />
                         <label class="form-label" for="date">Sacrament Date</label>
                         <input type="date" step="7" th:min="${#temporals.format(agenda.nextSunday(), 'yyyy-MM-dd')}" th:field="*{date}"
                                class="rounded block w-full md:w-1/4" id="date" required />
