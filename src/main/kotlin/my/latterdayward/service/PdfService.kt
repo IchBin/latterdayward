@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component
 import java.io.ByteArrayOutputStream
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-import javax.servlet.http.HttpServletResponse
+import jakarta.servlet.http.HttpServletResponse
 import kotlin.math.roundToInt
 
 @Component

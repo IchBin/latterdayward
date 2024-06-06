@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{main/master}" lang="en">
+<head />
+<body>
+<section layout:fragment="content">
+    <h3 class="font-bold text-3xl my-5">Ward Assignments</h3>
+    <div class="grid grid-cols-12 my-4">
+        <div class="col-span-12 md:col-span-5">
+
+
+        </div>
+    </div>
+
+    <div th:each="a : ${assignments}" class="grid grid-cols-12 my-4">
+        <div class="col-span-12 md:col-span-9 flex justify-between rounded-lg border border-grey-600 p-3">
+            <div><strong>Ward Assignment:</strong> <span th:text="${a.title}" /></div>
+            <div class="flex justify-end">
+                <div th:text="${#temporals.format(a.date, 'EEEE MMMM d yyyy')}"></div>
+                <div>
+                    <form th:action="@{/user/agenda/delete}" method="post">
+                        <input type="hidden" name="id" th:value="${a.id}" />
+                        <button th:formaction="@{/user/agenda/edit}" title="Edit this agenda" class="bg-amber-400 py-1 px-1.5 rounded-md ml-3">
+                            <i class="fa-solid fa-pencil text-white text-xl"></i></button>
+                        <button th:formaction="@{/user/agenda/copy}" title="Copy &amp; create a new agenda" class="bg-blue-400 py-1 px-2 rounded-md ml-3">
+                            <i class="fa-solid fa-copy text-white text-xl"></i></button>
+                        <button th:formaction="@{/user/agenda/download/{id}(id=${a.id})}" title="Download PDF" class="bg-green-400 py-1 px-2 rounded-md ml-3">
+                            <i class="fa-solid fa-download text-white text-xl"></i></button>
+                        <button class="delete_check bg-red-600 py-1 px-2 rounded-full ml-3" title="Delete this agenda">
+                            <i class="fa-solid fa-trash-can text-white text-xl"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:if="${#lists.isEmpty(agendas)}" class="col-span-12 rounded-lg border border-amber-600 md:w-1/2 w-full p-3">
+        <div class="font-bold">There are no agendas to display.</div>
+    </div>
+</section>
+</body>
+</html>

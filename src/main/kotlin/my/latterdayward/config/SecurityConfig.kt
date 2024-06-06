@@ -6,11 +6,13 @@ import my.latterdayward.interceptor.UserInterceptor
 import my.latterdayward.service.UserService
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.security.config.Customizer.withDefaults
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
+
 
 @Configuration
 @EnableWebSecurity
@@ -19,23 +21,14 @@ class SecurityConfig(
 ) {
 
     @Bean
-    @Throws(Exception::class)
-    fun filterChain(http: HttpSecurity): SecurityFilterChain? {
-        http.authorizeHttpRequests { authz ->
-                authz
-                    .antMatchers("/oauth/**", "/css/**", "/images/**", "/script/**", "/api/**", "/static-images/**", "/open/**").permitAll()
-                    .antMatchers("/**").authenticated()
-                    .and()
-                    .oauth2Login()
-                    .loginPage("/oauth/login")
-                    .defaultSuccessUrl("/user/home")
-                    .and()
-                    .logout()
-                    .logoutUrl("/oauth/logout")
-                    .invalidateHttpSession(true)
-
+    fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
+        return http.authorizeHttpRequests { authorize ->
+                authorize.requestMatchers("/oauth/**", "/css/**", "/images/**", "/script/**", "/api/**", "/static-images/**", "/open/**").permitAll()
+                    .requestMatchers("/**").authenticated()
             }
-        return http.build()
+            .oauth2Login { oauth2Login -> oauth2Login.loginPage("/oauth/login") }
+            .logout { logout -> logout.logoutUrl("/oauth/logout").invalidateHttpSession(true) }
+            .build()
     }
 
     @Bean

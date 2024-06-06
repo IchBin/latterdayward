@@ -6,8 +6,8 @@ import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.util.NestedServletException
-import javax.servlet.RequestDispatcher
-import javax.servlet.http.HttpServletRequest
+import jakarta.servlet.RequestDispatcher
+import jakarta.servlet.http.HttpServletRequest
 
 @Controller
 class MyErrorController : ErrorController {
