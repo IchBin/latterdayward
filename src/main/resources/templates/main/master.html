@@ -31,7 +31,7 @@
     </header>
 
     <div th:class="${user != null ? 'grid grid-cols-12 gap-0 md:gap-4 mb-20' : ''}">
-        <th:block th:insert="fragments/menu-fragment :: menu" th:if="${user != null}" />
+        <th:block th:insert="~{fragments/menu-fragment :: menu}" th:if="${user != null}" />
         <div class="col-span-12 md:col-span-9 mx-5">
             <th:block th:if="${messages}">
                 <div class="container" th:insert="fragments/message-fragment :: messages" />
