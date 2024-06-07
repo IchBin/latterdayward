@@ -3,10 +3,11 @@ package my.latterdayward.repo
 import my.latterdayward.data.Agenda
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
+import org.springframework.data.repository.CrudRepository
 import org.springframework.data.repository.PagingAndSortingRepository
 import java.time.LocalDate
 
-interface AgendaRepository: PagingAndSortingRepository<Agenda, String> {
+interface AgendaRepository: PagingAndSortingRepository<Agenda, String>, CrudRepository<Agenda, String> {
     fun findAllByWardPathOrderByDateDesc(path: String): List<Agenda>?
     fun findByWardPathAndDate(path: String, date: LocalDate): Agenda?
     fun deleteByWardPathAndDateLessThan(path: String, date: LocalDate): Long?

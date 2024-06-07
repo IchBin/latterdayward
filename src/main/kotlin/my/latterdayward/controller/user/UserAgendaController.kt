@@ -6,13 +6,12 @@ import my.latterdayward.data.User
 import my.latterdayward.repo.AgendaRepository
 import my.latterdayward.service.PdfService
 import org.springframework.data.domain.PageRequest
-import org.springframework.data.domain.Pageable
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import java.time.LocalDate
-import javax.servlet.http.HttpServletResponse
+import jakarta.servlet.http.HttpServletResponse
 
 @Controller
 @RequestMapping("/user/agenda")

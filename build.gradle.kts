@@ -1,14 +1,13 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 plugins {
-	id("org.springframework.boot") version "2.7.18"
-	id("io.spring.dependency-management") version "1.0.15.RELEASE"
-	kotlin("jvm") version "1.9.20"
-	kotlin("plugin.spring") version "1.9.20"
+	id("org.springframework.boot") version "3.3.0"
+	id("io.spring.dependency-management") version "1.1.5"
+	kotlin("jvm") version "2.0.0"
+	kotlin("plugin.spring") version "2.0.0"
 	// openapi via springdoc - https://github.com/springdoc/springdoc-openapi-gradle-plugin
-	id("org.springdoc.openapi-gradle-plugin") version "1.6.0"
-	id("org.siouan.frontend-jdk11") version "6.0.0"
+	id("org.springdoc.openapi-gradle-plugin") version "1.8.0"
+	id("org.siouan.frontend-jdk11") version "8.0.0"
 }
 
 group = "code.latterdayward"
@@ -16,7 +15,7 @@ version = "1.0.0"
 
 java {
 	toolchain {
-		languageVersion.set(JavaLanguageVersion.of("11"))
+		languageVersion.set(JavaLanguageVersion.of("21"))
 	}
 }
 
@@ -47,10 +46,10 @@ dependencies {
 
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
-	implementation("org.springdoc:springdoc-openapi-ui:1.7.0")
-	implementation("org.springdoc:springdoc-openapi-kotlin:1.7.0")
+	implementation("org.springdoc:springdoc-openapi-ui:1.8.0")
+	implementation("org.springdoc:springdoc-openapi-kotlin:1.8.0")
 
-	implementation("com.github.librepdf:openpdf:1.3.30")
+	implementation("com.github.librepdf:openpdf:2.0.2")
 
 	implementation(kotlin("reflect"))
 	implementation(kotlin("stdlib-jdk8"))
@@ -61,10 +60,9 @@ dependencies {
 	testImplementation("org.springframework.security:spring-security-test")
 }
 
-tasks.withType<KotlinCompile> {
-	kotlinOptions {
+kotlin {
+	compilerOptions {
 		freeCompilerArgs = listOf("-Xjsr305=strict")
-		jvmTarget = "11"
 	}
 }
 

@@ -4,7 +4,7 @@ import my.latterdayward.data.User
 import org.springframework.core.env.Environment
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ModelAttribute
-import javax.servlet.http.HttpSession
+import jakarta.servlet.http.HttpSession
 
 @ControllerAdvice
 class UserAdviceController(val env: Environment) {
