@@ -8,3 +8,4 @@ application-prod.properties
 /bin/
 .vscode/
 /node_modules/
+/.frontend-gradle-plugin/
