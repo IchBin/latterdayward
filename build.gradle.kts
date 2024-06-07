@@ -7,7 +7,7 @@ plugins {
 	kotlin("plugin.spring") version "2.0.0"
 	// openapi via springdoc - https://github.com/springdoc/springdoc-openapi-gradle-plugin
 	id("org.springdoc.openapi-gradle-plugin") version "1.8.0"
-	id("org.siouan.frontend-jdk11") version "8.0.0"
+	id("org.siouan.frontend-jdk17") version "8.0.0"
 }
 
 group = "code.latterdayward"
