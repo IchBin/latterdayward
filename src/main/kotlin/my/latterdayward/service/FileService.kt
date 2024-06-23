@@ -1,5 +1,6 @@
 package my.latterdayward.service
 
+import my.latterdayward.data.FileWrapper
 import my.latterdayward.data.User
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
@@ -34,11 +35,12 @@ class FileService {
         }
     }
 
-    fun fileList(user: User): List<File>? {
+    fun fileList(user: User): List<FileWrapper>? {
         val dir = "$path/${user.ward?.path}"
         // If it's the first time a directory will not exist. Create it!
         saveDirectory(dir)
-        return Files.list(Paths.get(dir)).map(Path::toFile).collect(Collectors.toList())
+        val files = Files.list(Paths.get(dir)).map(Path::toFile).collect(Collectors.toList())
+        return files.map { FileWrapper(it.name, it.path) }
     }
 
     fun delete(fileName: String, user: User) {
