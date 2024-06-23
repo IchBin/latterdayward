@@ -7,6 +7,7 @@ import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.util.NestedServletException
 import jakarta.servlet.RequestDispatcher
+import jakarta.servlet.ServletException
 import jakarta.servlet.http.HttpServletRequest
 
 @Controller
@@ -35,7 +36,7 @@ class MyErrorController : ErrorController {
 
     private fun getException(req: HttpServletRequest): Exception? {
         val exception = req.getAttribute(RequestDispatcher.ERROR_EXCEPTION) as Exception?
-        return if (exception is NestedServletException && exception.cause != null) {
+        return if (exception is ServletException && exception.cause != null) {
             exception.cause as Exception
         } else {
             exception
