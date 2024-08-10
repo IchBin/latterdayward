@@ -1,13 +1,14 @@
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 plugins {
-	id("org.springframework.boot") version "3.3.0"
-	id("io.spring.dependency-management") version "1.1.5"
-	kotlin("jvm") version "2.0.0"
-	kotlin("plugin.spring") version "2.0.0"
+	id("org.springframework.boot") version "3.3.2"
+	id("io.spring.dependency-management") version "1.1.6"
+	kotlin("jvm") version "2.0.10"
+	kotlin("plugin.spring") version "2.0.10"
 	// openapi via springdoc - https://github.com/springdoc/springdoc-openapi-gradle-plugin
-	id("org.springdoc.openapi-gradle-plugin") version "1.8.0"
-	id("org.siouan.frontend-jdk17") version "8.0.0"
+	id("org.springdoc.openapi-gradle-plugin") version "1.9.0"
+	// https://plugins.gradle.org/plugin/org.siouan.frontend-jdk17
+	id("org.siouan.frontend-jdk17") version "8.1.0"
 }
 
 group = "code.latterdayward"
@@ -41,23 +42,14 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
 	implementation("org.springframework.boot:spring-boot-starter-mail")
 
-	implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity5:3.1.2.RELEASE")
+	implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
 	implementation("nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect")
-
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-
 	implementation("org.springdoc:springdoc-openapi-ui:1.8.0")
 	implementation("org.springdoc:springdoc-openapi-kotlin:1.8.0")
-
-	implementation("com.github.librepdf:openpdf:2.0.2")
-
-	implementation(kotlin("reflect"))
-	implementation(kotlin("stdlib-jdk8"))
+	implementation("com.github.librepdf:openpdf:2.0.3")
 
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
-
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	testImplementation("org.springframework.security:spring-security-test")
 }
 
 kotlin {
