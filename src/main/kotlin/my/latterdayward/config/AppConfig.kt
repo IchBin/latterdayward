@@ -15,11 +15,13 @@ import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories
 import org.springframework.mail.javamail.JavaMailSenderImpl
 import org.springframework.scheduling.annotation.EnableAsync
+import org.springframework.scheduling.annotation.EnableScheduling
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
 @Configuration
 @EnableAsync
+@EnableScheduling
 @EnableMongoRepositories("my.latterdayward.repo")
 class AppConfig(private val env: Environment) : WebMvcConfigurer, AbstractMongoClientConfiguration() {
 
