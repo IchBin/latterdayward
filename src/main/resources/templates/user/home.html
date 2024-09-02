@@ -11,6 +11,9 @@
         <div class="col-span-10 md:col-span-4">
             <div th:if="${user != null}">
                 <span class="font-bold">User: </span><span th:text="${user.username}" />
+                <div th:if="${owner_user}">
+                    <span class="font-bold">Owner: </span><span th:text="${owner_user}" /> <span class="text-sm" th:text="${'('+ owner_name +')'}" />
+                </div>
             </div>
             <a th:href="@{/user/ward}" class="text-blue-600" th:if="${access_requests != null}">
                 You have Access <span class="px-1.5 bg-red-600 rounded border-black border text-white" th:text="${access_requests.size}"></span> Request

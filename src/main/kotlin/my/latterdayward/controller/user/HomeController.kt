@@ -10,7 +10,12 @@ class HomeController(private val userService: UserService) {
 
     @GetMapping("/user/home")
     fun home(model: MutableMap<String, Any?>, user: User): String {
-        model["access_requests"] = user.ward?.path?.let { userService.accessRequests(it) }
+        user.ward?.path?.let {
+            val owner = userService.findOwnerByWardPath(it)
+            model["access_requests"] = userService.accessRequests(it)
+            model["owner_user"] = owner?.username
+            model["owner_name"] = owner?.attributes?.get("name")
+        }
         return "user/home"
     }
 
