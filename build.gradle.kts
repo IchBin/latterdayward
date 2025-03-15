@@ -1,8 +1,8 @@
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 plugins {
-	id("org.springframework.boot") version "3.3.3"
-	id("io.spring.dependency-management") version "1.1.6"
+	id("org.springframework.boot") version "3.4.3"
+	id("io.spring.dependency-management") version "1.1.7"
 	kotlin("jvm") version "2.0.10"
 	kotlin("plugin.spring") version "2.0.20"
 	// openapi via springdoc - https://github.com/springdoc/springdoc-openapi-gradle-plugin
@@ -25,7 +25,7 @@ repositories {
 }
 
 frontend {
-	nodeVersion.set("21.5.0")
+	nodeVersion.set("23.9.0")
 	assembleScript.set("run build")
 	cleanScript.set("run clean")
 	checkScript.set("run check")
