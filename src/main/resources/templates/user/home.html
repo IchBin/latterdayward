@@ -11,7 +11,7 @@
         <div class="col-span-10 md:col-span-4">
             <div th:if="${user != null}">
                 <span class="font-bold">User: </span><span th:text="${user.username}" />
-                <div th:if="${owner_user}">
+                <div sec>
                     <span class="font-bold">Owner: </span><span th:text="${owner_user}" /> <span class="text-sm" th:text="${'('+ owner_name +')'}" />
                 </div>
             </div>

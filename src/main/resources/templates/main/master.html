@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <title>Latter Day Ward</title>
@@ -17,24 +18,24 @@
     <script th:src="@{/script/addins.js}"></script>
     <script th:if="${isDev}" src="https://cdn.tailwindcss.com"></script>
 </head>
-<body th:with="user=${user}">
+<body>
     <header>
         <div class="bg-gray-500 border-b-4 border-b-yellow-400 grid grid-cols-3 md:grid-cols-2 py-3 px-5 md:px-10">
             <div class="md:col-span-1 col-span-2">
                 <img th:src="@{/images/favicon.ico}" alt="" width="32" class="inline">
                 <span class="pl-3 text-white text-xl align-middle">Latter Day Ward</span>
             </div>
-            <div th:if="${user != null}" class="text-right">
+            <div sec:authorize="isAuthenticated()" class="text-right">
                 <a class="align-middle text-white" th:href="@{/oauth/logout}">LOGOUT</a>
             </div>
         </div>
     </header>
 
-    <div th:class="${user != null ? 'grid grid-cols-12 gap-0 md:gap-4 mb-20' : ''}">
-        <th:block th:insert="~{fragments/menu-fragment :: menu}" th:if="${user != null}" />
+    <div th:class="${#authorization.expression('isAuthenticated()') ? 'grid grid-cols-12 gap-0 md:gap-4 mb-20' : ''}">
+        <th:block sec:authorize="isAuthenticated()" th:insert="~{fragments/menu-fragment :: menu}" />
         <div class="col-span-12 md:col-span-9 mx-5">
             <th:block th:if="${messages}">
-                <div class="container" th:insert="fragments/message-fragment :: messages" />
+                <div class="container" th:insert="~{fragments/message-fragment :: messages}" />
             </th:block>
             <section layout:fragment="content" />
         </div>

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import java.time.LocalDate
 import jakarta.servlet.http.HttpServletResponse
+import org.springframework.security.core.annotation.AuthenticationPrincipal
 
 @Controller
 @RequestMapping("/user/agenda")
@@ -21,7 +22,7 @@ class UserAgendaController(
 ) {
 
     @GetMapping(value = ["/", ""])
-    fun home(@RequestParam(required = false) page: String?, model: MutableMap<String, Any?>, user: User): String {
+    fun home(@RequestParam(required = false) page: String?, model: MutableMap<String, Any?>, @AuthenticationPrincipal user: User): String {
         val pageable = PageRequest.of((page?.toInt()?.minus(1)) ?: 0, 10)
         model["page"] = page?.toInt() ?: 1
         model["agendas"] = repo.findAllByWardPathOrderByDateDesc(user.ward?.path!!, pageable)
@@ -63,14 +64,14 @@ class UserAgendaController(
     }
 
     @PostMapping("/delete-by-date")
-    fun deleteByDate(@RequestParam days: Long, user: User, r: RedirectAttributes, m: Messages): String {
+    fun deleteByDate(@RequestParam days: Long, @AuthenticationPrincipal user: User, r: RedirectAttributes, m: Messages): String {
         repo.deleteByWardPathAndDateLessThan(user.ward?.path!!, LocalDate.now().minusDays(days))
         r.addFlashAttribute("messages", m.success("You have successfully deleted the Sacrament agendas older than $days."))
         return "redirect:/user/agenda"
     }
 
     @PostMapping("/download/{id}")
-    fun downloadPdf(@PathVariable id: String, user: User, res: HttpServletResponse) {
+    fun downloadPdf(@PathVariable id: String, @AuthenticationPrincipal user: User, res: HttpServletResponse) {
         repo.findByIdOrNull(id)?.let {
             pdfService.generatePdf(res, it, user.ward?.title)
         }

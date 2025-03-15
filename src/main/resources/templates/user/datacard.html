@@ -12,7 +12,7 @@
             <div th:each="m, i: ${datacards}" th:with="color=${colors.nextColor(i.index)}" class="my-4">
                 <h4>
                     <span th:class="${'rounded-lg border border-'+color+'-600 text-'+color+'-800 bg-'+color+'-200 px-2 py-1'}" th:text="${m.key}" />
-                    <a class="px-2 py-1 rounded-lg text-white bg-gray-400 border border-gray-600" th:href="@{/user/datacard/order/{key}(key=${m.key})}" title="Order Cards">
+                    <a th:if="${#lists.size(m.value) > 1}" class="px-2 py-1 rounded-lg text-white bg-gray-400 border border-gray-600" th:href="@{/user/datacard/order/{key}(key=${m.key})}" title="Order Cards">
                         <i class="fa-solid fa-arrow-down-short-wide"></i>
                     </a>
                 </h4>

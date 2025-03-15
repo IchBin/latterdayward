@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import jakarta.servlet.http.HttpSession
+import org.springframework.security.core.annotation.AuthenticationPrincipal
 
 @Controller
 @RequestMapping("/user/announcement")
@@ -20,7 +21,7 @@ class UserAnnouncementController(
 ) {
 
     @GetMapping("")
-    fun home(model: MutableMap<String, Any?>, user: User): String {
+    fun home(model: MutableMap<String, Any?>, @AuthenticationPrincipal user: User): String {
         model["announcements"] = repo.findAllByWardPath(user.ward?.path!!)?.sortedBy { a -> a.dates?.first()?.date }?.groupBy { it.type }?.entries
         return "user/announcement"
     }

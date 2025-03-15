@@ -7,7 +7,7 @@
     <script th:src="@{/script/input-replication.js}"></script>
 </head>
 <body>
-<section layout:fragment="content">
+<section layout:fragment="content" th:with="user=${#authentication.principal}">
     <div class="grid grid-cols-12">
         <div class="col-span-12">
             <h3 class="font-bold text-3xl my-4">Add a DataCard</h3>

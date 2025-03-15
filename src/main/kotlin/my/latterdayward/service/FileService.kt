@@ -22,11 +22,15 @@ class FileService {
 
     fun uploadFile(file: MultipartFile, user: User) {
         validateFile(file)
-        val fileName = file.originalFilename
+        val fileName = Paths.get(file.originalFilename!!).fileName.toString()
         val inputStream = file.inputStream
-        val directory = "$path/${user.ward?.path}"
+        val directory = Paths.get("$path/${user.ward?.path}").toAbsolutePath().normalize()
+        val targetPath = directory.resolve(fileName).normalize()
+        if (!targetPath.startsWith(directory)) {
+            throw FileStorageException("Cannot store file outside current directory.")
+        }
         try {
-            Files.copy(inputStream, Paths.get("$directory/$fileName"), StandardCopyOption.REPLACE_EXISTING)
+            Files.copy(inputStream, targetPath, StandardCopyOption.REPLACE_EXISTING)
         } catch (e: IOException) {
             val msg = "Failed to store file $fileName"
             println("Exception $e")
@@ -38,13 +42,13 @@ class FileService {
         val dir = "$path/${user.ward?.path}"
         // If it's the first time a directory will not exist. Create it!
         saveDirectory(dir)
-        val files = Files.list(Paths.get(dir)).map(Path::toFile).collect(Collectors.toList())
+        val files = Files.list(Paths.get(dir).normalize()).map(Path::toFile).collect(Collectors.toList())
         return files.map { FileWrapper(it.name, it.path) }
     }
 
     fun delete(fileName: String, user: User) {
         val path = "$path/${user.ward?.path}/$fileName"
-        Files.delete(Paths.get(path))
+        Files.delete(Paths.get(path).normalize())
     }
 
     fun validateFile(file: MultipartFile?) {
@@ -59,7 +63,7 @@ class FileService {
     }
 
     private fun saveDirectory(dir: String) {
-        val directory = Paths.get(dir)
+        val directory = Paths.get(dir).normalize()
         if (!Files.exists(directory)) {
             Files.createDirectory(directory)
         }

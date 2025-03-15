@@ -5,13 +5,17 @@ import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 import org.springframework.data.mongodb.core.mapping.Field
 import org.springframework.format.annotation.DateTimeFormat
+import org.springframework.security.core.GrantedAuthority
+import org.springframework.security.core.authority.SimpleGrantedAuthority
+import org.springframework.security.oauth2.core.user.OAuth2User
 import java.time.LocalDateTime
 
 @Document("users")
 class User(
     @Id
     var id: ObjectId?,
-    var username: String,
+    @Field("username")
+    var userName: String,
     var active: Boolean,
     var created: LocalDateTime,
     @Field("api_access")
@@ -19,10 +23,11 @@ class User(
     var admin: Boolean,
     var apiActive: Boolean,
     var ward: Ward? = null,
-    var attributes: Map<String, Any?>? = null,
+    @Field("attributes")
+    var oauthAttributes: Map<String, Any?>? = null,
     var role: Role? = null,
     var accessRequest: AccessRequest? = null
-) {
+): OAuth2User {
 
     fun hasWard(): Boolean {
         return ward != null
@@ -85,6 +90,31 @@ class User(
         apiToken = from.apiToken
         return this
     }
+
+    override fun getAttributes(): Map<String, Any?>? {
+        return oauthAttributes
+    }
+
+    override fun getAuthorities(): Collection<GrantedAuthority?>? {
+        val authorities = mutableListOf<GrantedAuthority>()
+        if (admin) {
+            authorities.add(SimpleGrantedAuthority("ROLE_ADMIN"))
+        }
+        if (isOwner() || admin) {
+            authorities.add(SimpleGrantedAuthority("ROLE_OWNER"))
+        }
+        if (isPublisher() || admin || isOwner()) {
+            authorities.add(SimpleGrantedAuthority("ROLE_PUBLISHER"))
+        }
+        if (isEditor() || admin || isOwner() || isPublisher()) {
+            authorities.add(SimpleGrantedAuthority("ROLE_EDITOR"))
+        }
+        return authorities
+    }
+
+    override fun getName(): String? {
+        return userName
+    }
 }
 
 enum class Role {
@@ -92,9 +122,10 @@ enum class Role {
     EDITOR,
     PUBLISHER
 }
+
 class UserForm {
     var id: ObjectId? = null
-    var username: String = ""
+    var userName: String = ""
     var active: Boolean = false
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     var created: LocalDateTime? = null
@@ -103,8 +134,8 @@ class UserForm {
 
     fun toUser(user: User): User {
         val token = ApiToken(user.apiToken?.id, user.apiToken?.token, user.apiToken?.expires)
-        return User(user.id, user.username, active, user.created,
-            token, admin, apiActive, user.ward, user.attributes, user.role, user.accessRequest)
+        return User(user.id, userName, active, user.created,
+            token, admin, apiActive, user.ward, user.oauthAttributes, user.role, user.accessRequest)
     }
 }
 

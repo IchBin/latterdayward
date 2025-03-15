@@ -3,7 +3,8 @@ package my.latterdayward.controller.user
 import my.latterdayward.data.ApiToken
 import my.latterdayward.data.Messages
 import my.latterdayward.data.User
-import my.latterdayward.service.UserService
+import my.latterdayward.service.CustomOauth2UserService
+import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
@@ -15,11 +16,11 @@ import java.util.*
 @Controller
 @RequestMapping("/user/token")
 class TokenController(
-    private val userService: UserService
+    private val userService: CustomOauth2UserService
 ) {
 
     @GetMapping("")
-    fun home(model: MutableMap<String, Any?>, user: User): String {
+    fun home(model: MutableMap<String, Any?>, @AuthenticationPrincipal user: User): String {
         user.ward?.let {
             model["token"] = user.apiToken ?: ApiToken()
         } ?: run {
@@ -30,7 +31,8 @@ class TokenController(
     }
 
     @PostMapping("/create")
-    fun createToken(user: User, r: RedirectAttributes, m: Messages): String {
+    fun createToken(@AuthenticationPrincipal user: User, r: RedirectAttributes, m: Messages): String {
+        // TODO: Check if token already exists. Get another one if the same one already exists?
         user.apiToken = ApiToken(null, token = generateToken(), expires = LocalDateTime.now().plusYears(2))
         userService.save(user)
         r.addFlashAttribute("messages", m.success("Success!", "A token has been created."))
@@ -38,7 +40,7 @@ class TokenController(
     }
 
     @PostMapping("/delete")
-    fun deleteToken(user: User, r: RedirectAttributes, m: Messages): String {
+    fun deleteToken(@AuthenticationPrincipal user: User, r: RedirectAttributes, m: Messages): String {
         user.apiToken = null
         userService.save(user)
         r.addFlashAttribute("messages", m.success("Success!", "A token has been deleted."))

@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-ui@1.13.2/themes/base/autocomplete.min.css">
 </head>
 <body>
-<section layout:fragment="content">
+<section layout:fragment="content" th:with="user=${#authentication.principal}">
     <div class="grid grid-cols-10">
         <div class="col-span-10">
             <h3 class="font-bold text-3xl my-4" th:text="${agenda.id != null ? 'Edit Sacrament Agenda' : 'Add Sacrament Agenda'}"></h3>

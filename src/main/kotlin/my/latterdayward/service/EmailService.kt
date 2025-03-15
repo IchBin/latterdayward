@@ -36,9 +36,9 @@ class EmailService(
     fun sendAccessRequestEmail(accessRequest: AccessRequest, user: User, owner: User) {
         val message = MailMessage()
         message.subject = "Access Request"
-        message.to = owner.username
+        message.to = owner.userName
         message.from = adminEmail!!
-        message.body = """User: <strong>${user.username}</strong> has requested ${accessRequest.role} access for ${accessRequest.ward}. 
+        message.body = """User: <strong>${user.userName}</strong> has requested ${accessRequest.role} access for ${accessRequest.ward}. 
                 | Login to <a href="$domain/user/ward">$domain</a> to approve or deny this request.""".trimMargin()
         send(message)
     }
@@ -46,7 +46,7 @@ class EmailService(
     fun sendAccessApproval(user: User, role: Role) {
         val message = MailMessage()
         message.subject = "Access Request Approved"
-        message.to = user.username
+        message.to = user.userName
         message.from = adminEmail!!
         message.body = """You have been approved with <strong>$role</strong> access for ${user.ward?.path}. 
                 | Login to <a href="$domain">$domain</a> to update your ward content.""".trimMargin()
@@ -56,17 +56,17 @@ class EmailService(
     fun sendAccessDeny(user: User, role: Role, path: String, owner: User) {
         val message = MailMessage()
         message.subject = "Access Request Denied"
-        message.to = user.username
+        message.to = user.userName
         message.from = adminEmail!!
         message.body = """You have been denied or removed as a <strong>$role</strong> for $path.
-                | If you feel this is an error, you should contact the <a href="mailto:${owner.username}">ward owner</a>.""".trimMargin()
+                | If you feel this is an error, you should contact the <a href="mailto:${owner.userName}">ward owner</a>.""".trimMargin()
         send(message)
     }
 
     fun sendTokenExpirationEmail(owner: User) {
         val message = MailMessage()
         message.subject = "Attention: Your Ward website token is about to expire"
-        message.to = owner.username
+        message.to = owner.userName
         message.from = adminEmail!!
         val expires = owner.apiToken?.expires?.format(DateTimeFormatter.ofPattern("MM/dd/yyyy:HH:mm"))
         message.body = """Your API token at https://api.latterdayward.com is about to expire. 

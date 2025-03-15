@@ -5,7 +5,7 @@
       layout:decorate="~{main/master}" lang="en">
 <head />
 <body>
-<section layout:fragment="content">
+<section layout:fragment="content" th:with="user=${#authentication.principal}">
     <div class="grid grid-cols-10 gap-4">
         <!--/*@thymesVar id="token" type="my.latterdayward.data.ApiToken"*/-->
         <div class="col-span-10">

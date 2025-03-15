@@ -2,7 +2,7 @@ package my.latterdayward.controller.admin
 
 import my.latterdayward.data.Messages
 import my.latterdayward.data.Role
-import my.latterdayward.service.UserService
+import my.latterdayward.service.CustomOauth2UserService
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -11,7 +11,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes
 
 @Controller
 @RequestMapping("/admin/access")
-class AccessAdminController(private val userService: UserService) {
+class AccessAdminController(private val userService: CustomOauth2UserService) {
 
     @PostMapping("/approve")
     fun approveAccess(@RequestParam username: String, @RequestParam owner: String, @RequestParam role: Role, r: RedirectAttributes, m: Messages): String {

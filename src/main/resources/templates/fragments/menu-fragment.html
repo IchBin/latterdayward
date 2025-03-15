@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="https://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
       layout:decorate="~{main/master}" lang="en">
 <head />
 <body>
@@ -22,26 +23,26 @@
                     <a class="block bg-gray-200 p-3 pl-5 hover:bg-gray-400 border-b border-gray-400"
                        th:href="@{/user/ward}">Ward</a>
                     <a class="block bg-gray-200 p-3 pl-5 hover:bg-gray-400 border-b border-gray-400"
-                       th:if="${user.isOwner()}" th:href="@{/user/token}">Token</a>
+                       sec:authorize="hasAnyAuthority('ROLE_OWNER')" th:href="@{/user/token}">Token</a>
                     <a class="block bg-gray-200 p-3 pl-5 hover:bg-gray-400 border-b border-gray-400"
-                       th:if="${user.editorAccess()}" th:href="@{/user/announcement}">Announcements</a>
+                       sec:authorize="hasAnyAuthority('ROLE_EDITOR')" th:href="@{/user/announcement}">Announcements</a>
                     <a class="block bg-gray-200 p-3 pl-8 hover:bg-gray-400 border-b border-gray-400"
-                       th:if="${user.editorAccess()}" th:href="@{/user/announcement/add}">Add Announcement</a>
+                       sec:authorize="hasAnyAuthority('ROLE_EDITOR')" th:href="@{/user/announcement/add}">Add Announcement</a>
                     <a class="block bg-gray-200 p-3 pl-5 hover:bg-gray-400 border-b border-gray-400"
-                       th:if="${user.publisherAccess()}" th:href="@{/user/datacard}">DataCards</a>
+                       sec:authorize="hasAnyAuthority('ROLE_PUBLISHER')" th:href="@{/user/datacard}">DataCards</a>
                     <a class="block bg-gray-200 p-3 pl-8 hover:bg-gray-400 border-b border-gray-400"
-                       th:if="${user.publisherAccess()}" th:href="@{/user/datacard/add}">Add DataCard</a>
+                       sec:authorize="hasAnyAuthority('ROLE_PUBLISHER')" th:href="@{/user/datacard/add}">Add DataCard</a>
                     <a class="block bg-gray-200 p-3 pl-5 hover:bg-gray-400 border-b border-gray-400"
-                       th:if="${user.publisherAccess()}" th:href="@{/user/agenda}">Sacrament Agenda</a>
+                       sec:authorize="hasAnyAuthority('ROLE_PUBLISHER')" th:href="@{/user/agenda}">Sacrament Agenda</a>
                     <a class="block bg-gray-200 p-3 pl-8 hover:bg-gray-400 border-b border-gray-400"
-                       th:if="${user.publisherAccess()}" th:href="@{/user/agenda/add}">Add Agenda</a>
+                       sec:authorize="hasAnyAuthority('ROLE_PUBLISHER')" th:href="@{/user/agenda/add}">Add Agenda</a>
                     <a class="block bg-gray-200 p-3 pl-5 hover:bg-gray-400 border-b border-gray-400"
-                       th:if="${user.publisherAccess()}" th:href="@{/user/schedule}">Schedule</a>
+                       sec:authorize="hasAnyAuthority('ROLE_PUBLISHER')" th:href="@{/user/schedule}">Schedule</a>
                     <a class="block bg-gray-200 p-3 pl-8 hover:bg-gray-400 border-b border-gray-400"
-                       th:if="${user.publisherAccess()}" th:href="@{/user/schedule/add}">Add Meeting</a>
+                       sec:authorize="hasAnyAuthority('ROLE_PUBLISHER')" th:href="@{/user/schedule/add}">Add Meeting</a>
                     <a class="block bg-gray-200 p-3 pl-5 hover:bg-gray-400 border-b border-gray-400"
-                       th:if="${user.publisherAccess()}" th:href="@{/user/file}">File Upload</a>
-                    <th:block th:if="${user.admin}">
+                       sec:authorize="hasAnyAuthority('ROLE_PUBLISHER')" th:href="@{/user/file}">File Upload</a>
+                    <th:block sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
                         <div class="p-3 pl-5 bg-black text-white">Administration</div>
                         <a class="block bg-gray-200 p-3 pl-5 hover:bg-gray-400 border-b border-gray-400"
                            th:href="@{/admin/user}">User</a>

@@ -5,7 +5,7 @@ import my.latterdayward.data.Messages
 import my.latterdayward.data.Role
 import my.latterdayward.data.User
 import my.latterdayward.service.EmailService
-import my.latterdayward.service.UserService
+import my.latterdayward.service.CustomOauth2UserService
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -13,17 +13,17 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import jakarta.servlet.http.HttpSession
+import org.springframework.security.core.annotation.AuthenticationPrincipal
 
 @Controller
 @RequestMapping("/user/access")
 class AccessController(
-    private val userService: UserService,
+    private val userService: CustomOauth2UserService,
     private val emailService: EmailService
 ) {
 
     @PostMapping("/request")
-    fun editorAccess(accessRequest: AccessRequest, session: HttpSession, r: RedirectAttributes, m: Messages) : String {
-        val user = session.getAttribute("user") as User
+    fun editorAccess(@AuthenticationPrincipal user: User, accessRequest: AccessRequest, session: HttpSession, r: RedirectAttributes, m: Messages) : String {
         user.accessRequest = accessRequest
         userService.save(user)
         accessRequest.ward?.let {
@@ -34,7 +34,7 @@ class AccessController(
     }
 
     @PostMapping("/approve")
-    fun approveAccess(@RequestParam username: String, @RequestParam role: Role, user: User, r: RedirectAttributes, m: Messages): String {
+    fun approveAccess(@RequestParam username: String, @RequestParam role: Role, @AuthenticationPrincipal user: User, r: RedirectAttributes, m: Messages): String {
         val applicant = userService.findUserByUserName(username)
         applicant?.ward = user.ward
         userService.save(applicant?.approveAccess(role)!!)
@@ -44,7 +44,7 @@ class AccessController(
     }
 
     @PostMapping("/deny")
-    fun denyAccess(@RequestParam username: String, r: RedirectAttributes, m: Messages, owner: User): String {
+    fun denyAccess(@RequestParam username: String, r: RedirectAttributes, m: Messages, @AuthenticationPrincipal owner: User): String {
         val user = userService.findUserByUserName(username)
         val role = user?.accessRequest?.role ?: user?.role
         val path = user?.ward?.path ?: owner.ward?.path

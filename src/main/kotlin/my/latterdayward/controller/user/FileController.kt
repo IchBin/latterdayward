@@ -8,6 +8,7 @@ import org.apache.tomcat.util.http.fileupload.impl.FileSizeLimitExceededExceptio
 import org.apache.tomcat.util.http.fileupload.impl.SizeLimitExceededException
 import org.springframework.core.env.Environment
 import org.springframework.core.env.get
+import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
@@ -20,20 +21,20 @@ class FileController(
 ) {
 
     @GetMapping(value = ["", "/"])
-    fun home(model: MutableMap<String, Any?>, user: User): String {
+    fun home(model: MutableMap<String, Any?>, @AuthenticationPrincipal user: User): String {
         model["files"] = fileService.fileList(user)
         return "user/file"
     }
 
     @PostMapping("/upload", consumes = ["multipart/form-data"])
-    fun upload(@RequestParam file: MultipartFile, r: RedirectAttributes, m: Messages, user: User): String {
+    fun upload(@RequestParam file: MultipartFile, r: RedirectAttributes, m: Messages, @AuthenticationPrincipal user: User): String {
         fileService.uploadFile(file, user)
         r.addFlashAttribute("messages", m.success("Succesfully uploaded ${file.name}"))
         return "redirect:/user/file"
     }
 
     @PostMapping("/delete")
-    fun delete(@RequestParam imageId: String, r: RedirectAttributes, m: Messages, user: User): String {
+    fun delete(@RequestParam imageId: String, r: RedirectAttributes, m: Messages, @AuthenticationPrincipal user: User): String {
         fileService.delete(imageId, user)
         r.addFlashAttribute("messages", m.success("Succesfully deleted $imageId"))
         return "redirect:/user/file"
