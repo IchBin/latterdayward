@@ -10,12 +10,12 @@
     <div class="grid grid-cols-12 my-4">
         <div class="col-span-12 md:col-span-5">
             <form th:action="@{/user/agenda/delete-by-date}" method="post">
-                <select class="form-select rounded" id="days" name="days">
+                <select class="form-select rounded-sm" id="days" name="days">
                     <option value="30">Agendas older than 30 days</option>
                     <option value="60">Agendas older than 60 days</option>
                     <option value="90">Agendas older than 90 days</option>
                 </select>
-                <button type="submit" class="delete_check rounded border-red-600 bg-red-400 border py-2 px-3">Delete</button>
+                <button type="submit" class="delete_check rounded-sm border-red-600 bg-red-400 border py-2 px-3">Delete</button>
             </form>
 
         </div>
@@ -23,15 +23,15 @@
             <nav aria-label="Page navigation example">
                 <ul class="list-style-none flex justify-end">
                     <li th:if="${agendas.totalPages > 1 and page > 1}">
-                        <a class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:hover:bg-neutral-700 dark:hover:text-white"
+                        <a class="relative block rounded-sm bg-transparent px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:hover:bg-neutral-700 dark:hover:text-white"
                            th:href="@{/user/agenda(page=${page - 1})}">Previous</a>
                     </li>
                     <li th:each="n : ${#numbers.sequence(1, agendas.totalPages, 1)}">
-                        <a th:classappend="${page == n ? 'bg-slate-200' : 'bg-primary-100'}" class="relative block rounded px-3 py-1.5 text-sm font-medium text-primary-700 transition-all duration-300 hover:bg-neutral-100 dark:hover:bg-neutral-700 dark:hover:text-white"
+                        <a th:classappend="${page == n ? 'bg-slate-200' : 'bg-primary-100'}" class="relative block rounded-sm px-3 py-1.5 text-sm font-medium text-primary-700 transition-all duration-300 hover:bg-neutral-100 dark:hover:bg-neutral-700 dark:hover:text-white"
                            th:href="@{/user/agenda(page=${n})}" th:text="${n}"></a>
                     </li>
                     <li th:if="${page < agendas.totalPages}">
-                        <a class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:hover:bg-neutral-700 dark:hover:text-white"
+                        <a class="relative block rounded-sm bg-transparent px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:hover:bg-neutral-700 dark:hover:text-white"
                            th:href="@{/user/agenda(page=${page + 1})}" >Next</a>
                     </li>
                 </ul>
@@ -53,7 +53,7 @@
                             <i class="fa-solid fa-copy text-white text-xl"></i></button>
                         <button th:formaction="@{/user/agenda/download/{id}(id=${a.id})}" title="Download PDF" class="bg-green-400 py-1 px-2 rounded-md ml-3">
                             <i class="fa-solid fa-download text-white text-xl"></i></button>
-                        <button class="delete_check bg-red-600 py-1 px-2 rounded-full ml-3" title="Delete this agenda">
+                        <button class="delete_check bg-red-600 py-1 px-2 rounded-sm ml-3" title="Delete this agenda">
                             <i class="fa-solid fa-trash-can text-white text-xl"></i></button>
                     </form>
                 </div>

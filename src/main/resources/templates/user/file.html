@@ -13,15 +13,15 @@
         </div>
         <div class="col-span-12">
             <form th:action="@{/user/file/upload}" method="post" enctype="multipart/form-data">
-                <input class="form-input p-2 rounded" type="file" name="file" id="file" accept=".jpg, .png, .gif, .webp, .jpeg, .pdf" />
-                <button type="submit" class="bg-blue-400 border border-blue-600 rounded p-2.5 mt-3 w-full md:w-auto">Submit</button>
+                <input class="form-input p-2 rounded-sm" type="file" name="file" id="file" accept=".jpg, .png, .gif, .webp, .jpeg, .pdf" />
+                <button type="submit" class="bg-blue-400 border border-blue-600 rounded-sm p-2.5 mt-3 w-full md:w-auto">Submit</button>
                 <div class="text-blue-600">Allowed file types: .jpg, .png, .gif, .webp, .jpeg, .pdf</div>
             </form>
         </div>
 
         <div th:if="${!#lists.isEmpty(files)}" class="col-span-12" th:with="wardPath=${user.ward.path}">
             <div th:each="f, i : ${files}">
-                <div class="flex flex-row border border-grey-600 rounded p-4 my-2">
+                <div class="flex flex-row border border-grey-600 rounded-sm p-4 my-2">
                     <div class="basis-full hidden md:block md:basis-1/5 my-auto md:my-0">
                         <img th:if="${!#strings.endsWith(f.name, 'pdf')}" th:src="@{/static-images/{ward}/{file}(ward=${wardPath},file=${f.name})}" th:alt="${f.name}" width="75" height="75" />
                         <i th:if="${#strings.endsWith(f.name, 'pdf')}" class="fa-solid fa-file-pdf text-xl"></i>
@@ -41,7 +41,7 @@
                                th:data-id="${i.index}" title="Copy Image URL">
                                 <i class="fa-regular fa-copy text-xl text-white"></i>
                             </a>
-                            <button class=" md:mt-0 mt-6 delete_check bg-red-600 py-1 px-2 rounded-full" title="Delete Image">
+                            <button class=" md:mt-0 mt-6 delete_check bg-red-600 py-1 px-2 rounded-sm" title="Delete Image">
                                 <i class="fa-solid text-xl fa-trash-can text-white"></i></button>
                         </form>
                     </div>

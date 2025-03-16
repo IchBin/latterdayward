@@ -12,9 +12,9 @@
         </div>
         <div class="col-span-6 my-auto">
             Create Example Schedule:
-            <a class="border border-blue-400 bg-blue-200 px-2 py-1 rounded block md:inline my-2 md:my-0" th:href="@{/user/schedule/example/WARD}">Ward</a>
-            <a class="border border-violet-400 bg-violet-200 px-2 py-1 rounded block md:inline my-2 md:my-0" th:href="@{/user/schedule/example/STAKE}">Stake</a>
-            <a class="border border-orange-400 bg-orange-200 px-2 py-1 rounded block md:inline my-2 md:my-0" th:href="@{/user/schedule/example/CONFERENCE}">Conference</a>
+            <a class="border border-blue-400 bg-blue-200 px-2 py-1 rounded-sm block md:inline my-2 md:my-0" th:href="@{/user/schedule/example/WARD}">Ward</a>
+            <a class="border border-violet-400 bg-violet-200 px-2 py-1 rounded-sm block md:inline my-2 md:my-0" th:href="@{/user/schedule/example/STAKE}">Stake</a>
+            <a class="border border-orange-400 bg-orange-200 px-2 py-1 rounded-sm block md:inline my-2 md:my-0" th:href="@{/user/schedule/example/CONFERENCE}">Conference</a>
         </div>
         <div class="col-span-12">
             <div class="grid grid-cols-12 my-4" th:each="s, i: ${schedule}">
@@ -25,7 +25,7 @@
                             <span th:class="'px-4 py-1 rounded-lg text-slate-800 bg-slate-100 border border-slate-800'" th:text="${s.time}"></span>
                             <div class="float-right inline">
                                 <form class="inline mr-4" method="post" th:action="@{/user/schedule/delete/{id}(id=${s.id})}">
-                                    <button type="submit" class="delete_check bg-red-600 py-1 px-2 rounded-full"><i class="fa-solid text-xl fa-trash-can text-white md:m-0 m-3"></i></button>
+                                    <button type="submit" class="delete_check bg-red-600 py-1 px-2 rounded-sm"><i class="fa-solid text-xl fa-trash-can text-white md:m-0 m-3"></i></button>
                                 </form>
                                 <a th:href="@{/user/schedule/edit/{id}(id=${s.id})}" class="bg-amber-400 py-1.5 px-1.5 rounded-md"><i class="fa-solid text-xl fa-pencil text-white"></i></a>
                             </div>

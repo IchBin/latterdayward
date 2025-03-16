@@ -1,3 +1,17 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@layer base {
+    input, textarea, select {
+        @apply !px-3 !py-2 drop-shadow-sm !rounded-md !border !border-solid !border-gray-300;
+    }
+
+    /* Style specific input types */
+    input[type="text"], input[type="email"] {
+        @apply bg-white;
+    }
+
+    /* Focus states */
+    input:focus, select:focus, textarea:focus {
+        @apply !ring-2 !ring-yellow-400 !border-yellow-400 !outline-none;
+    }
+}
