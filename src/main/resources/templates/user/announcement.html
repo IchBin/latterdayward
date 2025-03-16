@@ -8,7 +8,7 @@
 <section layout:fragment="content">
     <h3 class="font-bold text-3xl my-5">Ward Announcements</h3>
     <th:block th:each="g : ${announcements}">
-        <h4 class="rounded-sm bg-gray-200 border border-gray-600 p-1 inline" th:text="${g.key}"></h4>
+        <h4 class="rounded-md bg-gray-200 border border-gray-600 p-1 inline" th:text="${g.key}"></h4>
         <div th:each="a : ${g.value}"
              th:class="${a.pastDue()} ? 'border border-red-600 flex flex-row flex-wrap my-2 p-4 rounded-lg' : 'flex flex-row my-2 border border-gray-600 flex-wrap rounded-lg p-4'">
             <div class="basis-full md:basis-2/5">
@@ -16,7 +16,7 @@
                     <b th:text="${a.title}" />
                     <span th:if="${a.pastDue()}" class="text-red-600"> - * Past Due</span>
                 </p>
-                <p><b>ID: </b> <span class="text-sm px-1 bg-gray-200 border border-black rounded-sm" th:text="${a.id}" /></p>
+                <p><b>ID: </b> <span class="text-sm px-1 bg-gray-200 border border-black rounded-md" th:text="${a.id}" /></p>
                 <p><b>Description: </b><span th:text="${#strings.abbreviate(a.description,120)}" /></p>
             </div>
             <div class="basis-full md:basis-2/5 md:px-7">
@@ -46,8 +46,8 @@
                 <span>
                     <form th:action="@{/user/announcement/delete}" method="post" class="inline float-right">
                         <input type="hidden" name="id" th:value="${a.id}" />
-                        <button class="delete_check bg-red-600 py-1 px-2 rounded-sm"><i class="fa-solid fa-trash-can text-xl text-white"></i></button>
-                        <button th:formaction="@{/user/announcement/edit}" class="bg-amber-400 py-1 px-1.5 rounded-md"><i class="fa-solid text-xl fa-pencil text-white"></i></button>
+                        <button class="delete_check py-1 px-2"><i class="fa-solid fa-trash-can text-xl text-red-600"></i></button>
+                        <button th:formaction="@{/user/announcement/edit}" class="py-1 px-1.5"><i class="fa-solid text-xl fa-pencil text-amber-400"></i></button>
                     </form>
                 </span>
             </div>

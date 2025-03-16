@@ -23,6 +23,7 @@ class SecurityConfig(
                     .requestMatchers("/user/announcement/**").hasRole("EDITOR")
                     .requestMatchers("/user/datacard/**").hasRole("PUBLISHER")
                     .requestMatchers("/user/schedule/**").hasRole("PUBLISHER")
+                    .requestMatchers("/user/agenda/**").hasRole("PUBLISHER")
                     .requestMatchers("/user/file/**").hasRole("PUBLISHER")
                     .requestMatchers("/user/transfer/**").hasRole("OWNER")
                     .requestMatchers("/**").authenticated()
@@ -31,6 +32,14 @@ class SecurityConfig(
                 oauth2Login
                     .loginPage("/oauth/login")
                     .userInfoEndpoint { userInfo -> userInfo.userService(userService) }
+                    /*.successHandler { request, response, authentication ->
+                        // Force reload user data here
+                        val oauth2User = authentication.principal as User
+                        val refreshedUser = userService.findUserByUserName(oauth2User.userName)
+                        // Update authentication
+                        // Then redirect
+                        response.sendRedirect("/user/home")
+                    }*/
             }
             .logout { logout -> logout.logoutUrl("/oauth/logout").invalidateHttpSession(true) }
             .build()

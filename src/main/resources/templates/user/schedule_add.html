@@ -16,32 +16,32 @@
                 <div class="grid grid-cols-12 gap-4 w-full md:w-2/3">
                     <div class="col-span-12 md:col-span-6">
                         <label for="time">Meeting Time</label>
-                        <input type="text" th:field="*{time}" class="rounded-sm block" id="time" placeholder="i.e. 10:00AM"/>
+                        <input type="text" th:field="*{time}" class="rounded-md block" id="time" placeholder="i.e. 10:00AM"/>
                     </div>
                     <div class="col-span-12 md:col-span-6">
                         <label for="color">Custom Color</label>
-                        <input type="text" th:field="*{color}" class="rounded-sm block" id="color" placeholder="i.e. green"/>
+                        <input type="text" th:field="*{color}" class="rounded-md block" id="color" placeholder="i.e. green"/>
                     </div>
                     <div class="col-span-12">
                         <label for="color">Override Date</label>
-                        <input type="date" step="7" th:min="${#temporals.format(form.nextSunday(), 'yyyy-MM-dd')}" th:field="*{dateOverride}" class="rounded-sm block" id="dateOverride" />
+                        <input type="date" step="7" th:min="${#temporals.format(form.nextSunday(), 'yyyy-MM-dd')}" th:field="*{dateOverride}" class="rounded-md block" id="dateOverride" />
                         <div class="text-blue-400 text-sm">
                             <strong>Note:</strong> The override date can be used to customize a schedule for one weekend. If the upcoming
                             Sunday matches the override date, that schedule will be returned instead of the schedule without an override date.
                             Use this option for Stake Conference or General Conference weekends etc.
                         </div>
-                        <button type="submit" class="border border-blue-600 bg-blue-400 p-2 my-2 rounded-sm">Save</button>
+                        <button type="submit" class="border border-blue-600 bg-blue-400 p-2 my-2 rounded-md">Save</button>
                     </div>
                 </div>
             </form>
             <div class="grid grid-cols-12 gap-4 w-full">
                 <div class="col-span-12 md:col-span-6" th:if="${form.id != null}">
                     <h4 class="font-bold text-xl my-3">Meetings for this time slot</h4>
-                    <a th:href="@{/user/schedule/add/{id}(id=${form.id})}" class="border border-violet-600 bg-violet-200 p-2 rounded-sm my-2">Add Meeting Event</a>
+                    <a th:href="@{/user/schedule/add/{id}(id=${form.id})}" class="border border-violet-600 bg-violet-200 p-2 rounded-md my-2">Add Meeting Event</a>
                 </div>
                 <div class="col-span-12 md:w-3/5 w-full">
-                    <p class="rounded-sm bg-gray-200 border border-gray-600 p-2" th:if="${form.id == null}">In order to add a meeting event, the Schedule must first be saved.</p>
-                    <p class="rounded-sm bg-gray-200 border border-gray-600 p-2" th:if="${form.id != null && #lists.isEmpty(form.events)}">There are no meeting events for this time.</p>
+                    <p class="rounded-md bg-gray-200 border border-gray-600 p-2" th:if="${form.id == null}">In order to add a meeting event, the Schedule must first be saved.</p>
+                    <p class="rounded-md bg-gray-200 border border-gray-600 p-2" th:if="${form.id != null && #lists.isEmpty(form.events)}">There are no meeting events for this time.</p>
                 </div>
                 <div class="col-span-12" th:if="${!#lists.isEmpty(form.events)}">
                     <div class="flex flex-row flex-wrap gap-4">
@@ -52,12 +52,12 @@
                             <p><span class="font-bold">Description: </span><span th:text="${e.description}"></span></p>
                             <p><span class="font-bold">Sundays: </span><span th:text="${e.sundays}"></span></p>
                             <div class="mt-6 flex justify-between">
-                                <a th:href="@{/user/schedule/edit/{id}/{meeting}(id=${form.id}, meeting=${i.index})}" class="delete_event bg-amber-400 py-1 px-1.5 rounded-md"
-                                   th:data-edit-id="${i.index}"><i class="fa-solid fa-pencil text-white text-xl"></i>
+                                <a th:href="@{/user/schedule/edit/{id}/{meeting}(id=${form.id}, meeting=${i.index})}" class="delete_event py-1 px-1.5"
+                                   th:data-edit-id="${i.index}"><i class="fa-solid fa-pencil text-amber-400 text-xl"></i>
                                 </a>
                                 <form method="post" th:action="@{/user/schedule/delete/{id}/{meeting}(id=${form.id}, meeting=${i.index})}">
-                                    <button type="submit" class="delete_check bg-red-600 py-1 px-2 rounded-sm"
-                                       th:data-delete-id="${i.index}"><i class="fa-solid fa-trash-can text-white text-xl"></i>
+                                    <button type="submit" class="delete_check py-1 px-2"
+                                       th:data-delete-id="${i.index}"><i class="fa-solid fa-trash-can text-red-600 text-xl"></i>
                                     </button>
                                 </form>
                             </div>

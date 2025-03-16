@@ -15,15 +15,15 @@
                 <div class="grid grid-cols-12 gap-4">
                     <div class="col-span-12 md:col-span-3">
                         <label for="title">Title</label>
-                        <input type="text" th:field="*{title}" name="title" id="title" class="block rounded-sm" />
+                        <input type="text" th:field="*{title}" name="title" id="title" class="block rounded-md" />
                     </div>
                     <div class="col-span-12 md:col-span-3">
                         <label for="subtitle">SubTitle</label>
-                        <input type="text" th:field="*{subtitle}" name="subtitle" id="subtitle" class="block rounded-sm" />
+                        <input type="text" th:field="*{subtitle}" name="subtitle" id="subtitle" class="block rounded-md" />
                     </div>
                     <div class="col-span-12 md:col-span-3">
                         <label for="description">Description</label>
-                        <input type="text" th:field="*{description}" name="description" id="description" class="block rounded-sm" />
+                        <input type="text" th:field="*{description}" name="description" id="description" class="block rounded-md" />
                     </div>
                     <div class="col-span-12">
                         <h5>Sunday's this meeting are on</h5>
@@ -56,7 +56,7 @@
                         <div class="flex flex-row flex-wrap">
                             <div class="basis-full md:basis-2/5"><h5 class="font-bold text-xl my-3">Image</h5></div>
                             <div class="basis-full md:basis-1/5"><p class="hidden copy-url text-blue-400 text-sm">Image URL copied!</p></div>
-                            <div class="basis-full md:basis-2/5">
+                            <div class="basis-full md:basis-2/5" th:with="user=${#authentication.principal}">
                                 <select id="image-src" class="form-select rounded" th:with="wardPath=${user.ward.path}">
                                     <option>Choose an Image from your uploads</option>
                                     <option th:each="i : ${files}"

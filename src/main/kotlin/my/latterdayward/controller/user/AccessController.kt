@@ -4,16 +4,15 @@ import my.latterdayward.data.AccessRequest
 import my.latterdayward.data.Messages
 import my.latterdayward.data.Role
 import my.latterdayward.data.User
-import my.latterdayward.service.EmailService
 import my.latterdayward.service.CustomOauth2UserService
+import my.latterdayward.service.EmailService
+import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
-import jakarta.servlet.http.HttpSession
-import org.springframework.security.core.annotation.AuthenticationPrincipal
 
 @Controller
 @RequestMapping("/user/access")
@@ -23,7 +22,7 @@ class AccessController(
 ) {
 
     @PostMapping("/request")
-    fun editorAccess(@AuthenticationPrincipal user: User, accessRequest: AccessRequest, session: HttpSession, r: RedirectAttributes, m: Messages) : String {
+    fun editorAccess(@AuthenticationPrincipal user: User, accessRequest: AccessRequest, r: RedirectAttributes, m: Messages) : String {
         user.accessRequest = accessRequest
         userService.save(user)
         accessRequest.ward?.let {

@@ -27,10 +27,10 @@
                             <div class="basis-3/5 text-right">
                                 <form th:action="@{/user/datacard/delete}" method="post">
                                     <input type="hidden" name="id" th:value="${c.id}" />
-                                    <button class="delete_check bg-red-600 py-1 px-2 rounded-sm mx-3">
-                                        <i class="fa-solid fa-trash-can text-white text-xl"></i></button>
-                                    <button th:formaction="@{/user/datacard/edit}" class="bg-amber-400 py-1 px-1.5 rounded-md ml-3">
-                                        <i class="fa-solid fa-pencil text-white text-xl"></i></button>
+                                    <button class="delete_check py-1 px-2 mx-3">
+                                        <i class="fa-solid fa-trash-can text-red-600 text-xl"></i></button>
+                                    <button th:formaction="@{/user/datacard/edit}" class="py-1 px-1.5 ml-3">
+                                        <i class="fa-solid fa-pencil text-amber-400 text-xl"></i></button>
                                 </form>
                             </div>
                         </div>
@@ -39,7 +39,7 @@
                         <h5 class="card-title" th:text="${c.subtitle}"></h5>
                         <span>
                             <strong>ID: </strong>
-                            <span class="border border-gray-600 bg-gray-200 px-1 rounded-sm" th:text="${c.id}" />
+                            <span class="border border-gray-600 bg-gray-200 px-1 rounded-md" th:text="${c.id}" />
                         </span>
 
                         <div th:if="${c.hasImage()}" class="float-right">

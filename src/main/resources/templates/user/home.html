@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="https://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
       layout:decorate="~{main/master}" lang="en">
 <head />
 <body>
@@ -9,14 +10,14 @@
     <div class="grid grid-cols-10 my-5">
         <div class="col-span-10 md:col-span-6"><h1 class="font-bold text-3xl">Welcome to Latter Day Ward</h1></div>
         <div class="col-span-10 md:col-span-4">
-            <div th:if="${user != null}">
-                <span class="font-bold">User: </span><span th:text="${user.username}" />
+            <div sec:authorize="isAuthenticated()" th:with="user=${#authentication.principal}">
+                <span class="font-bold">User: </span><span th:text="${user.userName}" />
                 <div sec>
                     <span class="font-bold">Owner: </span><span th:text="${owner_user}" /> <span class="text-sm" th:text="${'('+ owner_name +')'}" />
                 </div>
             </div>
             <a th:href="@{/user/ward}" class="text-blue-600" th:if="${access_requests != null}">
-                You have Access <span class="px-1.5 bg-red-600 rounded-sm border-black border text-white" th:text="${access_requests.size}"></span> Request
+                You have Access <span class="px-1.5 bg-red-600 rounded-md border-black border text-white" th:text="${access_requests.size}"></span> Request
             </a>
         </div>
     </div>

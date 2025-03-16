@@ -40,13 +40,13 @@
                         </th:block>
                         <input type="hidden" th:name="${'datacards['+i.index+'].type'}" th:value="${d.type}" />
                         <input type="hidden" th:name="${'datacards['+i.index+'].active'}" th:value="${d.active}" />
-                        <select class="form-select rounded-sm" th:name="${'datacards['+i.index+'].order'}">
+                        <select class="form-select rounded-md" th:name="${'datacards['+i.index+'].order'}">
                             <option th:each="o, i: ${cardNumbers}" th:selected="${d.order == o}" th:text="${o}"></option>
                         </select>
 
                     </div>
                 </div>
-                <button type="submit" class="border border-amber-400 bg-amber-200 py-1 px-2 my-2 rounded-sm">Save</button>
+                <button type="submit" class="border border-amber-400 bg-amber-200 py-1 px-2 my-2 rounded-md">Save</button>
             </form>
         </div>
     </div>

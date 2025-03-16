@@ -22,12 +22,12 @@
                 <tbody class="table-group-divider">
                     <tr th:each="u : ${users}"
                         th:data-user-id="${u.id}"
-                        th:data-username="${u.username}"
+                        th:data-username="${u.userName}"
                         th:data-active="${u.active}"
                         th:data-api-active="${u.apiActive}"
                         th:data-admin="${u.admin}"
                         th:data-created="${u.created}" class="edit-user">
-                        <td th:text="${u.username}"></td>
+                        <td th:text="${u.userName}"></td>
                         <td th:text="${u.created}"></td>
                         <td>
                             <i th:if="${u.active}" class="text-success fa-regular fa-circle-check"></i>

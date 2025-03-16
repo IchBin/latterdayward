@@ -40,24 +40,24 @@ class EmailService(
     }
 
     fun sendAccessRequestEmail(accessRequest: AccessRequest, user: User, owner: User) {
-        val body = """User: <strong>${user.username}</strong> has requested ${accessRequest.role} access for ${accessRequest.ward}. 
+        val body = """User: <strong>${user.userName}</strong> has requested ${accessRequest.role} access for ${accessRequest.ward}. 
                 | Login to <a href="$domain/user/ward">$domain</a> to approve or deny this request.""".trimMargin()
 
-        send(createMessage(owner.username, "Access Request", body))
+        send(createMessage(owner.userName, "Access Request", body))
     }
 
     fun sendAccessApproval(user: User, role: Role) {
         val body = """You have been approved with <strong>$role</strong> access for ${user.ward?.path}. 
                 | Login to <a href="$domain">$domain</a> to update your ward content.""".trimMargin()
 
-        send(createMessage(user.username, "Access Request Approved", body))
+        send(createMessage(user.userName, "Access Request Approved", body))
     }
 
     fun sendAccessDeny(user: User, role: Role, path: String, owner: User) {
         val body = """You have been denied or removed as a <strong>$role</strong> for $path.
-                | If you feel this is an error, you should contact the <a href="mailto:${owner.username}">ward owner</a>.""".trimMargin()
+                | If you feel this is an error, you should contact the <a href="mailto:${owner.userName}">ward owner</a>.""".trimMargin()
 
-        send(createMessage(user.username, "Access Request Denied", body))
+        send(createMessage(user.userName, "Access Request Denied", body))
     }
 
     fun sendTokenExpirationEmail(owner: User) {
@@ -67,6 +67,6 @@ class EmailService(
             Your Token Expires on <strong>$expires</strong>.
             """.trimMargin()
 
-        send(createMessage(owner.username, "Attention: Your Ward website token is about to expire", body))
+        send(createMessage(owner.userName, "Attention: Your Ward website token is about to expire", body))
     }
 }
