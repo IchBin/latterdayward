@@ -19,7 +19,7 @@ class ApiToken(
     }
 
     fun isExpired(): Boolean {
-        return expires?.let { LocalDateTime.now().isAfter(expires) } != false
+        return expires?.isBefore(LocalDateTime.now()) ?: false
     }
 
     fun hasTokenAccess(externalToken: String): Boolean {

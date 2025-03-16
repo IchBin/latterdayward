@@ -18,7 +18,7 @@ class ApiInterceptor(
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
         val token = request.getHeader("x-api-key") ?: return false.also { throw ForbiddenException("You must provide a valid API key") }
         val user = userService.findUserByApiToken(token) ?: return false.also { throw ForbiddenException("You must provide a valid API key") }
-        if((user.apiActive && user.apiToken?.hasTokenAccess(token) == true)) {
+        if(user.apiActive && user.apiToken?.hasTokenAccess(token) == true) {
             return true
         }
         throw ForbiddenException("You must provide a valid API key. Check if your key is expired.")
