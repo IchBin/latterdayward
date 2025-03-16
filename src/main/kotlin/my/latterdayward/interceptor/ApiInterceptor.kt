@@ -5,6 +5,10 @@ import org.springframework.stereotype.Component
 import org.springframework.web.servlet.HandlerInterceptor
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
+import my.latterdayward.controller.open.ForbiddenException
+import my.latterdayward.controller.open.RestExceptionHandler
+import java.time.LocalDate
+import java.time.LocalDateTime
 
 @Component
 class ApiInterceptor(
@@ -12,24 +16,12 @@ class ApiInterceptor(
 ): HandlerInterceptor {
 
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
-        val path = request.servletPath.split("/")[3]
-        val token = request.getHeader("x-api-key")
-        if (token.isNullOrBlank()) {
-            response.sendError(HttpServletResponse.SC_FORBIDDEN)
-            return false
-        }
-
-        val adminUser = userService.findUserByApiToken(token)
-        if(adminUser?.admin == true && token == adminUser.apiToken?.token) {
+        val token = request.getHeader("x-api-key") ?: return false.also { throw ForbiddenException("You must provide a valid API key") }
+        val user = userService.findUserByApiToken(token) ?: return false.also { throw ForbiddenException("You must provide a valid API key") }
+        if((user.apiActive && user.apiToken?.hasTokenAccess(token) == true)) {
             return true
         }
-
-        val user = userService.findOwnerByWardPath(path)
-        val revokedAccess = user?.apiActive?.not() ?: true
-        if (revokedAccess || token != user?.apiToken?.token || user.tokenExpired()) {
-            response.sendError(HttpServletResponse.SC_FORBIDDEN)
-            return false
-        }
-        return true
+        throw ForbiddenException("You must provide a valid API key. Check if your key is expired.")
+        return false
     }
 }

@@ -1,17 +1,21 @@
 package my.latterdayward.config
 
+import my.latterdayward.interceptor.ApiInterceptor
 import my.latterdayward.service.CustomOauth2UserService
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.web.SecurityFilterChain
+import org.springframework.web.servlet.HandlerInterceptor
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
 @Configuration
 @EnableWebSecurity
 class SecurityConfig(
     private val userService: CustomOauth2UserService
-) {
+): HandlerInterceptor {
 
     @Bean
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
@@ -26,7 +30,7 @@ class SecurityConfig(
                     .requestMatchers("/user/agenda/**").hasRole("PUBLISHER")
                     .requestMatchers("/user/file/**").hasRole("PUBLISHER")
                     .requestMatchers("/user/transfer/**").hasRole("OWNER")
-                    .requestMatchers("/**").authenticated()
+                    //.requestMatchers("/**").authenticated()
             }
             .oauth2Login { oauth2Login ->
                 oauth2Login
@@ -45,5 +49,15 @@ class SecurityConfig(
             .build()
     }
 
+    @Bean
+    fun webMvcConfigurer(): WebMvcConfigurer {
+        return object : WebMvcConfigurer {
+            override fun addInterceptors(registry: InterceptorRegistry) {
+                registry.addInterceptor(ApiInterceptor(userService))
+                    .addPathPatterns("/api/**")
+                    .order(1)
+            }
+        }
+    }
 
 }
