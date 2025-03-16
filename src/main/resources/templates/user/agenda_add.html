@@ -22,27 +22,27 @@
                         <input type="hidden" name="wardPath" th:value="${user.ward.path}" />
                         <label class="form-label" for="date">Sacrament Date</label>
                         <input type="date" step="7" th:min="${#temporals.format(agenda.nextSunday(), 'yyyy-MM-dd')}" th:field="*{date}"
-                               class="rounded block w-full md:w-1/4" id="date" required />
+                               class="rounded-sm block w-full md:w-1/4" id="date" required />
                     </div>
                     <div class="col-span-3 md:col-span-2">
                         <label class="form-label" for="presiding.title">Presiding Title</label>
-                        <input class="rounded block w-full" type="text" th:field="*{presiding.title}" id="presiding.title"/>
+                        <input class="border-gray-800 rounded-sm block w-full" type="text" th:field="*{presiding.title}" id="presiding.title"/>
                     </div>
                     <div class="col-span-3">
                         <label class="form-label" for="presiding.name">Presiding Name</label>
-                        <input class="rounded block w-full" type="text" th:field="*{presiding.name}" id="presiding.name"/>
+                        <input class="rounded-sm block w-full" type="text" th:field="*{presiding.name}" id="presiding.name"/>
                     </div>
                     <div class="col-span-3 md:col-span-2">
                         <label class="form-label" for="conducting.title">Conducting Title</label>
-                        <input class="rounded block w-full" type="text" th:field="*{conducting.title}" id="conducting.title"/>
+                        <input class="rounded-sm block w-full" type="text" th:field="*{conducting.title}" id="conducting.title"/>
                     </div>
                     <div class="col-span-3">
                         <label class="form-label" for="conducting.name">Conducting Name</label>
-                        <input class="rounded block w-full" type="text" th:field="*{conducting.name}" id="conducting.name"/>
+                        <input class="rounded-sm block w-full" type="text" th:field="*{conducting.name}" id="conducting.name"/>
                     </div>
                     <div class="col-span-3 md:col-span-2">
                         <label class="form-label" for="organist.title">Organist Title</label>
-                        <input class="rounded block w-full" type="text" th:field="*{organist.title}" id="organist.title"/>
+                        <input class="rounded-sm block w-full" type="text" th:field="*{organist.title}" id="organist.title"/>
                     </div>
                     <div class="col-span-3">
                         <label class="form-label" for="organist.name">Organist Name</label>
@@ -113,7 +113,7 @@
                         </div>
                         <div class="md:col-span-1 col-span-6 place-self-end text-center">
                             <div th:class="${i.index > 0 ? 'inline' : 'hidden'}">
-                                <button type="button" class="delete_item bg-red-600 py-1 px-2 rounded-full" th:data-item-target="${'programContent'+i.index}">
+                                <button type="button" class="delete_item bg-red-600 py-1 px-2 rounded-sm" th:data-item-target="${'programContent'+i.index}" data-target-set=".content-set">
                                     <i class="fa-solid fs-4 fa-trash-can text-white text-xl"></i>
                                 </button>
                             </div>
@@ -163,11 +163,11 @@
                                        th:id="${'wardAnnouncement['+ i.index +'].description'}" />
                             </div>
                             <div class="md:col-span-1 col-span-6 md:place-self-end text-center" title="Click & Drag to move">
-                                <i class="fa-solid fa-up-down text-white text-xl bg-gray-400 py-1.5 px-3 rounded-full handle"></i>
+                                <i class="fa-solid fa-up-down text-white text-xl bg-gray-400 py-1.5 px-3 rounded-sm handle"></i>
                             </div>
                             <div class="md:col-span-1 col-span-6 md:place-self-end text-center">
                                 <div th:class="${i.index > 0 ? 'inline' : 'hidden'}">
-                                    <button type="button" class="delete_item bg-red-600 py-1 px-2 rounded-full" th:data-item-target="${'wardAnnouncement'+i.index}" data-target-set=".announcement-set">
+                                    <button type="button" class="delete_item bg-red-600 py-1 px-2 rounded-sm" th:data-item-target="${'wardAnnouncement'+i.index}" data-target-set=".announcement-set">
                                         <i class="fa-solid fs-4 fa-trash-can text-white text-xl"></i>
                                     </button>
                                 </div>

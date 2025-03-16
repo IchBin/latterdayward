@@ -8,7 +8,7 @@ plugins {
 	// openapi via springdoc - https://github.com/springdoc/springdoc-openapi-gradle-plugin
 	id("org.springdoc.openapi-gradle-plugin") version "1.9.0"
 	// https://plugins.gradle.org/plugin/org.siouan.frontend-jdk17
-	id("org.siouan.frontend-jdk17") version "8.1.0"
+	id("org.siouan.frontend-jdk21") version "10.0.0"
 }
 
 group = "code.latterdayward"
@@ -27,8 +27,8 @@ repositories {
 frontend {
 	nodeVersion.set("23.9.0")
 	assembleScript.set("run build")
-	cleanScript.set("run clean")
 	checkScript.set("run check")
+	verboseModeEnabled.set(true)
 }
 
 dependencies {

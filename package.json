@@ -2,14 +2,14 @@
   "name": "latter-day-ward",
   "version": "1.0.0",
   "scripts": {
-    "build": "echo Building frontend && npx tailwindcss -i ./input.css -o ./src/main/resources/static/css/main.css",
+    "build": "echo Building frontend && npx tailwindcss -i ./input.css -o ./src/main/resources/static/css/main.css --minify",
     "check": "echo Checking frontend && npm run lint && npm run test",
     "clean": "echo Cleaning frontend",
     "lint": "echo Linting frontend",
     "test": "echo Testing frontend"
   },
-  "dependencies": {
-    "@tailwindcss/forms": "^0.5.7"
-  },
-  "packageManager": "npm@10.5.0"
+  "packageManager": "npm@10.9.2",
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.0.14"
+  }
 }

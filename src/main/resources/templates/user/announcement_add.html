@@ -17,19 +17,19 @@
                         <input type="hidden" th:field="*{id}" th:if="${announcement.id != null}"/>
                         <input type="hidden" name="wardPath" th:value="${user.ward.path}" />
                         <label class="form-label" for="title">Title</label>
-                        <input class="rounded block w-10/12" type="text" th:field="*{title}" id="title"/>
+                        <input class="rounded-sm block w-10/12" type="text" th:field="*{title}" id="title"/>
                     </div>
                     <div class="col-span-12">
                         <label class="form-label" for="description">Description</label>
-                        <textarea class="rounded block w-10/12" type="text" th:field="*{description}" id="description"></textarea>
+                        <textarea class="rounded-sm block w-10/12" type="text" th:field="*{description}" id="description"></textarea>
                     </div>
                     <div class="col-span-12 md:col-span-6">
                         <label class="form-label" for="address">Address Location</label>
-                        <input class="rounded block w-10/12" type="text" th:field="*{location.address}" id="address" />
+                        <input class="rounded-sm block w-10/12" type="text" th:field="*{location.address}" id="address" />
                     </div>
                     <div class="col-span-12 md:col-span-6">
                         <label class="form-label" for="link">Address Link</label>
-                        <input class="rounded block w-10/12" type="text" th:field="*{location.link}" id="link"/>
+                        <input class="rounded-sm block w-10/12" type="text" th:field="*{location.link}" id="link"/>
                     </div>
                     <div class="col-span-12 mt-4">
                         <h5 class="text-lg font-bold">Dates
@@ -43,20 +43,20 @@
                     <div class="grid grid-cols-12 mb-3 date-set" th:each="d, i : *{dates}" th:data-item-id="${'date'+i.index}" >
                         <div class="col-span-12 md:col-span-6">
                             <label th:for="${'dates['+ i.index +'].date'}">Date/Time</label>
-                            <input class="rounded block w-10/12" type="datetime-local"
+                            <input class="rounded-sm block w-10/12" type="datetime-local"
                                    th:name="${'dates['+ i.index +'].date'}"
                                    th:value="${d.date != null ? announcement.thymeleafDateTime(d.date) : ''}"
                                    th:id="${'dates['+ i.index +'].date'}" />
                         </div>
                         <div class="col-span-12 md:col-span-6">
                             <label th:for="${'dates['+ i.index +'].subTitle'}">SubTitle</label><br />
-                            <input class="rounded w-10/12" type="text"
+                            <input class="rounded-sm w-10/12" type="text"
                                    th:name="${'dates['+ i.index +'].subTitle'}"
                                    th:value="${d.subTitle}"
                                    th:id="${'dates['+ i.index +'].subTitle'}" />
 
                             <div th:class="${i.index > 0 ? 'inline' : 'hidden'}">
-                                <button type="button" class="delete_item bg-red-600 py-1 px-2 rounded-full" th:data-item-target="${'date'+i.index}">
+                                <button type="button" class="delete_item bg-red-600 py-1 px-2 rounded-sm" th:data-item-target="${'date'+i.index}">
                                     <i class="fa-solid fs-4 fa-trash-can text-white text-xl"></i>
                                 </button>
                             </div>
@@ -67,7 +67,7 @@
                 <div class="grid grid-cols-12">
                     <div class="col-span-12">
                         <label for="type">Type</label>
-                        <input class="rounded block" type="text" th:field="*{type}" id="type"/>
+                        <input class="rounded-sm block" type="text" th:field="*{type}" id="type"/>
                         <small class="mute">
                             You can group announcements together by giving them the same type.
                         </small>
@@ -75,10 +75,10 @@
 
                     <div class="col-span-12 my-4">
                         <label for="active">Active?</label>
-                        <input class="rounded" type="checkbox" th:field="*{active}" id="active"/>
+                        <input class="rounded-sm" type="checkbox" th:field="*{active}" id="active"/>
                     </div>
                 </div>
-                <button type="submit" class="rounded border-blue-600 bg-blue-400 border py-2 px-3">Save</button>
+                <button type="submit" class="rounded-sm border-blue-600 bg-blue-400 border py-2 px-3">Save</button>
             </form>
         </div>
     </div>

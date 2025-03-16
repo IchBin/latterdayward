@@ -12,7 +12,7 @@
             <form th:action="@{/user/ward/save}" method="post" th:object="${ward}">
                 <div class="mb-3">
                     <label for="ward-title">Ward Name</label>
-                    <input type="text" class="block rounded border-gray-400" th:field="*{title}" id="ward-title" required placeholder="i.e. SunsetPeak 6th Ward"/>
+                    <input type="text" class="block rounded-sm border-gray-400" th:field="*{title}" id="ward-title" required placeholder="i.e. SunsetPeak 6th Ward"/>
                     <input type="hidden" th:field="*{created}" />
                     <input type="hidden" th:name="userId" th:value="${user.id}"/>
                     <input type="hidden" th:field="*{id}" th:if="${ward.id != null}"/>
@@ -20,13 +20,13 @@
                 <div class="mb-3">
                     <label for="ward-path">Ward Path</label>
                     <i class="fa-solid fa-circle-info text-red-600" title="Required API path. See {path} parameter in the swagger documentation."></i>
-                    <input type="text" class="block rounded border-gray-400 w-4/5" th:readonly="${user.hasWard()}"
+                    <input type="text" class="block rounded-sm border-gray-400 w-4/5" th:readonly="${user.hasWard()}"
                            th:field="*{path}" id="ward-path" autocomplete="off" placeholder="i.e. sunsetpeak-6th" required/>
                     <p class="text-sm">No spaces. Must be min 5 characters, lower case, optional dash and numbers.</p>
                 </div>
                 <div class="mb-1">
                     <label for="descr">Description</label>
-                    <input type="text" class="block rounded border-gray-400 w-4/5" th:field="*{subTitle}" id="descr" placeholder="i.e. Sunset Peak 6th in the California Sunset Stake"/>
+                    <input type="text" class="block rounded-sm border-gray-400 w-4/5" th:field="*{subTitle}" id="descr" placeholder="i.e. Sunset Peak 6th in the California Sunset Stake"/>
                 </div>
                 <p class="leading-4">
                     <small class="text-red-600" th:if="${user.hasWard()}">
@@ -34,7 +34,7 @@
                         If you absolutely must change the path <a class="underline text-blue-600" href="mailto:admin@latterdayward.com?subject=Change%20Ward%20Path">please contact me.</a>
                     </small>
                 </p>
-                <button type="submit" class="my-3 p-1.5 bg-blue-400 block rounded border-blue-600 border" id="ward-save">Save</button>
+                <button type="submit" class="my-3 p-1.5 bg-blue-400 block rounded-sm border-blue-600 border" id="ward-save">Save</button>
             </form>
             <div class="bg-amber-100 border border-amber-400 rounded-lg mt-8" th:if="${user.isOwner()}">
                 <div class="p-4 rounded-t-lg font-bold bg-amber-200">Need to Transfer Ownership?</div>

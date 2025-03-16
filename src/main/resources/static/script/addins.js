@@ -3,17 +3,13 @@ $(document).ready(function() {
     // Toggle visibility of token
     $('#show_hide_token a').on('click', function(event) {
         event.preventDefault();
-        let showHideTokenI = $('#show_hide_token i')
-        let showHideTokenInput = $('#show_hide_token input')
-        if(showHideTokenInput.attr('type') === 'text'){
-            showHideTokenInput.attr('type', 'password');
-            showHideTokenI.addClass( 'fa-eye-slash' );
-            showHideTokenI.removeClass( 'fa-eye' );
-        }else if(showHideTokenInput.attr('type') === 'password'){
-            showHideTokenInput.attr('type', 'text');
-            showHideTokenI.removeClass( 'fa-eye-slash' );
-            showHideTokenI.addClass( "fa-eye" );
-        }
+        const icon = $('#show_hide_token i');
+        const input = $('#show_hide_token input');
+        const isPassword = input.attr('type') === 'password';
+        // Toggle input type
+        input.attr('type', isPassword ? 'text' : 'password');
+        // Toggle icon classes
+        icon.toggleClass('fa-eye fa-eye-slash');
     });
 
     $('#token_delete, .delete_check').click(function() {
@@ -100,25 +96,26 @@ $(document).ready(function() {
 
     // Delete image, link, or ward announcement row
     $(document).on('click', '.delete_item', function() {
+        if (!confirm('Are you sure you want to remove this?')) return;
+
         const regex = /(\d+)/;
-        if (confirm('Are you sure you want to remove this?')) {
-            const id = $(this).attr('data-item-target');
-            $('[data-item-id="'+id+'"]').remove();
-            // We need to reorder the array so that we remove empty items when deleting.
-            const targetSet = $($(this).attr('data-target-set'));
-            targetSet.each(function (i) {
-                $(this).find('input').each(function () {
-                    const inputId = $(this).attr('id');
-                    const name = $(this).attr("name");
-                    $(this).attr('id', inputId.replace(regex, i));
-                    $(this).attr('name', name.replace(regex, i));
-                });
-                $(this).find('label').each(function () {
-                    const forId = $(this).attr('for');
-                    $(this).attr('for', forId.replace(regex, i));
+        const id = $(this).attr('data-item-target');
+        $('[data-item-id="'+id+'"]').remove();
+        // We need to reorder the array so that we remove empty items when deleting.
+        const targetSet = $($(this).attr('data-target-set'));
+        targetSet.each(function (i) {
+            $(this).find('input').each(function () {
+                const inputId = $(this).attr('id');
+                const name = $(this).attr("name");
+                $(this).attr({
+                    'id': inputId.replace(regex, i),
+                    'name': name.replace(regex, i)
                 });
             });
-        }
+            $(this).find('label').each(function () {
+                $(this).attr('for', $(this).attr('for').replace(regex, i));
+            });
+        });
     });
 
     // Toggle active state for data card
