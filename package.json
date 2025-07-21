@@ -8,8 +8,8 @@
     "lint": "echo Linting frontend",
     "test": "echo Testing frontend"
   },
-  "packageManager": "npm@10.9.2",
+  "packageManager": "npm@11.4.2",
   "devDependencies": {
-    "@tailwindcss/cli": "^4.0.14"
+    "@tailwindcss/cli": "^4.1.11"
   }
 }
