@@ -1,13 +1,13 @@
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 plugins {
-	id("org.springframework.boot") version "3.5.3"
+	id("org.springframework.boot") version "3.5.9"
 	id("io.spring.dependency-management") version "1.1.7"
-	kotlin("jvm") version "2.0.10"
-	kotlin("plugin.spring") version "2.0.20"
+	kotlin("jvm") version "2.2.20"
+	kotlin("plugin.spring") version "2.2.20"
 	// openapi via springdoc - https://github.com/springdoc/springdoc-openapi-gradle-plugin
 	id("org.springdoc.openapi-gradle-plugin") version "1.9.0"
-	// https://plugins.gradle.org/plugin/org.siouan.frontend-jdk17
+	// https://plugins.gradle.org/plugin/org.siouan.frontend-jdk21
 	id("org.siouan.frontend-jdk21") version "10.0.0"
 }
 
@@ -47,7 +47,7 @@ dependencies {
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.springdoc:springdoc-openapi-ui:1.8.0")
 	implementation("org.springdoc:springdoc-openapi-kotlin:1.8.0")
-	implementation("com.github.librepdf:openpdf:2.0.3")
+	implementation("com.github.librepdf:openpdf:3.0.0")
 
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 }

@@ -34,7 +34,7 @@
         <th:block th:insert="~{fragments/menu-fragment :: menu}" th:if="${user != null}" />
         <div class="col-span-12 md:col-span-9 mx-5">
             <th:block th:if="${messages}">
-                <div class="container" th:insert="fragments/message-fragment :: messages" />
+                <div class="container" th:insert="~{fragments/message-fragment :: messages}" />
             </th:block>
             <section layout:fragment="content" />
         </div>

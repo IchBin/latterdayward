@@ -1,10 +1,5 @@
 package my.latterdayward.service
 
-import com.lowagie.text.*
-import com.lowagie.text.pdf.CMYKColor
-import com.lowagie.text.pdf.PdfPCell
-import com.lowagie.text.pdf.PdfPTable
-import com.lowagie.text.pdf.PdfWriter
 import my.latterdayward.data.Agenda
 import my.latterdayward.data.ProgramContent
 import my.latterdayward.data.ProgramItem
@@ -14,13 +9,23 @@ import java.io.ByteArrayOutputStream
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import jakarta.servlet.http.HttpServletResponse
+import org.openpdf.text.Chunk
+import org.openpdf.text.Document
+import org.openpdf.text.Element
+import org.openpdf.text.Font
+import org.openpdf.text.Paragraph
+import org.openpdf.text.Phrase
+import org.openpdf.text.pdf.CMYKColor
+import org.openpdf.text.pdf.PdfPCell
+import org.openpdf.text.pdf.PdfPTable
+import org.openpdf.text.pdf.PdfWriter
 import kotlin.math.roundToInt
 
 @Component
 class PdfService {
 
     private val pageWidth = 410
-    private val darkBlue = CMYKColor(100, 80, 0 ,100)
+    private val darkBlue = CMYKColor(100, 80, 0, 100)
     private val dividerFont = Font(Font.COURIER, 14f, Font.BOLD, darkBlue)
     private val titleFont = Font(Font.COURIER, 20f, Font.BOLD, darkBlue)
     private val dateFont = Font(Font.COURIER, 12f, Font.NORMAL, darkBlue)
